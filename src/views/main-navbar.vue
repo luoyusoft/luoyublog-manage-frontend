@@ -2,8 +2,8 @@
   <nav class="site-navbar" :class="'site-navbar--' + navbarLayoutType">
     <div class="site-navbar__header">
       <h1 class="site-navbar__brand" @click="$router.push({ name: 'home' })">
-        <a class="site-navbar__brand-lg" href="javascript:;">db's Blog</a>
-        <a class="site-navbar__brand-mini" href="javascript:;">DB</a>
+        <a class="site-navbar__brand-lg" href="javascript:;">LuoYu BLOG</a>
+        <a class="site-navbar__brand-mini" href="javascript:;">LuoYu</a>
       </h1>
     </div>
     <div class="site-navbar__body clearfix">

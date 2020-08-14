@@ -103,7 +103,7 @@
         </el-col>
       </el-form-item>
       <el-form-item label="笔记内容">
-        <mavon-editor ref=md v-model="bookNote.content" @imgAdd="imgAdd" @change="mavonChangeHandle"></mavon-editor>
+        <mavon-editor ref=md style="z-index:500" v-model="bookNote.content" @imgAdd="imgAdd" @change="mavonChangeHandle"></mavon-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="saveArticle()">保存</el-button>
