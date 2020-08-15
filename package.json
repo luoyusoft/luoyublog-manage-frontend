@@ -1,7 +1,7 @@
 {
-  "name": "luoyu-blog-manage",
+  "name": "luoyublog-manage-frontend",
   "version": "1.0.0",
-  "description": "落雨个人博客后台管理平台",
+  "description": "落雨个人博客后台管理系统",
   "author": "落雨",
   "private": true,
   "scripts": {
