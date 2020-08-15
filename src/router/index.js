@@ -67,8 +67,7 @@ const mainRoutes = {
   }
 }
 const router = new Router({
-  base: '/manage/',
-  mode: 'history',
+  mode: 'hash',
   scrollBehavior: () => ({ y: 0 }), // 每次访问滚动条都置0
   isAddDynamicMenuRoutes: false, // 是否已经添加动态（菜单）路由
   routes: globalRoutes.concat(mainRoutes)
