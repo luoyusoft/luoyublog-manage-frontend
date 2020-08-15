@@ -17,7 +17,7 @@ const globalRoutes = [
 
 // 主入口路由（需嵌套上左右整体布局）
 const mainRoutes = {
-  base: 'manage',
+  base: '/manage/',
   path: '/',
   component: _import('main'),
   name: 'main',
