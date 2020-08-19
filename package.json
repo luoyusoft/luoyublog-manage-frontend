@@ -1,8 +1,8 @@
 {
   "name": "luoyu-blog-manage",
   "version": "1.0.0",
-  "description": "落雨个人博客后台管理平台",
-  "author": "落雨",
+  "description": "Luo Yu Blog Manage",
+  "author": "luoyu",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
