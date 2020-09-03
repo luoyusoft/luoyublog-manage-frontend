@@ -51,4 +51,4 @@ npm run build:prod
 
 ## 在线地址
 会持续更新，欢迎大家Star，感谢！-->【<b><a href="https://luoyublog.com/manage"> https://luoyublog.com/manage </a></b>】<br/>
-游客账号密码：guest/guest
+游客账号：guest，密码：guest
