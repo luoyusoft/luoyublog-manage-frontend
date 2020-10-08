@@ -82,6 +82,7 @@ export default {
             if (data && data.code === 200) {
               this.$cookie.set('token', data.token)
               this.$router.replace({ name: 'home' })
+              this.$message.success('登录成功')
             } else {
               this.getCaptcha()
               this.$message.error(data.msg)
