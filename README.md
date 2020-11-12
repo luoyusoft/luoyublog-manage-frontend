@@ -18,6 +18,7 @@ Vuex
 Vue Router
 Vue-cli
 Element-UI
+...
 ```
 
 ## 前端部署
