@@ -48,6 +48,13 @@
   </el-dialog>
 </template>
 
+<style>
+.el-popover{
+  height: 200px;
+overflow: auto;
+}
+</style>
+
 <script>
 import { treeDataTranslate } from '@/utils'
 export default {
