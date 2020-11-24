@@ -2,7 +2,7 @@
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="dataForm.title" placeholder="标题" clearable></el-input>
+        <el-input v-model="dataForm.title" placeholder="图书标题" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
@@ -189,7 +189,21 @@ export default {
   activated () {
     this.getDataList()
   },
+  beforeDestroy () {
+    // 移除监听器
+    document.removeEventListener('keydown', this.keyDown)
+  },
+  mounted () {
+    // 监听回车键
+    document.addEventListener('keydown', this.keyDown)
+  },
   methods: {
+    keyDown () {
+      // 13代表回车键
+      if (window.event.keyCode === 13) {
+        this.getDataList()
+      }
+    },
     // 获取数据列表
     getDataList () {
       this.dataListLoading = true

@@ -2,7 +2,7 @@
 <div>
   <el-form :inline="true">
     <el-form-item>
-      <el-input placeholder="标题" v-model="dataForm.title" clearable></el-input>
+      <el-input placeholder="笔记标题" v-model="dataForm.title" clearable></el-input>
     </el-form-item>
     <el-form-item>
       <el-button @click="getDataList()">查询</el-button>
@@ -156,7 +156,21 @@ export default {
   activated () {
     this.getDataList()
   },
+  beforeDestroy () {
+    // 移除监听器
+    document.removeEventListener('keydown', this.keyDown)
+  },
+  mounted () {
+    // 监听回车键
+    document.addEventListener('keydown', this.keyDown)
+  },
   methods: {
+    keyDown () {
+      // 13代表回车键
+      if (window.event.keyCode === 13) {
+        this.getDataList()
+      }
+    },
     // 获取数据列表
     getDataList () {
       this.dataListLoading = true

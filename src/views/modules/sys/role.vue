@@ -1,6 +1,6 @@
 <template>
   <div class="mod-role">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+    <el-form :inline="true" :model="dataForm">
       <el-form-item>
         <el-input v-model="dataForm.roleName" placeholder="角色名称" clearable></el-input>
       </el-form-item>
@@ -97,7 +97,21 @@ export default {
   activated () {
     this.getDataList()
   },
+  beforeDestroy () {
+    // 移除监听器
+    document.removeEventListener('keydown', this.keyDown)
+  },
+  mounted () {
+    // 监听回车键
+    document.addEventListener('keydown', this.keyDown)
+  },
   methods: {
+    keyDown () {
+      // 13代表回车键
+      if (window.event.keyCode === 13) {
+        this.getDataList()
+      }
+    },
     // 获取数据列表
     getDataList () {
       this.dataListLoading = true
