@@ -51,7 +51,7 @@
       width="300">
       <template slot-scope="scope">
         <el-row>
-          <el-button v-for="tag in scope.row.tagList" :key="tag.id" size="mini">{{tag.name}}</el-button>
+          <el-button style="margin-top: 8px" v-for="tag in scope.row.tagList" :key="tag.id" size="mini">{{tag.name}}</el-button>
         </el-row>
       </template>
     </el-table-column>
