@@ -40,7 +40,7 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="出版日期">
-            <el-date-picker value-format="yyyy-MM-dd" placeholder="出版日期" v-model="book.publishDate"></el-date-picker>
+            <el-date-picker value-format="yyyy-MM-dd" placeholder="出版日期" v-model="book.publishDate" ></el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
@@ -144,7 +144,8 @@ export default {
         label: 'name',
         children: 'children',
         value: 'id'
-      }
+      },
+      publishDate: 0
     }
   },
   components: {
@@ -159,7 +160,10 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/admin/operation/category/list'),
         method: 'get',
-        params: this.$http.adornParams({type: 1})
+        params: this.$http.adornParams({
+          type: 1,
+          name: ''
+        })
       }).then(({data}) => {
         if (data && data.code === 200) {
           this.categoryOptions = treeDataTranslate(data.categoryList)

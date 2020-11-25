@@ -153,7 +153,7 @@ export default {
         if (valid) {
           this.$http({
             url: this.$http.adornUrl(`/admin/operation/category/${!this.dataForm.id ? 'save' : 'update'}`),
-            method: 'post',
+            method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData(this.dataForm)
           }).then(({data}) => {
             if (data && data.code === 200) {

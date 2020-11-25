@@ -158,7 +158,10 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/admin/operation/category/list'),
         method: 'get',
-        params: this.$http.adornParams({type: 1})
+        params: this.$http.adornParams({
+          type: 1,
+          name: ''
+        })
       }).then(({data}) => {
         if (data && data.code === 200) {
           this.categoryOptions = treeDataTranslate(data.categoryList)
