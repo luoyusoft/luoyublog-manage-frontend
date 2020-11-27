@@ -40,7 +40,7 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="出版日期">
-            <el-date-picker value-format="yyyy-MM-dd" placeholder="出版日期" v-model="book.publishDate" ></el-date-picker>
+            <el-date-picker value-format="yyyy-MM-dd" type="date" placeholder="出版日期" v-model="book.publishDate"></el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
@@ -127,7 +127,8 @@ export default {
         tagList: [],
         type: 0,
         status: 0,
-        pageNum: 1
+        pageNum: 1,
+        publishDate: ''
       },
       coverTypeList: this.getSysParamArr('BOOK_COVER_TYPE'),
       url: '',
@@ -144,8 +145,7 @@ export default {
         label: 'name',
         children: 'children',
         value: 'id'
-      },
-      publishDate: 0
+      }
     }
   },
   components: {
@@ -189,6 +189,7 @@ export default {
           }).then(({data}) => {
             if (data && data.code === 200) {
               this.book = data.book
+              this.book.publishDate = new Date(data.book.publishDate)
               this.file = [{url: data.book.cover}]
               // 转换tagList
               this.tagListSelect = this.book.tagList.map(tag => {
