@@ -1,6 +1,6 @@
 <template>
 <div>
-  <el-form :inline="true">
+  <el-form :inline="true" @submit.native.prevent>
     <el-form-item>
       <el-input placeholder="笔记标题" v-model="dataForm.title" clearable></el-input>
     </el-form-item>
@@ -182,10 +182,10 @@ export default {
           'limit': this.pageSize,
           'title': this.dataForm.title
         })
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.dataList = data.page.list
-          this.totalPage = data.page.totalCount
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.dataList = response.data.list
+          this.totalPage = response.data.totalCount
         } else {
           this.dataList = []
           this.totalPage = 0
@@ -226,8 +226,8 @@ export default {
           url: this.$http.adornUrl('/admin/book/note/delete'),
           method: 'delete',
           data: this.$http.adornData(articleIds, false)
-        }).then(({data}) => {
-          if (data && data.code === 200) {
+        }).then((response) => {
+          if (response && response.code === 200) {
             this.$message({
               message: '操作成功',
               type: 'success',
@@ -237,7 +237,7 @@ export default {
               }
             })
           } else {
-            this.$message.error(data.msg)
+            this.$message.error(response.msg)
           }
         })
       }).catch(() => {})
@@ -271,12 +271,12 @@ export default {
         url: this.$http.adornUrl(`/admin/book/note/update/status`),
         method: 'put',
         data: this.$http.adornData(data)
-      }).then(({data}) => {
-        if (data && data.code === 200) {
+      }).then((response) => {
+        if (response && response.code === 200) {
           this.$message.success('更新成功')
           this.getDataList()
         } else {
-          this.$message.error(data.msg)
+          this.$message.error(response.msg)
         }
       })
     }

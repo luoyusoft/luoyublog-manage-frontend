@@ -106,18 +106,18 @@ export default {
           url: this.$http.adornUrl(`/admin/operation/category/info/${this.dataForm.id}`),
           method: 'get',
           params: this.$http.adornParams()
-        }).then(({data}) => {
-          if (data && data.code === 200) {
-            this.dataForm = data.category
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.dataForm = response.data
           }
         }).then(() => {
           this.$http({
             url: this.$http.adornUrl('/admin/operation/category/select'),
             method: 'get',
             params: this.$http.adornParams({type: this.dataForm.type})
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.categoryList = treeDataTranslate(data.categoryList)
+          }).then((response) => {
+            if (response && response.code === 200) {
+              this.categoryList = treeDataTranslate(response.data)
               this.categoryListTreeSetCurrentNode()
             } else {
               this.categoryList = []
@@ -139,9 +139,9 @@ export default {
         url: this.$http.adornUrl('/admin/operation/category/select'),
         method: 'get',
         params: this.$http.adornParams({type: this.dataForm.type})
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.categoryList = treeDataTranslate(data.categoryList)
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.categoryList = treeDataTranslate(response.data)
         } else {
           this.categoryList = []
         }
@@ -155,8 +155,8 @@ export default {
             url: this.$http.adornUrl(`/admin/operation/category/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData(this.dataForm)
-          }).then(({data}) => {
-            if (data && data.code === 200) {
+          }).then((response) => {
+            if (response && response.code === 200) {
               this.$message({
                 message: '操作成功',
                 type: 'success',
@@ -167,7 +167,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         }

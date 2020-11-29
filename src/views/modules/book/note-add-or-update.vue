@@ -162,18 +162,18 @@ export default {
           type: 1,
           name: ''
         })
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.categoryOptions = treeDataTranslate(data.categoryList)
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.categoryOptions = treeDataTranslate(response.data)
         }
       }).then(() => {
         this.$http({
           url: this.$http.adornUrl('/admin/operation/tag/select'),
           method: 'get',
           params: this.$http.adornParams({type: 2})
-        }).then(({data}) => {
-          if (data && data.code === 200) {
-            this.tagList = data.tagList
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.tagList = response.data
           }
         })
       }).then(() => {
@@ -181,9 +181,9 @@ export default {
           url: this.$http.adornUrl('/admin/book/select'),
           method: 'get',
           params: this.$http.adornParams()
-        }).then(({data}) => {
-          if (data && data.code === 200) {
-            this.bookList = data.bookList
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.bookList = response.data
           }
         })
       }).then(() => {
@@ -194,10 +194,10 @@ export default {
             url: this.$http.adornUrl('/admin/book/note/info/' + id),
             method: 'get',
             params: this.$http.adornParams()
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.bookNote = data.bookNote
-              this.file = [{url: data.bookNote.cover}]
+          }).then((response) => {
+            if (response && response.code === 200) {
+              this.bookNote = response.data
+              this.file = [{url: response.data.cover}]
               // 转换tagList
               this.tagListSelect = this.bookNote.tagList.map(tag => {
                 return tag.id
@@ -257,15 +257,15 @@ export default {
             url: this.$http.adornUrl(`/admin/book/note/${!this.bookNote.id ? 'save' : 'update'}`),
             method: !this.bookNote.id ? 'post' : 'put',
             data: this.$http.adornData(this.bookNote)
-          }).then(({data}) => {
-            if (data && data.code === 200) {
+          }).then((response) => {
+            if (response && response.code === 200) {
               this.$message.success('保存笔记成功')
               // 关闭当前标签
               this.$emit('closeCurrentTabs')
               // 跳转到list
               this.$router.push('/book-note')
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         } else {
@@ -283,8 +283,8 @@ export default {
         method: 'post',
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data' }
-      }).then(({data}) => {
-        this.$refs.md.$img2Url(pos, data.resource.url)
+      }).then((response) => {
+        this.$refs.md.$img2Url(pos, response.data.url)
       })
     },
     mavonChangeHandle (value, render) {

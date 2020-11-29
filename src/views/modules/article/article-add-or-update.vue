@@ -138,18 +138,18 @@ export default {
           type: 0,
           name: ''
         })
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.categoryOptions = treeDataTranslate(data.categoryList)
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.categoryOptions = treeDataTranslate(response.data)
         }
       }).then(() => {
         this.$http({
           url: this.$http.adornUrl('/admin/operation/tag/select'),
           method: 'get',
           params: this.$http.adornParams({type: 0})
-        }).then(({data}) => {
-          if (data && data.code === 200) {
-            this.tagList = data.tagList
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.tagList = response.data
           }
         })
       }).then(() => {
@@ -160,10 +160,10 @@ export default {
             url: this.$http.adornUrl('/admin/article/info/' + id),
             method: 'get',
             params: this.$http.adornParams()
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.article = data.article
-              this.file = [{url: data.article.cover}]
+          }).then((response) => {
+            if (response && response.code === 200) {
+              this.article = response.data
+              this.file = [{url: response.data.cover}]
               // 转换tagList
               this.tagListSelect = this.article.tagList.map(tag => {
                 return tag.id
@@ -223,15 +223,15 @@ export default {
             url: this.$http.adornUrl(`/admin/article/${!this.article.id ? 'save' : 'update'}`),
             method: !this.article.id ? 'post' : 'put',
             data: this.$http.adornData(this.article)
-          }).then(({data}) => {
-            if (data && data.code === 200) {
+          }).then((response) => {
+            if (response && response.code === 200) {
               this.$message.success('保存博文成功')
               // 关闭当前标签
               this.$emit('closeCurrentTabs')
               // 跳转到list
               this.$router.push('/article-article')
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         } else {
@@ -249,8 +249,8 @@ export default {
         method: 'post',
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data' }
-      }).then(({data}) => {
-        this.$refs.md.$img2Url(pos, data.resource.url)
+      }).then((response) => {
+        this.$refs.md.$img2Url(pos, response.data.url)
       })
     },
     mavonChangeHandle (context, render) {

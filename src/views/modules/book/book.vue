@@ -1,6 +1,6 @@
 <template>
   <div class="mod-config">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+    <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item>
         <el-input v-model="dataForm.title" placeholder="图书标题" clearable></el-input>
       </el-form-item>
@@ -215,10 +215,10 @@ export default {
           'limit': this.pageSize,
           'title': this.dataForm.title
         })
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.dataList = data.page.list
-          this.totalPage = data.page.totalCount
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.dataList = response.data.list
+          this.totalPage = response.data.totalCount
         } else {
           this.dataList = []
           this.totalPage = 0
@@ -259,8 +259,8 @@ export default {
           url: this.$http.adornUrl('/admin/book/delete'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
-        }).then(({data}) => {
-          if (data && data.code === 200) {
+        }).then((response) => {
+          if (response && response.code === 200) {
             this.$message({
               message: '操作成功',
               type: 'success',
@@ -270,7 +270,7 @@ export default {
               }
             })
           } else {
-            this.$message.error(data.msg)
+            this.$message.error(response.msg)
           }
         })
       })
@@ -313,12 +313,12 @@ export default {
         url: this.$http.adornUrl(`/admin/book/update/status`),
         method: 'put',
         data: this.$http.adornData(data)
-      }).then(({data}) => {
-        if (data && data.code === 200) {
+      }).then((response) => {
+        if (response && response.code === 200) {
           this.$message.success('更新成功')
           this.getDataList()
         } else {
-          this.$message.error(data.msg)
+          this.$message.error(response.msg)
         }
       })
     },
@@ -328,9 +328,9 @@ export default {
         url: this.$http.adornUrl('/admin/book/sense/' + id),
         method: 'get',
         params: this.$http.adornParams()
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.bookSense = data.bookSense || {}
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.bookSense = response.data || {}
           this.bookSense.bookId = id
         }
       }).then(() => {
@@ -343,8 +343,8 @@ export default {
         url: this.$http.adornUrl(`/admin/book/sense/${!this.bookSense.id ? 'save' : 'update'}`),
         method: !this.bookSense.id ? 'post' : 'put',
         data: this.$http.adornData(this.bookSense)
-      }).then(({data}) => {
-        if (data && data.code === 200) {
+      }).then((response) => {
+        if (response && response.code === 200) {
           this.$message({
             message: '操作成功',
             type: 'success',
@@ -354,7 +354,7 @@ export default {
             }
           })
         } else {
-          this.$message.error(data.msg)
+          this.$message.error(response.msg)
         }
       })
     }

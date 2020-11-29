@@ -53,9 +53,9 @@ export default {
             url: this.$http.adornUrl(`/admin/operation/tag/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.dataForm = data.tag
+          }).then((response) => {
+            if (response && response.code === 200) {
+              this.dataForm = response.data
             }
           })
         } else {
@@ -71,9 +71,9 @@ export default {
             url: this.$http.adornUrl(`/admin/operation/tag/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData(this.dataForm)
-          }).then(({data}) => {
+          }).then((response) => {
             this.confirmButtonDisabled = true
-            if (data && data.code === 200) {
+            if (response && response.code === 200) {
               this.$message({
                 message: '操作成功',
                 type: 'success',
@@ -84,7 +84,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         }

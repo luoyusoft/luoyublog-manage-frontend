@@ -1,6 +1,6 @@
 <template>
   <div class="mod-config">
-    <el-form :inline="true" :model="dataForm">
+    <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item>
         <el-input v-model="dataForm.title" placeholder="链接名称" clearable></el-input>
       </el-form-item>
@@ -118,10 +118,10 @@ export default {
           'limit': this.pageSize,
           'title': this.dataForm.title
         })
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.dataList = data.page.list
-          this.totalPage = data.page.totalCount
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.dataList = response.data.list
+          this.totalPage = response.data.totalCount
         } else {
           this.dataList = []
           this.totalPage = 0
@@ -165,8 +165,8 @@ export default {
           url: this.$http.adornUrl('/admin/operation/link/delete'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
-        }).then(({data}) => {
-          if (data && data.code === 200) {
+        }).then((response) => {
+          if (response && response.code === 200) {
             this.$message({
               message: '操作成功',
               type: 'success',
@@ -176,7 +176,7 @@ export default {
               }
             })
           } else {
-            this.$message.error(data.msg)
+            this.$message.error(response.msg)
           }
         })
       })

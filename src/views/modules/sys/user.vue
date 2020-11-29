@@ -1,6 +1,6 @@
 <template>
   <div class="mod-user">
-    <el-form :inline="true" :model="dataForm">
+    <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item>
         <el-input v-model="dataForm.userName" placeholder="用户名" clearable></el-input>
       </el-form-item>
@@ -139,10 +139,10 @@ export default {
           'limit': this.pageSize,
           'username': this.dataForm.userName
         })
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.dataList = data.page.list
-          this.totalPage = data.page.totalCount
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.dataList = response.data.list
+          this.totalPage = response.data.totalCount
         } else {
           this.dataList = []
           this.totalPage = 0
@@ -186,8 +186,8 @@ export default {
           url: this.$http.adornUrl('/admin/sys/user/delete'),
           method: 'post',
           data: this.$http.adornData(userIds, false)
-        }).then(({data}) => {
-          if (data && data.code === 200) {
+        }).then((response) => {
+          if (response && response.code === 200) {
             this.$message({
               message: '操作成功',
               type: 'success',
@@ -197,7 +197,7 @@ export default {
               }
             })
           } else {
-            this.$message.error(data.msg)
+            this.$message.error(response.msg)
           }
         })
       }).catch(() => {})

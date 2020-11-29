@@ -89,12 +89,12 @@ router.beforeEach((to, from, next) => {
       url: http.adornUrl('/admin/sys/menu/nav'),
       method: 'get',
       params: http.adornParams()
-    }).then(({data}) => {
-      if (data && data.code === 200) {
-        fnAddDynamicMenuRoutes(data.menuList)
+    }).then((response) => {
+      if (response && response.code === 200) {
+        fnAddDynamicMenuRoutes(response.data.menuList)
         router.options.isAddDynamicMenuRoutes = true
-        sessionStorage.setItem('menuList', JSON.stringify(data.menuList || []))
-        sessionStorage.setItem('permissions', JSON.stringify(data.permissions || []))
+        sessionStorage.setItem('menuList', JSON.stringify(response.data.menuList || []))
+        sessionStorage.setItem('permissions', JSON.stringify(response.data.permissions || []))
         next({...to, replace: false}) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
       } else {
         sessionStorage.setItem('menuList', '[]')

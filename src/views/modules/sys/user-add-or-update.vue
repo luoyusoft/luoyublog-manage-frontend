@@ -111,8 +111,8 @@ export default {
         url: this.$http.adornUrl('/admin/sys/role/select'),
         method: 'get',
         params: this.$http.adornParams()
-      }).then(({data}) => {
-        this.roleList = data && data.code === 200 ? data.list : []
+      }).then((response) => {
+        this.roleList = response && response.code === 200 ? response.data : []
       }).then(() => {
         this.visible = true
         this.$nextTick(() => {
@@ -124,13 +124,13 @@ export default {
             url: this.$http.adornUrl(`/admin/sys/user/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.dataForm.userName = data.user.username
-              this.dataForm.salt = data.user.salt
-              this.dataForm.email = data.user.email
-              this.dataForm.roleIdList = data.user.roleIdList
-              this.dataForm.status = data.user.status
+          }).then((response) => {
+            if (response && response.code === 200) {
+              this.dataForm.userName = response.data.username
+              this.dataForm.salt = response.data.salt
+              this.dataForm.email = response.data.email
+              this.dataForm.roleIdList = response.data.roleIdList
+              this.dataForm.status = response.data.status
             }
           })
         }
@@ -153,8 +153,8 @@ export default {
               'status': this.dataForm.status,
               'roleIdList': this.dataForm.roleIdList
             })
-          }).then(({data}) => {
-            if (data && data.code === 200) {
+          }).then((response) => {
+            if (response && response.code === 200) {
               this.$message({
                 message: '操作成功',
                 type: 'success',
@@ -165,7 +165,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         }

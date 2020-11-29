@@ -1,6 +1,6 @@
 <template>
   <div class="mod-config">
-    <el-form :inline="true" :model="dataForm">
+    <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item>
         <el-select v-model="dataForm.type" clearable>
           <el-option v-for="type in typeList"
@@ -118,9 +118,9 @@ export default {
           name: this.dataForm.name,
           type: this.dataForm.type
         })
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.dataList = treeDataTranslate(data.categoryList)
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.dataList = treeDataTranslate(response.data)
         } else {
           this.dataList = []
         }
@@ -145,8 +145,8 @@ export default {
           url: this.$http.adornUrl('/admin/operation/category/delete/' + id),
           method: 'delete',
           data: this.$http.adornData()
-        }).then(({data}) => {
-          if (data && data.code === 200) {
+        }).then((response) => {
+          if (response && response.code === 200) {
             this.$message({
               message: '操作成功',
               type: 'success',
@@ -156,7 +156,7 @@ export default {
               }
             })
           } else {
-            this.$message.error(data.msg)
+            this.$message.error(response.msg)
           }
         })
       })

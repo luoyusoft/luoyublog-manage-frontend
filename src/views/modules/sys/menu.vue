@@ -116,8 +116,8 @@ export default {
         url: this.$http.adornUrl('/admin/sys/menu/list'),
         method: 'get',
         params: this.$http.adornParams()
-      }).then(({data}) => {
-        this.dataList = treeDataTranslate(data, 'menuId')
+      }).then((response) => {
+        this.dataList = treeDataTranslate(response.data, 'menuId')
         this.dataListLoading = false
       })
     },
@@ -139,8 +139,8 @@ export default {
           url: this.$http.adornUrl(`/admin/sys/menu/delete/${id}`),
           method: 'delete',
           data: this.$http.adornData()
-        }).then(({data}) => {
-          if (data && data.code === 200) {
+        }).then((response) => {
+          if (response && response.code === 200) {
             this.$message({
               message: '操作成功',
               type: 'success',
@@ -150,7 +150,7 @@ export default {
               }
             })
           } else {
-            this.$message.error(data.msg)
+            this.$message.error(response.msg)
           }
         })
       }).catch(() => {})

@@ -67,11 +67,11 @@ export default {
         url: this.$http.adornUrl('/admin/sys/user/info'),
         method: 'get',
         params: this.$http.adornParams()
-      }).then(({data}) => {
-        if (data && data.code === 200) {
+      }).then((response) => {
+        if (response && response.code === 200) {
           this.loading = false
-          this.userId = data.user.userId
-          this.userName = data.user.username
+          this.userId = response.data.userId
+          this.userName = response.data.username
         }
       })
     },
@@ -81,9 +81,9 @@ export default {
         url: this.$http.adornUrl('/admin/sys/param/all'),
         method: 'get',
         params: this.$http.adornParams()
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          localStorage.setItem('sysParamList', JSON.stringify(data.sysParamList))
+      }).then((response) => {
+        if (response && response.code === 200) {
+          localStorage.setItem('sysParamList', JSON.stringify(response.data))
         }
       })
     }

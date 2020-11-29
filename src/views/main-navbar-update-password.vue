@@ -84,8 +84,8 @@ export default {
               'password': this.dataForm.password,
               'newPassword': this.dataForm.newPassword
             })
-          }).then(({data}) => {
-            if (data && data.code === 200) {
+          }).then((response) => {
+            if (response && response.code === 200) {
               this.$message({
                 message: '操作成功',
                 type: 'success',
@@ -100,7 +100,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         }

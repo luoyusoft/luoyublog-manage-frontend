@@ -164,18 +164,18 @@ export default {
           type: 1,
           name: ''
         })
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.categoryOptions = treeDataTranslate(data.categoryList)
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.categoryOptions = treeDataTranslate(response.data)
         }
       }).then(() => {
         this.$http({
           url: this.$http.adornUrl('/admin/operation/tag/select'),
           method: 'get',
           params: this.$http.adornParams({type: 1})
-        }).then(({data}) => {
-          if (data && data.code === 200) {
-            this.tagList = data.tagList
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.tagList = response.data
           }
         })
       }).then(() => {
@@ -186,11 +186,11 @@ export default {
             url: this.$http.adornUrl('/admin/book/info/' + id),
             method: 'get',
             params: this.$http.adornParams()
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.book = data.book
-              this.book.publishDate = new Date(data.book.publishDate)
-              this.file = [{url: data.book.cover}]
+          }).then((response) => {
+            if (response && response.code === 200) {
+              this.book = response.data
+              this.book.publishDate = new Date(response.data.publishDate)
+              this.file = [{url: response.data.cover}]
               // 转换tagList
               this.tagListSelect = this.book.tagList.map(tag => {
                 return tag.id
@@ -250,15 +250,15 @@ export default {
             url: this.$http.adornUrl(`/admin/book/${!this.book.id ? 'save' : 'update'}`),
             method: !this.book.id ? 'post' : 'put',
             data: this.$http.adornData(this.book)
-          }).then(({data}) => {
-            if (data && data.code === 200) {
+          }).then((response) => {
+            if (response && response.code === 200) {
               this.$message.success('保存图书成功')
               // 关闭当前标签
               this.$emit('closeCurrentTabs')
               // 跳转到list
               this.$router.push('/book-book')
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         } else {
@@ -276,8 +276,8 @@ export default {
         method: 'post',
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data' }
-      }).then(({data}) => {
-        this.$refs.md.$img2Url(pos, data.resource.url)
+      }).then((response) => {
+        this.$refs.md.$img2Url(pos, response.data.url)
       })
     }
   }

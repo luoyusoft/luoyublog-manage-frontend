@@ -59,8 +59,8 @@ export default {
         url: this.$http.adornUrl('/admin/sys/menu/list'),
         method: 'get',
         params: this.$http.adornParams()
-      }).then(({data}) => {
-        this.menuList = treeDataTranslate(data, 'menuId')
+      }).then((response) => {
+        this.menuList = treeDataTranslate(response.data, 'menuId')
       }).then(() => {
         this.visible = true
         this.$nextTick(() => {
@@ -73,15 +73,15 @@ export default {
             url: this.$http.adornUrl(`/admin/sys/role/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.dataForm.roleName = data.role.roleName
-              this.dataForm.remark = data.role.remark
-              var idx = data.role.menuIdList.indexOf(this.tempKey)
+          }).then((response) => {
+            if (response && response.code === 200) {
+              this.dataForm.roleName = response.data.roleName
+              this.dataForm.remark = response.data.remark
+              var idx = response.data.menuIdList.indexOf(this.tempKey)
               if (idx !== -1) {
-                data.role.menuIdList.splice(idx, data.role.menuIdList.length - idx)
+                response.data.menuIdList.splice(idx, response.data.menuIdList.length - idx)
               }
-              this.$refs.menuListTree.setCheckedKeys(data.role.menuIdList)
+              this.$refs.menuListTree.setCheckedKeys(response.data.menuIdList)
             }
           })
         }
@@ -100,8 +100,8 @@ export default {
               'remark': this.dataForm.remark,
               'menuIdList': [].concat(this.$refs.menuListTree.getCheckedKeys(), [this.tempKey], this.$refs.menuListTree.getHalfCheckedKeys())
             })
-          }).then(({data}) => {
-            if (data && data.code === 200) {
+          }).then((response) => {
+            if (response && response.code === 200) {
               this.$message({
                 message: '操作成功',
                 type: 'success',
@@ -112,7 +112,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         }

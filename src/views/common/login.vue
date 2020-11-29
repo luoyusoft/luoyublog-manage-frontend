@@ -78,14 +78,14 @@ export default {
               'uuid': this.dataForm.uuid,
               'captcha': this.dataForm.captcha
             })
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.$cookie.set('token', data.token)
+          }).then((response) => {
+            if (response && response.code === 200) {
+              this.$cookie.set('token', response.data)
               this.$router.replace({ name: 'home' })
               this.$message.success('登录成功')
             } else {
               this.getCaptcha()
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         }

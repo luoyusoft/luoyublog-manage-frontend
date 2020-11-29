@@ -3,26 +3,26 @@
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
     :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="120px">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="120px" @submit.native.prevent>
       <el-form-item>
-        <el-popover v-model="recommendListShow"
-                    placement="right"
+        <el-popover placement="right"
                     width="500"
-                    trigger="click">
-          <el-form :inline="true"  @keyup.enter.native="listRecommend()">
-            <el-form-item>
+                    trigger="click"
+                    v-model="isClose">
+          <el-form :inline="true">
+            <el-form-item style="display: inline-block;width: 20%">
               <el-select v-model="listParams.type" >
                 <el-option v-for="type in typeList" :key="type.parKey" :value="type.parKey" :label="type.parValue"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item>
-              <el-input v-model="listParams.name" placeholder="文章标题" clearable></el-input>
+            <el-form-item style="width: 35%">
+              <el-input v-model="listParams.title" placeholder="文章标题"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button @click="listRecommend()">查询</el-button>
             </el-form-item>
           </el-form>
-          <el-table :data="recommendList" style="height: 500px;overflow: auto" >
+          <el-table :data="recommendList" style="height: 500px;overflow: auto">
             <el-table-column property="title" label="文章标题"></el-table-column>
             <el-table-column property="type"  label="文章类型">
               <template  slot-scope="scope" >
@@ -34,21 +34,27 @@
               align="center"
               label="操作">
               <template slot-scope="scope">
-                <el-button type="success" size="small" @click="selectRecommend(scope.row)">选择</el-button>
+                <el-button type="success" size="small" @click="selectRecommend(scope.row); close()">选择</el-button>
               </template>
             </el-table-column>
           </el-table>
-          <el-button slot="reference" @click="recommendListShow = true;  listRecommend()" >请选择推荐文章</el-button>
+          <el-button slot="reference" @click="choose()" >请选择推荐文章</el-button>
         </el-popover>
       </el-form-item>
-      <el-form-item label="推荐文章" >
+      <el-form-item label="推荐文章" v-if="dataForm.title">
         {{dataForm.title}}
       </el-form-item>
-      <el-form-item label="推荐类型" >
+      <el-form-item label="推荐文章" v-if="!dataForm.title">
+        请选择推荐文章
+      </el-form-item>
+      <el-form-item label="推荐类型" v-if="getSysParam('MODULE_TYPE',dataForm.type,typeList)">
         {{getSysParam('MODULE_TYPE',dataForm.type,typeList)}}
       </el-form-item>
+      <el-form-item label="推荐类型" v-if="!getSysParam('MODULE_TYPE',dataForm.type,typeList)">
+        请选择推荐文章
+      </el-form-item>
       <el-form-item label="顺序" >
-        <el-input v-model="dataForm.orderNum" type="number" placeholder="顺序"></el-input>
+        <el-input v-model="dataForm.orderNum" type="number" placeholder="请输入顺序"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -57,6 +63,13 @@
     </span>
   </el-dialog>
 </template>
+
+<style>
+.el-popover{
+  height: 650px;
+  overflow: auto;
+}
+</style>
 
 <script>
 export default {
@@ -72,24 +85,52 @@ export default {
       recommendListShow: false,
       recommendList: [],
       typeList: this.getSysParamArr('MODULE_TYPE'),
-      listParams: {}
+      listParams: {
+        title: '',
+        type: 0
+      },
+      isClose: false
     }
   },
+  beforeDestroy () {
+    // 移除监听器
+    document.removeEventListener('keydown', this.keyDown)
+  },
+  mounted () {
+    // 监听回车键
+    document.addEventListener('keydown', this.keyDown)
+  },
   methods: {
+    // 关闭弹框的事件
+    close () {
+      this.isClose = false
+    },
+    choose () {
+      this.recommendListShow = true
+      this.listRecommend()
+    },
+    keyDown () {
+      // 13代表回车键
+      if (window.event.keyCode === 13) {
+        this.listRecommend()
+      }
+    },
     init (id) {
       this.dataForm.id = id || ''
       this.visible = true
       this.confirmButtonDisabled = false
       this.$nextTick(() => {
-        this.$refs['dataForm'].resetFields()
+        if (this.$refs['dataForm'] !== undefined) {
+          this.$refs['dataForm'].resetFields()
+        }
         if (this.dataForm.id) {
           this.$http({
             url: this.$http.adornUrl(`/admin/operation/recommend/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
-          }).then(({data}) => {
-            if (data && data.code === 200) {
-              this.dataForm = data.recommend
+          }).then((response) => {
+            if (response && response.code === 200) {
+              this.dataForm = response.data
             }
           })
         } else {
@@ -105,9 +146,9 @@ export default {
             url: this.$http.adornUrl(`/admin/operation/recommend/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData(this.dataForm)
-          }).then(({data}) => {
+          }).then((response) => {
             this.confirmButtonDisabled = true
-            if (data && data.code === 200) {
+            if (response && response.code === 200) {
               this.$message({
                 message: '操作成功',
                 type: 'success',
@@ -118,7 +159,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         }
@@ -129,9 +170,9 @@ export default {
         url: this.$http.adornUrl(`/admin/operation/recommend/select`),
         method: 'get',
         params: this.$http.adornParams(this.listParams)
-      }).then(({data}) => {
-        if (data && data.code === 200) {
-          this.recommendList = data.recommendList
+      }).then((response) => {
+        if (response && response.code === 200) {
+          this.recommendList = response.data
         }
       })
     },

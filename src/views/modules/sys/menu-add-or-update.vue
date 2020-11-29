@@ -75,6 +75,13 @@
   </el-dialog>
 </template>
 
+<style>
+.el-popover{
+  height: 200px;
+  overflow: auto;
+}
+</style>
+
 <script>
 import { treeDataTranslate } from '@/utils'
 import Icon from '@/icons'
@@ -130,8 +137,8 @@ export default {
         url: this.$http.adornUrl('/admin/sys/menu/select'),
         method: 'get',
         params: this.$http.adornParams()
-      }).then(({data}) => {
-        this.menuList = treeDataTranslate(data.menuList, 'menuId')
+      }).then((response) => {
+        this.menuList = treeDataTranslate(response.data, 'menuId')
       }).then(() => {
         this.visible = true
         this.$nextTick(() => {
@@ -147,15 +154,15 @@ export default {
             url: this.$http.adornUrl(`/admin/sys/menu/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
-          }).then(({data}) => {
-            this.dataForm.id = data.menu.menuId
-            this.dataForm.type = data.menu.type
-            this.dataForm.name = data.menu.name
-            this.dataForm.parentId = data.menu.parentId
-            this.dataForm.url = data.menu.url
-            this.dataForm.perms = data.menu.perms
-            this.dataForm.orderNum = data.menu.orderNum
-            this.dataForm.icon = data.menu.icon
+          }).then((response) => {
+            this.dataForm.id = response.data.menuId
+            this.dataForm.type = response.data.type
+            this.dataForm.name = response.data.name
+            this.dataForm.parentId = response.data.parentId
+            this.dataForm.url = response.data.url
+            this.dataForm.perms = response.data.perms
+            this.dataForm.orderNum = response.data.orderNum
+            this.dataForm.icon = response.data.icon
             this.menuListTreeSetCurrentNode()
           })
         }
@@ -192,8 +199,8 @@ export default {
               'orderNum': this.dataForm.orderNum,
               'icon': this.dataForm.icon
             })
-          }).then(({data}) => {
-            if (data && data.code === 200) {
+          }).then((response) => {
+            if (response && response.code === 200) {
               this.$message({
                 message: '操作成功',
                 type: 'success',
@@ -204,7 +211,7 @@ export default {
                 }
               })
             } else {
-              this.$message.error(data.msg)
+              this.$message.error(response.msg)
             }
           })
         }

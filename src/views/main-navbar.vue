@@ -97,8 +97,8 @@ export default {
           url: this.$http.adornUrl('/sys/logout'),
           method: 'post',
           data: this.$http.adornData()
-        }).then(({data}) => {
-          if (data && data.code === 200) {
+        }).then((response) => {
+          if (response && response.code === 200) {
             clearLoginInfo()
             this.$router.push({ name: 'login' })
           }
