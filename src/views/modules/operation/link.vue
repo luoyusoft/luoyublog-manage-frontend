@@ -20,24 +20,27 @@
         type="selection"
         header-align="center"
         align="center"
-        width="50">
+        min-width="10%">
       </el-table-column>
     <el-table-column
         prop="title"
         header-align="center"
         align="center"
+        min-width="20%"
         label="链接名称">
     </el-table-column>
     <el-table-column
         prop="url"
         header-align="center"
         align="center"
+        min-width="50%"
         label="链接地址">
     </el-table-column>
     <el-table-column
         prop="avatar"
         header-align="center"
         align="center"
+        min-width="30%"
         label="头像">
       <template slot-scope="scope">
         <img :src="scope.row.avatar" width="80px"/>
@@ -47,7 +50,7 @@
         fixed="right"
         header-align="center"
         align="center"
-        width="150"
+        min-width="20%"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

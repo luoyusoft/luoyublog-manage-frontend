@@ -20,37 +20,41 @@
         type="selection"
         header-align="center"
         align="center"
-        width="50">
+        min-width="10%">
       </el-table-column>
       <el-table-column
         prop="userId"
         header-align="center"
         align="center"
-        width="80"
+        min-width="10%"
         label="ID">
       </el-table-column>
       <el-table-column
         prop="username"
         header-align="center"
         align="center"
+        min-width="50%"
         label="用户名">
       </el-table-column>
       <el-table-column
         prop="email"
         header-align="center"
         align="center"
+        min-width="50%"
         label="邮箱">
       </el-table-column>
       <el-table-column
         prop="mobile"
         header-align="center"
         align="center"
+        min-width="50%"
         label="手机号">
       </el-table-column>
       <el-table-column
         prop="status"
         header-align="center"
         align="center"
+        min-width="15%"
         label="状态">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.status === 0" size="small" type="danger">禁用</el-tag>
@@ -61,14 +65,14 @@
         prop="createTime"
         header-align="center"
         align="center"
-        width="180"
+        min-width="15%"
         label="创建时间">
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        width="150"
+        min-width="20%"
         label="操作">
         <template slot-scope="scope">
           <el-button v-if="isAuth('sys:user:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.userId)">修改</el-button>

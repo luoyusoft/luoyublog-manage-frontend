@@ -25,13 +25,14 @@
       <table-tree-column
         prop="name"
         header-align="center"
-        width="150"
+        min-width="20%"
         label="名称">
       </table-tree-column>
       <el-table-column
         prop="type"
         header-align="center"
         align="center"
+        min-width="30%"
         label="类型">
         <template slot-scope="scope">
           {{getSysParam('MODULE_TYPE',scope.row.type,typeList)}}
@@ -41,6 +42,7 @@
         prop="rank"
         header-align="center"
         align="center"
+        min-width="30%"
         label="级别">
         <template slot-scope="scope">
           {{getSysParam('CATEGORY_RANK', scope.row.rank)}}
@@ -50,13 +52,14 @@
         prop="parentName"
         header-align="center"
         align="center"
+        min-width="30%"
         label="上级级别">
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        width="150"
+        min-width="20%"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

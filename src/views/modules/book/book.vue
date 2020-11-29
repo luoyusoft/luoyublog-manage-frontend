@@ -19,14 +19,14 @@
         type="selection"
         header-align="center"
         align="center"
-        width="50">
+        min-width="10%">
       </el-table-column>
       <el-table-column
         prop="cover"
         header-align="center"
         align="center"
         label="封面"
-        width="150">
+        min-width="30%">
         <template slot-scope="scope">
           <img :src="scope.row.cover" style="width: 50px;height: 100px">
         </template>
@@ -35,12 +35,14 @@
         prop="title"
         header-align="center"
         align="center"
+        min-width="50%"
         label="标题">
     </el-table-column>
       <el-table-column
         prop="categoryListStr"
         header-align="center"
         align="center"
+        min-width="50%"
         label="分类">
       </el-table-column>
       <el-table-column
@@ -48,7 +50,7 @@
         header-align="center"
         align="center"
         label="标签"
-        width="300">
+        min-width="60%">
         <template slot-scope="scope">
           <el-row>
             <el-button v-for="tag in scope.row.tagList" :key="tag.id" size="mini">{{tag.name}}</el-button>
@@ -59,7 +61,7 @@
         prop="progress"
         header-align="center"
         align="center"
-        width="200"
+        min-width="30%"
         label="进度">
       <template slot-scope="scope">
         <el-slider v-model="scope.row.progress" :step="10" @change="updateProgress(scope.row.id,scope.row.progress)"></el-slider>
@@ -70,7 +72,7 @@
         header-align="center"
         align="center"
         label="推荐"
-        width="80">
+        min-width="15%">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.recommend"
@@ -84,7 +86,7 @@
         header-align="center"
         align="center"
         label="阅读"
-        width="80">
+        min-width="15%">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.reading"
@@ -98,7 +100,7 @@
         header-align="center"
         align="center"
         label="状态"
-        width="100">
+        min-width="15%">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
             <el-button type="info" size="mini" @click="updatePublish(scope.row.id, true)">未发布</el-button>
@@ -112,7 +114,7 @@
         header-align="center"
         align="center"
         label="读后感"
-        width="80">
+        min-width="15%">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="修改读后感" placement="top">
             <el-button icon="el-icon-edit" circle @click="getReadSense(scope.row.id)"></el-button>
@@ -123,7 +125,7 @@
         fixed="right"
         header-align="center"
         align="center"
-        width="150"
+        min-width="20%"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

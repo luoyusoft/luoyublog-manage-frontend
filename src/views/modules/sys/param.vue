@@ -46,37 +46,41 @@
               type="selection"
               header-align="center"
               align="center"
-              width="50">
+              min-width="10%">
             </el-table-column>
             <el-table-column
               prop="parKey"
               header-align="center"
               align="center"
+              min-width="20%"
               label="参数键">
             </el-table-column>
             <el-table-column
               prop="parValue"
               header-align="center"
               align="center"
+              min-width="20%"
               label="参数值">
             </el-table-column>
             <el-table-column
               prop="menuUrl"
               header-align="center"
               align="center"
+              min-width="50%"
               label="参数url">
             </el-table-column>
             <el-table-column
               prop="type"
               header-align="center"
               align="center"
+              min-width="40%"
               label="参数类型">
             </el-table-column>
             <el-table-column
               fixed="right"
               header-align="center"
               align="center"
-              width="150"
+              min-width="20%"
               label="操作">
               <template slot-scope="scope">
                 <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

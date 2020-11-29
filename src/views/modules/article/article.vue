@@ -20,13 +20,13 @@
       type="selection"
       header-align="center"
       align="center"
-      width="50">
+      min-width="10%">
     </el-table-column>
     <el-table-column
       prop="id"
       header-align="center"
       align="center"
-      width="50"
+      min-width="10%"
       label="编号">
     </el-table-column>
     <el-table-column
@@ -34,21 +34,21 @@
       header-align="center"
       align="center"
       label="博文标题"
-      width="300">
+      min-width="50%">
     </el-table-column>
     <el-table-column
       prop="categoryListStr"
       header-align="center"
       align="center"
       label="分类"
-       width="250">
+      min-width="50%">
     </el-table-column>
     <el-table-column
       prop="tagList"
       header-align="center"
       align="center"
       label="标签"
-      width="300">
+      min-width="60%">
       <template slot-scope="scope">
         <el-row>
           <el-button style="margin-top: 8px" v-for="tag in scope.row.tagList" :key="tag.id" size="mini">{{tag.name}}</el-button>
@@ -59,20 +59,21 @@
       prop="readNum"
       header-align="center"
       align="center"
-      width="80"
+      min-width="15%"
       label="浏览">
     </el-table-column>
     <el-table-column
       prop="likeNum"
       header-align="center"
       align="center"
-      width="80"
+      min-width="15%"
       label="喜欢">
     </el-table-column>
     <el-table-column
       prop="recommend"
       header-align="center"
       align="center"
+      min-width="15%"
       label="推荐">
       <template slot-scope="scope">
         <el-switch
@@ -86,6 +87,7 @@
       prop="recommend"
       header-align="center"
       align="center"
+      min-width="15%"
       label="置顶">
       <template slot-scope="scope">
         <el-switch
@@ -99,6 +101,7 @@
       prop="recommend"
       header-align="center"
       align="center"
+      min-width="15%"
       label="状态">
       <template slot-scope="scope">
         <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
@@ -113,7 +116,7 @@
       fixed="right"
       header-align="center"
       align="center"
-      width="150"
+      min-width="20%"
       label="操作">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

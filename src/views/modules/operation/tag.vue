@@ -20,25 +20,27 @@
         type="selection"
         header-align="center"
         align="center"
-        width="50">
+        min-width="10%">
       </el-table-column>
       <el-table-column
         prop="id"
         header-align="center"
         align="center"
         label="编号"
-        width="80">
+        min-width="10%">
       </el-table-column>
     <el-table-column
         prop="name"
         header-align="center"
         align="center"
+        min-width="50%"
         label="标签名称">
     </el-table-column>
     <el-table-column
         prop="type"
         header-align="center"
         align="center"
+        min-width="50%"
         label="所属类别">
       <template slot-scope="scope">
         {{getSysParam('MODULE_TYPE',scope.row.type)}}
@@ -48,7 +50,7 @@
         fixed="right"
         header-align="center"
         align="center"
-        width="150"
+        min-width="20%"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

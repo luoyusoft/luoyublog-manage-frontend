@@ -20,25 +20,27 @@
         type="selection"
         header-align="center"
         align="center"
-        width="50">
+        min-width="10%">
       </el-table-column>
       <el-table-column
         prop="roleId"
         header-align="center"
         align="center"
-        width="80"
+        min-width="10%"
         label="ID">
       </el-table-column>
       <el-table-column
         prop="roleName"
         header-align="center"
         align="center"
+        min-width="30%"
         label="角色名称">
       </el-table-column>
       <el-table-column
         prop="remark"
         header-align="center"
         align="center"
+        min-width="50%"
         label="备注">
       </el-table-column>
       <el-table-column
@@ -46,13 +48,14 @@
         header-align="center"
         align="center"
         width="180"
+        min-width="15%"
         label="创建时间">
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        width="150"
+        min-width="20%"
         label="操作">
         <template slot-scope="scope">
           <el-button v-if="isAuth('sys:role:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.roleId)">修改</el-button>

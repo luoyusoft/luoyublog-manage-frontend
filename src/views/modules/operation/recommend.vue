@@ -20,18 +20,20 @@
         type="selection"
         header-align="center"
         align="center"
-        width="50">
+        min-width="10%">
       </el-table-column>
     <el-table-column
         prop="title"
         header-align="center"
         align="center"
+        min-width="50%"
         label="推荐标题">
     </el-table-column>
     <el-table-column
         prop="type"
         header-align="center"
         align="center"
+        min-width="15%"
         label="推荐类型">
       <template slot-scope="scope">
         {{getSysParam('MODULE_TYPE',scope.row.type)}}
@@ -41,12 +43,14 @@
         prop="orderNum"
         header-align="center"
         align="center"
+        min-width="15%"
         label="顺序">
     </el-table-column>
       <el-table-column
         prop="recommend"
         header-align="center"
         align="center"
+        min-width="15%"
         label="置顶">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="点击置顶" v-if="!scope.row.top" placement="top">
@@ -59,7 +63,7 @@
         fixed="right"
         header-align="center"
         align="center"
-        width="150"
+        min-width="20%"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
