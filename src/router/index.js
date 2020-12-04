@@ -11,6 +11,11 @@ const originalPush = Router.prototype.push
 Router.prototype.push = function push (location) {
   return originalPush.call(this, location).catch(err => err)
 }
+// 解决第一次重定向报错问题
+const originalReplace = Router.prototype.replace
+Router.prototype.replace = function replace (location) {
+  return originalReplace.call(this, location).catch(err => err)
+}
 
 // 开发环境不使用懒加载, 因为懒加载页面太多的话会造成webpack热更新太慢, 所以只有生产环境使用懒加载
 const _import = require('./import-' + process.env.NODE_ENV)
@@ -39,8 +44,8 @@ const mainRoutes = {
       component: _import('modules/article/article-add-or-update'),
       name: 'article-update',
       meta: {
-        menuId: 'article-update',
-        title: '博文修改',
+        id: 'article-update',
+        title: '文章修改',
         isTab: true
       }
     },
@@ -48,7 +53,7 @@ const mainRoutes = {
       component: _import('modules/book/book-add-or-update'),
       name: 'book-update',
       meta: {
-        menuId: 'book-update',
+        id: 'book-update',
         title: '阅读修改',
         isTab: true
       }
@@ -57,7 +62,7 @@ const mainRoutes = {
       component: _import('modules/book/note-add-or-update'),
       name: 'book-note-update',
       meta: {
-        menuId: 'book-note-update',
+        id: 'book-note-update',
         title: '笔记修改',
         isTab: true
       }
@@ -135,7 +140,7 @@ function fnAddDynamicMenuRoutes (menuList = [], routes = []) {
         component: null,
         name: menuList[i].url.replace(new RegExp('/', 'g'), '-'),
         meta: {
-          menuId: menuList[i].menuId,
+          id: menuList[i].id,
           title: menuList[i].name,
           isDynamic: true,
           isTab: true,
@@ -144,8 +149,8 @@ function fnAddDynamicMenuRoutes (menuList = [], routes = []) {
       }
       // url以http[s]://开头, 通过iframe展示
       if (isURL(menuList[i].url)) {
-        route['path'] = `i-${menuList[i].menuId}`
-        route['name'] = `i-${menuList[i].menuId}`
+        route['path'] = `i-${menuList[i].id}`
+        route['name'] = `i-${menuList[i].id}`
         route['meta']['iframeUrl'] = menuList[i].url
       } else {
         try {

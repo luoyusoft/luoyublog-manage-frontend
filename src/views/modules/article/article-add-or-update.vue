@@ -1,14 +1,14 @@
   <template>
   <div>
     <el-form :model="article" label-width="80px" :rules="rules" ref="articleForm">
-      <el-form-item label="博文标题" prop="title">
+      <el-form-item label="文章标题" prop="title">
         <el-col :span="12">
-          <el-input placeholder="博文标题" v-model="article.title"  clearable></el-input>
+          <el-input placeholder="文章标题" v-model="article.title"  clearable></el-input>
         </el-col>
       </el-form-item>
       <el-row>
         <el-col :span="6">
-          <el-form-item label="博文分类">
+          <el-form-item label="文章分类">
             <el-cascader
               style="width: 100%;"
               clearable
@@ -20,7 +20,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="博文标签">
+          <el-form-item label="文章标签">
             <el-select
               style="width: 100%"
               v-model="tagListSelect"
@@ -39,10 +39,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="博文作者">
+      <el-form-item label="文章作者">
         <el-row>
           <el-col :span="4">
-            <el-input placeholder="博文作者" v-model="article.author" clearable></el-input>
+            <el-input placeholder="文章作者" v-model="article.author" clearable></el-input>
           </el-col>
         </el-row>
       </el-form-item>
@@ -74,12 +74,12 @@
           </el-upload>
         </el-col>
       </el-form-item>
-      <el-form-item label="博文描述">
+      <el-form-item label="文章描述">
         <el-col :span="12">
-          <el-input type="textarea" v-model="article.description" placeholder="博文描述" clearable></el-input>
+          <el-input type="textarea" v-model="article.description" placeholder="文章描述" clearable></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item label="博文内容">
+      <el-form-item label="文章内容">
         <mavon-editor style="z-index:500" ref=md v-model="article.content" @imgAdd="imgAdd" @change="mavonChangeHandle"></mavon-editor>
       </el-form-item>
       <el-form-item>
@@ -111,7 +111,7 @@ export default {
       url: '',
       file: [],
       rules: {
-        title: {required: true, message: '请输入博文标题', trigger: 'change'}
+        title: {required: true, message: '请输入文章标题', trigger: 'change'}
       },
       tagList: [],
       tagListSelect: [],
@@ -130,7 +130,7 @@ export default {
   },
   methods: {
     init () {
-      // 获取博文分类
+      // 获取文章分类
       this.$http({
         url: this.$http.adornUrl('/admin/operation/category/list'),
         method: 'get',
@@ -225,7 +225,7 @@ export default {
             data: this.$http.adornData(this.article)
           }).then((response) => {
             if (response && response.code === 200) {
-              this.$message.success('保存博文成功')
+              this.$message.success('保存文章成功')
               // 关闭当前标签
               this.$emit('closeCurrentTabs')
               // 跳转到list

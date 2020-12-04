@@ -10,7 +10,7 @@
       border
       style="width: 100%;">
       <el-table-column
-        prop="menuId"
+        prop="id"
         header-align="center"
         align="center"
         min-width="10%"
@@ -19,7 +19,7 @@
       <table-tree-column
         prop="name"
         header-align="center"
-        treeKey="menuId"
+        treeKey="id"
         min-width="30%"
         label="名称">
       </table-tree-column>
@@ -81,8 +81,8 @@
         min-width="20%"
         label="操作">
         <template slot-scope="scope">
-          <el-button v-if="isAuth('sys:menu:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.menuId)">修改</el-button>
-          <el-button v-if="isAuth('sys:menu:delete')" type="text" size="small" @click="deleteHandle(scope.row.menuId)">删除</el-button>
+          <el-button v-if="isAuth('sys:menu:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="isAuth('sys:menu:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -120,7 +120,7 @@ export default {
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
-        this.dataList = treeDataTranslate(response.data, 'menuId')
+        this.dataList = treeDataTranslate(response.data, 'id')
         this.dataListLoading = false
       })
     },

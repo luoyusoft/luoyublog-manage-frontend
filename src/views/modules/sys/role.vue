@@ -23,7 +23,7 @@
         min-width="10%">
       </el-table-column>
       <el-table-column
-        prop="roleId"
+        prop="id"
         header-align="center"
         align="center"
         min-width="10%"

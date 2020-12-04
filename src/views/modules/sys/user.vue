@@ -23,7 +23,7 @@
         min-width="10%">
       </el-table-column>
       <el-table-column
-        prop="userId"
+        prop="id"
         header-align="center"
         align="center"
         min-width="10%"
@@ -65,7 +65,7 @@
         prop="createTime"
         header-align="center"
         align="center"
-        min-width="15%"
+        min-width="20%"
         label="创建时间">
       </el-table-column>
       <el-table-column

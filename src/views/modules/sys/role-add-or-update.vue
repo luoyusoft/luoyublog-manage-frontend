@@ -14,7 +14,7 @@
         <el-tree
           :data="menuList"
           :props="menuListTreeProps"
-          node-key="menuId"
+          node-key="id"
           ref="menuListTree"
           :default-expand-all="true"
           show-checkbox>
@@ -60,7 +60,7 @@ export default {
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
-        this.menuList = treeDataTranslate(response.data, 'menuId')
+        this.menuList = treeDataTranslate(response.data, 'id')
       }).then(() => {
         this.visible = true
         this.$nextTick(() => {

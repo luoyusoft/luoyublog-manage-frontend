@@ -25,14 +25,14 @@
       <table-tree-column
         prop="name"
         header-align="center"
-        min-width="20%"
+        min-width="30%"
         label="名称">
       </table-tree-column>
       <el-table-column
         prop="type"
         header-align="center"
         align="center"
-        min-width="30%"
+        min-width="20%"
         label="类型">
         <template slot-scope="scope">
           {{getSysParam('MODULE_TYPE',scope.row.type,typeList)}}
@@ -42,7 +42,7 @@
         prop="rank"
         header-align="center"
         align="center"
-        min-width="30%"
+        min-width="20%"
         label="级别">
         <template slot-scope="scope">
           {{getSysParam('CATEGORY_RANK', scope.row.rank)}}

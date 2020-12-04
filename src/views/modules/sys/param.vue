@@ -10,7 +10,7 @@
             <el-tree
               :data="menuList"
               :props="menuListTreeProps"
-              node-key="menuId"
+              node-key="id"
               ref="menuListTree"
               @current-change="menuListTreeCurrentChangeHandle"
               :default-expand-all="true"
@@ -235,12 +235,12 @@ export default {
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
-        this.menuList = treeDataTranslate(response.data, 'menuId')
+        this.menuList = treeDataTranslate(response.data, 'id')
       })
     },
     // 菜单树选中
     menuListTreeCurrentChangeHandle (data, node) {
-      let route = this.dynamicMenuRoutes.filter(item => item.meta.menuId === data.menuId)
+      let route = this.dynamicMenuRoutes.filter(item => item.meta.id === data.id)
       if (route.length >= 1) {
         this.dataForm.menuUrl = '/' + route[0].path
       } else {

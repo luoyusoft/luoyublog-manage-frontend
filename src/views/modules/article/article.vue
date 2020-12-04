@@ -2,7 +2,7 @@
 <div>
   <el-form :inline="true">
     <el-form-item>
-      <el-input placeholder="博文标题" v-model="dataForm.title" clearable></el-input>
+      <el-input placeholder="文章标题" v-model="dataForm.title" clearable></el-input>
     </el-form-item>
     <el-form-item>
       <el-button @click="getDataList()">查询</el-button>
@@ -26,14 +26,14 @@
       prop="id"
       header-align="center"
       align="center"
-      min-width="10%"
+      min-width="15px"
       label="编号">
     </el-table-column>
     <el-table-column
       prop="title"
       header-align="center"
       align="center"
-      label="博文标题"
+      label="文章标题"
       min-width="50%">
     </el-table-column>
     <el-table-column
@@ -59,49 +59,21 @@
       prop="readNum"
       header-align="center"
       align="center"
-      min-width="15%"
+      min-width="15px"
       label="浏览">
     </el-table-column>
     <el-table-column
       prop="likeNum"
       header-align="center"
       align="center"
-      min-width="15%"
+      min-width="15px"
       label="喜欢">
     </el-table-column>
     <el-table-column
       prop="recommend"
       header-align="center"
       align="center"
-      min-width="15%"
-      label="推荐">
-      <template slot-scope="scope">
-        <el-switch
-          v-model="scope.row.recommend"
-          active-color="#13ce66"
-          @change="updateRecommend(scope.row.id,scope.row.recommend)">
-        </el-switch>
-      </template>
-    </el-table-column>
-    <el-table-column
-      prop="recommend"
-      header-align="center"
-      align="center"
-      min-width="15%"
-      label="置顶">
-      <template slot-scope="scope">
-        <el-switch
-          v-model="scope.row.top"
-          active-color="#13ce66"
-          @change="updateTop(scope.row.id,scope.row.top)">
-        </el-switch>
-      </template>
-    </el-table-column>
-    <el-table-column
-      prop="recommend"
-      header-align="center"
-      align="center"
-      min-width="15%"
+      min-width="30px"
       label="状态">
       <template slot-scope="scope">
         <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
@@ -116,7 +88,7 @@
       fixed="right"
       header-align="center"
       align="center"
-      min-width="20%"
+      min-width="30px"
       label="操作">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
@@ -212,10 +184,10 @@ export default {
     },
     // 删除
     deleteHandle (id) {
-      let articleIds = id ? [id] : this.dataListSelections.map(item => {
+      let ids = id ? [id] : this.dataListSelections.map(item => {
         return item.id
       })
-      this.$confirm(`确定对[id=${articleIds.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
+      this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -223,7 +195,7 @@ export default {
         this.$http({
           url: this.$http.adornUrl('/admin/article/delete'),
           method: 'delete',
-          data: this.$http.adornData(articleIds, false)
+          data: this.$http.adornData(ids, false)
         }).then((response) => {
           if (response && response.code === 200) {
             this.$message({

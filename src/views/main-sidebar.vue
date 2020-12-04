@@ -12,7 +12,7 @@
         </el-menu-item>
         <sub-menu
           v-for="menu in menuList"
-          :key="menu.menuId"
+          :key="menu.id"
           :menu="menu"
           :dynamicMenuRoutes="dynamicMenuRoutes">
         </sub-menu>
@@ -79,7 +79,7 @@ export default {
             }
           }
           tab = {
-            menuId: route.meta.menuId || route.name,
+            id: route.meta.id || route.name,
             name: route.name,
             title: route.meta.title,
             type: isURL(route.meta.iframeUrl) ? 'iframe' : 'module',
@@ -87,7 +87,7 @@ export default {
           }
           this.mainTabs = this.mainTabs.concat(tab)
         }
-        this.menuActiveName = tab.menuId + ''
+        this.menuActiveName = tab.id + ''
         this.mainTabsActiveName = tab.name
       }
     }

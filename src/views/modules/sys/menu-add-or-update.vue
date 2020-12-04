@@ -20,7 +20,7 @@
           <el-tree
             :data="menuList"
             :props="menuListTreeProps"
-            node-key="menuId"
+            node-key="id"
             ref="menuListTree"
             @current-change="menuListTreeCurrentChangeHandle"
             :default-expand-all="true"
@@ -138,7 +138,7 @@ export default {
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
-        this.menuList = treeDataTranslate(response.data, 'menuId')
+        this.menuList = treeDataTranslate(response.data, 'id')
       }).then(() => {
         this.visible = true
         this.$nextTick(() => {
@@ -155,7 +155,7 @@ export default {
             method: 'get',
             params: this.$http.adornParams()
           }).then((response) => {
-            this.dataForm.id = response.data.menuId
+            this.dataForm.id = response.data.id
             this.dataForm.type = response.data.type
             this.dataForm.name = response.data.name
             this.dataForm.parentId = response.data.parentId
@@ -170,7 +170,7 @@ export default {
     },
     // 菜单树选中
     menuListTreeCurrentChangeHandle (data, node) {
-      this.dataForm.parentId = data.menuId
+      this.dataForm.parentId = data.id
       this.dataForm.parentName = data.name
     },
     // 菜单树设置当前选中节点
@@ -190,7 +190,7 @@ export default {
             url: this.$http.adornUrl(`/admin/sys/menu/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData({
-              'menuId': this.dataForm.id || undefined,
+              'id': this.dataForm.id || undefined,
               'type': this.dataForm.type,
               'name': this.dataForm.name,
               'parentId': this.dataForm.parentId,
