@@ -115,7 +115,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/admin/operation/category/list'),
+        url: this.$http.adornUrl('/manage/operation/category/list'),
         method: 'get',
         params: this.$http.adornParams({
           name: this.dataForm.name,
@@ -145,7 +145,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/operation/category/delete/' + id),
+          url: this.$http.adornUrl('/manage/operation/category/delete/' + id),
           method: 'delete',
           data: this.$http.adornData()
         }).then((response) => {

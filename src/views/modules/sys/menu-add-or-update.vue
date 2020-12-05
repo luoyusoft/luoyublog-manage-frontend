@@ -134,7 +134,7 @@ export default {
     init (id) {
       this.dataForm.id = id || 0
       this.$http({
-        url: this.$http.adornUrl('/admin/sys/menu/select'),
+        url: this.$http.adornUrl('/manage/sys/menu/select'),
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
@@ -151,7 +151,7 @@ export default {
         } else {
           // 修改
           this.$http({
-            url: this.$http.adornUrl(`/admin/sys/menu/info/${this.dataForm.id}`),
+            url: this.$http.adornUrl(`/manage/sys/menu/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
           }).then((response) => {
@@ -187,7 +187,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$http({
-            url: this.$http.adornUrl(`/admin/sys/menu/${!this.dataForm.id ? 'save' : 'update'}`),
+            url: this.$http.adornUrl(`/manage/sys/menu/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData({
               'id': this.dataForm.id || undefined,

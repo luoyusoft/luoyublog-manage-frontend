@@ -78,7 +78,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$http({
-            url: this.$http.adornUrl('/admin/sys/user/password'),
+            url: this.$http.adornUrl('/manage/sys/user/password'),
             method: 'put',
             data: this.$http.adornData({
               'password': this.dataForm.password,

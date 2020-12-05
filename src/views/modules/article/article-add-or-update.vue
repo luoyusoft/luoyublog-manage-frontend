@@ -132,7 +132,7 @@ export default {
     init () {
       // 获取文章分类
       this.$http({
-        url: this.$http.adornUrl('/admin/operation/category/list'),
+        url: this.$http.adornUrl('/manage/operation/category/list'),
         method: 'get',
         params: this.$http.adornParams({
           type: 0,
@@ -144,7 +144,7 @@ export default {
         }
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/operation/tag/select'),
+          url: this.$http.adornUrl('/manage/operation/tag/select'),
           method: 'get',
           params: this.$http.adornParams({type: 0})
         }).then((response) => {
@@ -153,11 +153,11 @@ export default {
           }
         })
       }).then(() => {
-        this.url = this.$http.adornUrl(`/admin/oss/resource/upload?token=${this.$cookie.get('token')}`)
+        this.url = this.$http.adornUrl(`/manage/oss/resource/upload?token=${this.$cookie.get('token')}`)
         let id = this.$route.params.id
         if (id) {
           this.$http({
-            url: this.$http.adornUrl('/admin/article/info/' + id),
+            url: this.$http.adornUrl('/manage/article/info/' + id),
             method: 'get',
             params: this.$http.adornParams()
           }).then((response) => {
@@ -220,7 +220,7 @@ export default {
           // 转化categoryId
           this.article.categoryId = this.categoryOptionsSelect.join(',')
           this.$http({
-            url: this.$http.adornUrl(`/admin/article/${!this.article.id ? 'save' : 'update'}`),
+            url: this.$http.adornUrl(`/manage/article/${!this.article.id ? 'save' : 'update'}`),
             method: !this.article.id ? 'post' : 'put',
             data: this.$http.adornData(this.article)
           }).then((response) => {

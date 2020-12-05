@@ -76,12 +76,12 @@ export default {
       this.dataForm.id = id || ''
       this.visible = true
       this.confirmButtonDisabled = false
-      this.url = this.$http.adornUrl(`/admin/oss/resource/upload?token=${this.$cookie.get('token')}`)
+      this.url = this.$http.adornUrl(`/manage/oss/resource/upload?token=${this.$cookie.get('token')}`)
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
           this.$http({
-            url: this.$http.adornUrl(`/admin/operation/link/info/${this.dataForm.id}`),
+            url: this.$http.adornUrl(`/manage/operation/link/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
           }).then((response) => {
@@ -101,7 +101,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$http({
-            url: this.$http.adornUrl(`/admin/operation/link/${!this.dataForm.id ? 'save' : 'update'}`),
+            url: this.$http.adornUrl(`/manage/operation/link/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData(this.dataForm)
           }).then((response) => {

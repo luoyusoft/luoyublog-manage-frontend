@@ -116,7 +116,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/admin/sys/menu/list'),
+        url: this.$http.adornUrl('/manage/sys/menu/list'),
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
@@ -139,7 +139,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl(`/admin/sys/menu/delete/${id}`),
+          url: this.$http.adornUrl(`/manage/sys/menu/delete/${id}`),
           method: 'delete',
           data: this.$http.adornData()
         }).then((response) => {

@@ -125,7 +125,7 @@ export default {
         }
         if (this.dataForm.id) {
           this.$http({
-            url: this.$http.adornUrl(`/admin/operation/recommend/info/${this.dataForm.id}`),
+            url: this.$http.adornUrl(`/manage/operation/recommend/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
           }).then((response) => {
@@ -143,7 +143,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$http({
-            url: this.$http.adornUrl(`/admin/operation/recommend/${!this.dataForm.id ? 'save' : 'update'}`),
+            url: this.$http.adornUrl(`/manage/operation/recommend/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData(this.dataForm)
           }).then((response) => {
@@ -167,7 +167,7 @@ export default {
     },
     listRecommend () {
       this.$http({
-        url: this.$http.adornUrl(`/admin/operation/recommend/select`),
+        url: this.$http.adornUrl(`/manage/operation/recommend/select`),
         method: 'get',
         params: this.$http.adornParams(this.listParams)
       }).then((response) => {

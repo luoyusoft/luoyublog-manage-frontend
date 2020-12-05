@@ -210,7 +210,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/admin/book/list'),
+        url: this.$http.adornUrl('/manage/book/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
@@ -258,7 +258,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/book/delete'),
+          url: this.$http.adornUrl('/manage/book/delete'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then((response) => {
@@ -312,7 +312,7 @@ export default {
     // 更新状态
     updateStatus (data) {
       this.$http({
-        url: this.$http.adornUrl(`/admin/book/update/status`),
+        url: this.$http.adornUrl(`/manage/book/update/status`),
         method: 'put',
         data: this.$http.adornData(data)
       }).then((response) => {
@@ -327,7 +327,7 @@ export default {
     // 更新读后感
     getReadSense (id) {
       this.$http({
-        url: this.$http.adornUrl('/admin/book/sense/' + id),
+        url: this.$http.adornUrl('/manage/book/sense/' + id),
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
@@ -342,7 +342,7 @@ export default {
     // 更新读后感
     updateReadSense () {
       this.$http({
-        url: this.$http.adornUrl(`/admin/book/sense/${!this.bookSense.id ? 'save' : 'update'}`),
+        url: this.$http.adornUrl(`/manage/book/sense/${!this.bookSense.id ? 'save' : 'update'}`),
         method: !this.bookSense.id ? 'post' : 'put',
         data: this.$http.adornData(this.bookSense)
       }).then((response) => {

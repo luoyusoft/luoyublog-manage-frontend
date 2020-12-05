@@ -94,7 +94,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/sys/logout'),
+          url: this.$http.adornUrl('/manage/sys/logout'),
           method: 'post',
           data: this.$http.adornData()
         }).then((response) => {

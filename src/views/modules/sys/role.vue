@@ -119,7 +119,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/admin/sys/role/list'),
+        url: this.$http.adornUrl('/manage/sys/role/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
@@ -170,7 +170,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/sys/role/delete'),
+          url: this.$http.adornUrl('/manage/sys/role/delete'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then((response) => {

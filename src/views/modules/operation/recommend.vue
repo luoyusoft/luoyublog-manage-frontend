@@ -110,7 +110,7 @@ export default {
     getDataList() {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/admin/operation/recommend/list'),
+        url: this.$http.adornUrl('/manage/operation/recommend/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
@@ -161,7 +161,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/operation/recommend/delete'),
+          url: this.$http.adornUrl('/manage/operation/recommend/delete'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then((response) => {
@@ -182,7 +182,7 @@ export default {
     },
     updateTop(id) {
       this.$http({
-        url: this.$http.adornUrl('/admin/operation/recommend/top/' + id),
+        url: this.$http.adornUrl('/manage/operation/recommend/top/' + id),
         method: 'put',
         data: this.$http.adornData()
       }).then((response) => {

@@ -108,7 +108,7 @@ export default {
     init (id) {
       this.dataForm.id = id || 0
       this.$http({
-        url: this.$http.adornUrl('/admin/sys/role/select'),
+        url: this.$http.adornUrl('/manage/sys/role/select'),
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
@@ -121,7 +121,7 @@ export default {
       }).then(() => {
         if (this.dataForm.id) {
           this.$http({
-            url: this.$http.adornUrl(`/admin/sys/user/info/${this.dataForm.id}`),
+            url: this.$http.adornUrl(`/manage/sys/user/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
           }).then((response) => {
@@ -141,7 +141,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$http({
-            url: this.$http.adornUrl(`/admin/sys/user/${!this.dataForm.id ? 'save' : 'update'}`),
+            url: this.$http.adornUrl(`/manage/sys/user/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData({
               'userId': this.dataForm.id || undefined,

@@ -156,7 +156,7 @@ export default {
     init () {
       // 获取笔记分类
       this.$http({
-        url: this.$http.adornUrl('/admin/operation/category/list'),
+        url: this.$http.adornUrl('/manage/operation/category/list'),
         method: 'get',
         params: this.$http.adornParams({
           type: 1,
@@ -168,7 +168,7 @@ export default {
         }
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/operation/tag/select'),
+          url: this.$http.adornUrl('/manage/operation/tag/select'),
           method: 'get',
           params: this.$http.adornParams({type: 2})
         }).then((response) => {
@@ -178,7 +178,7 @@ export default {
         })
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/book/select'),
+          url: this.$http.adornUrl('/manage/book/select'),
           method: 'get',
           params: this.$http.adornParams()
         }).then((response) => {
@@ -187,11 +187,11 @@ export default {
           }
         })
       }).then(() => {
-        this.url = this.$http.adornUrl(`/admin/oss/resource/upload?token=${this.$cookie.get('token')}`)
+        this.url = this.$http.adornUrl(`/manage/oss/resource/upload?token=${this.$cookie.get('token')}`)
         let id = this.$route.params.id
         if (id) {
           this.$http({
-            url: this.$http.adornUrl('/admin/book/note/info/' + id),
+            url: this.$http.adornUrl('/manage/book/note/info/' + id),
             method: 'get',
             params: this.$http.adornParams()
           }).then((response) => {
@@ -254,7 +254,7 @@ export default {
           // 转化categoryId
           this.bookNote.categoryId = this.categoryOptionsSelect.join(',')
           this.$http({
-            url: this.$http.adornUrl(`/admin/book/note/${!this.bookNote.id ? 'save' : 'update'}`),
+            url: this.$http.adornUrl(`/manage/book/note/${!this.bookNote.id ? 'save' : 'update'}`),
             method: !this.bookNote.id ? 'post' : 'put',
             data: this.$http.adornData(this.bookNote)
           }).then((response) => {

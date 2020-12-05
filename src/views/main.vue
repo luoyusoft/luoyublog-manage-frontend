@@ -64,7 +64,7 @@ export default {
     // 获取当前管理员信息
     getUserInfo () {
       this.$http({
-        url: this.$http.adornUrl('/admin/sys/user/info'),
+        url: this.$http.adornUrl('/manage/sys/user/info'),
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
@@ -78,7 +78,7 @@ export default {
     // 获取参数
     listSysParam () {
       this.$http({
-        url: this.$http.adornUrl('/admin/sys/param/all'),
+        url: this.$http.adornUrl('/manage/sys/param/all'),
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {

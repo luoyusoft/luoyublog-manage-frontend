@@ -145,7 +145,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/admin/article/list'),
+        url: this.$http.adornUrl('/manage/article/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
@@ -193,7 +193,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/article/delete'),
+          url: this.$http.adornUrl('/manage/article/delete'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then((response) => {
@@ -239,7 +239,7 @@ export default {
     // 更新文章
     updateStatus (data) {
       this.$http({
-        url: this.$http.adornUrl(`/admin/article/update/status`),
+        url: this.$http.adornUrl(`/manage/article/update/status`),
         method: 'put',
         data: this.$http.adornData(data)
       }).then((response) => {
@@ -254,7 +254,7 @@ export default {
     // 刷新缓存
     refreshCache () {
       this.$http({
-        url: this.$http.adornUrl(`/admin/article/cache/refresh`),
+        url: this.$http.adornUrl(`/manage/article/cache/refresh`),
         method: 'delete'
       }).then((response) => {
         if (response && response.code === 200) {

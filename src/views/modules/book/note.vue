@@ -179,7 +179,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/admin/book/note/list'),
+        url: this.$http.adornUrl('/manage/book/note/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
@@ -227,7 +227,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/book/note/delete'),
+          url: this.$http.adornUrl('/manage/book/note/delete'),
           method: 'delete',
           data: this.$http.adornData(articleIds, false)
         }).then((response) => {
@@ -272,7 +272,7 @@ export default {
     // 更新笔记
     updateStatus (data) {
       this.$http({
-        url: this.$http.adornUrl(`/admin/book/note/update/status`),
+        url: this.$http.adornUrl(`/manage/book/note/update/status`),
         method: 'put',
         data: this.$http.adornData(data)
       }).then((response) => {

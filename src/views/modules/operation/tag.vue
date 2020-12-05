@@ -114,7 +114,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/admin/operation/tag/list'),
+        url: this.$http.adornUrl('/manage/operation/tag/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
@@ -165,7 +165,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/admin/operation/tag/delete'),
+          url: this.$http.adornUrl('/manage/operation/tag/delete'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then((response) => {

@@ -103,7 +103,7 @@ export default {
       })
       if (this.dataForm.id) {
         this.$http({
-          url: this.$http.adornUrl(`/admin/operation/category/info/${this.dataForm.id}`),
+          url: this.$http.adornUrl(`/manage/operation/category/info/${this.dataForm.id}`),
           method: 'get',
           params: this.$http.adornParams()
         }).then((response) => {
@@ -112,7 +112,7 @@ export default {
           }
         }).then(() => {
           this.$http({
-            url: this.$http.adornUrl('/admin/operation/category/select'),
+            url: this.$http.adornUrl('/manage/operation/category/select'),
             method: 'get',
             params: this.$http.adornParams({type: this.dataForm.type})
           }).then((response) => {
@@ -136,7 +136,7 @@ export default {
     // 获取目录列表
     getCategorySelect () {
       this.$http({
-        url: this.$http.adornUrl('/admin/operation/category/select'),
+        url: this.$http.adornUrl('/manage/operation/category/select'),
         method: 'get',
         params: this.$http.adornParams({type: this.dataForm.type})
       }).then((response) => {
@@ -152,7 +152,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$http({
-            url: this.$http.adornUrl(`/admin/operation/category/${!this.dataForm.id ? 'save' : 'update'}`),
+            url: this.$http.adornUrl(`/manage/operation/category/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData(this.dataForm)
           }).then((response) => {
