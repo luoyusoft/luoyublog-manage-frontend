@@ -22,7 +22,7 @@
         <el-col :span="6">
           <el-form-item label="文章标签">
             <el-select
-              style="width: 100%"
+              style="width: 120%"
               v-model="tagListSelect"
               multiple
               allow-create
@@ -203,8 +203,8 @@ export default {
     // 上传成功
     successHandle (response) {
       if (response && response.code === 200) {
-        this.article.cover = response.resource.url
-        this.file = [response.resource]
+        this.article.cover = response.data.url
+        this.file = [response.data]
         this.$message.success('上传成功！')
       }
     },

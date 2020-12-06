@@ -70,7 +70,7 @@
       label="喜欢">
     </el-table-column>
     <el-table-column
-      prop="recommend"
+      prop="publish"
       header-align="center"
       align="center"
       width="100px"
@@ -82,6 +82,20 @@
         <el-tooltip class="item" effect="dark" content="点击下架" v-if="scope.row.publish" placement="top">
           <el-button type="success" size="mini" @click="updatePublish(scope.row.id, false)" v-if="scope.row.publish === true">已发布</el-button>
         </el-tooltip>
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="recommend"
+      header-align="center"
+      align="center"
+      min-width="100px"
+      label="推荐">
+      <template slot-scope="scope">
+        <el-switch
+          v-model="scope.row.recommend"
+          active-color="#13ce66"
+          @change="updateRecommend(scope.row.id,scope.row.recommend)">
+        </el-switch>
       </template>
     </el-table-column>
     <el-table-column
@@ -253,7 +267,7 @@ export default {
     // 更新文章
     updateStatus (data) {
       this.$http({
-        url: this.$http.adornUrl(`/manage/article/update`),
+        url: this.$http.adornUrl(`/manage/article/update/status`),
         method: 'put',
         data: this.$http.adornData(data)
       }).then((response) => {
