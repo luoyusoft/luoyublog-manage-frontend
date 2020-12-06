@@ -20,13 +20,13 @@
       type="selection"
       header-align="center"
       align="center"
-      min-width="10%">
+      width="50px">
     </el-table-column>
     <el-table-column
       prop="id"
       header-align="center"
       align="center"
-      min-width="15px"
+      width="100px"
       label="编号">
     </el-table-column>
     <el-table-column
@@ -34,21 +34,21 @@
       header-align="center"
       align="center"
       label="文章标题"
-      min-width="50%">
+      width="250px">
     </el-table-column>
     <el-table-column
       prop="categoryListStr"
       header-align="center"
       align="center"
       label="分类"
-      min-width="50%">
+      width="200px">
     </el-table-column>
     <el-table-column
       prop="tagList"
       header-align="center"
       align="center"
       label="标签"
-      min-width="60%">
+      width="300px">
       <template slot-scope="scope">
         <el-row>
           <el-button style="margin-top: 8px" v-for="tag in scope.row.tagList" :key="tag.id" size="mini">{{tag.name}}</el-button>
@@ -59,21 +59,21 @@
       prop="readNum"
       header-align="center"
       align="center"
-      min-width="15px"
+      width="100px"
       label="浏览">
     </el-table-column>
     <el-table-column
       prop="likeNum"
       header-align="center"
       align="center"
-      min-width="15px"
+      width="100px"
       label="喜欢">
     </el-table-column>
     <el-table-column
       prop="recommend"
       header-align="center"
       align="center"
-      min-width="30px"
+      width="100px"
       label="状态">
       <template slot-scope="scope">
         <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
@@ -85,10 +85,24 @@
       </template>
     </el-table-column>
     <el-table-column
+      prop="createTime"
+      header-align="center"
+      align="center"
+      width="180px"
+      label="创建时间">
+    </el-table-column>
+    <el-table-column
+      prop="updateTime"
+      header-align="center"
+      align="center"
+      width="180px"
+      label="更新时间">
+    </el-table-column>
+    <el-table-column
       fixed="right"
       header-align="center"
       align="center"
-      min-width="30px"
+      width="100px"
       label="操作">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
@@ -239,7 +253,7 @@ export default {
     // 更新文章
     updateStatus (data) {
       this.$http({
-        url: this.$http.adornUrl(`/manage/article/update/status`),
+        url: this.$http.adornUrl(`/manage/article/update`),
         method: 'put',
         data: this.$http.adornData(data)
       }).then((response) => {

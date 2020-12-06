@@ -20,41 +20,41 @@
         type="selection"
         header-align="center"
         align="center"
-        min-width="10%">
+        width="50px">
       </el-table-column>
       <el-table-column
         prop="id"
         header-align="center"
         align="center"
-        min-width="10%"
+        width="100px"
         label="ID">
       </el-table-column>
       <el-table-column
         prop="username"
         header-align="center"
         align="center"
-        min-width="50%"
+        width="150px"
         label="用户名">
       </el-table-column>
       <el-table-column
         prop="email"
         header-align="center"
         align="center"
-        min-width="50%"
+        width="200px"
         label="邮箱">
       </el-table-column>
       <el-table-column
         prop="mobile"
         header-align="center"
         align="center"
-        min-width="50%"
+        width="200px"
         label="手机号">
       </el-table-column>
       <el-table-column
         prop="status"
         header-align="center"
         align="center"
-        min-width="15%"
+        width="100px"
         label="状态">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.status === 0" size="small" type="danger">禁用</el-tag>
@@ -65,14 +65,21 @@
         prop="createTime"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="180px"
         label="创建时间">
+      </el-table-column>
+      <el-table-column
+        prop="updateTime"
+        header-align="center"
+        align="center"
+        width="180px"
+        label="更新时间">
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="100px"
         label="操作">
         <template slot-scope="scope">
           <el-button v-if="isAuth('sys:user:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.userId)">修改</el-button>

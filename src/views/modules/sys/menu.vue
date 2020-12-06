@@ -13,27 +13,27 @@
         prop="id"
         header-align="center"
         align="center"
-        min-width="10%"
+        width="100px"
         label="ID">
       </el-table-column>
       <table-tree-column
         prop="name"
         header-align="center"
         treeKey="id"
-        min-width="30%"
+        width="250px"
         label="名称">
       </table-tree-column>
       <el-table-column
         prop="parentName"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="150px"
         label="上级菜单">
       </el-table-column>
       <el-table-column
         header-align="center"
         align="center"
-        min-width="15%"
+        width="100px"
         label="图标">
         <template slot-scope="scope">
           <icon-svg :name="scope.row.icon || ''"></icon-svg>
@@ -43,7 +43,7 @@
         prop="type"
         header-align="center"
         align="center"
-        min-width="15%"
+        width="100px"
         label="类型">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.type === 0" size="small">目录</el-tag>
@@ -55,14 +55,14 @@
         prop="orderNum"
         header-align="center"
         align="center"
-        min-width="15%"
+        width="100px"
         label="排序号">
       </el-table-column>
       <el-table-column
         prop="url"
         header-align="center"
         align="center"
-        min-width="50%"
+        width="300px"
         :show-overflow-tooltip="true"
         label="菜单URL">
       </el-table-column>
@@ -70,15 +70,29 @@
         prop="perms"
         header-align="center"
         align="center"
-        min-width="50%"
+        width="250px"
         :show-overflow-tooltip="true"
         label="授权标识">
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
+        header-align="center"
+        align="center"
+        width="180px"
+        label="创建时间">
+      </el-table-column>
+      <el-table-column
+        prop="updateTime"
+        header-align="center"
+        align="center"
+        width="180px"
+        label="更新时间">
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="100px"
         label="操作">
         <template slot-scope="scope">
           <el-button v-if="isAuth('sys:menu:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

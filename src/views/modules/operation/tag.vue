@@ -20,37 +20,51 @@
         type="selection"
         header-align="center"
         align="center"
-        min-width="10%">
+        width="50px">
       </el-table-column>
       <el-table-column
         prop="id"
         header-align="center"
         align="center"
         label="编号"
-        min-width="10%">
+        width="100px">
       </el-table-column>
-    <el-table-column
-        prop="name"
+      <el-table-column
+          prop="name"
+          header-align="center"
+          align="center"
+          width="250px"
+          label="标签名称">
+      </el-table-column>
+      <el-table-column
+          prop="type"
+          header-align="center"
+          align="center"
+          width="150px"
+          label="所属类别">
+        <template slot-scope="scope">
+          {{getSysParam('MODULE_TYPE',scope.row.type)}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
         header-align="center"
         align="center"
-        min-width="50%"
-        label="标签名称">
-    </el-table-column>
-    <el-table-column
-        prop="type"
+        width="180px"
+        label="创建时间">
+      </el-table-column>
+      <el-table-column
+        prop="updateTime"
         header-align="center"
         align="center"
-        min-width="50%"
-        label="所属类别">
-      <template slot-scope="scope">
-        {{getSysParam('MODULE_TYPE',scope.row.type)}}
-      </template>
-    </el-table-column>
+        width="180px"
+        label="更新时间">
+      </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="100px"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

@@ -20,37 +20,51 @@
         type="selection"
         header-align="center"
         align="center"
-        min-width="10%">
+        width="50px">
       </el-table-column>
-    <el-table-column
-        prop="title"
+      <el-table-column
+          prop="title"
+          header-align="center"
+          align="center"
+          width="150px"
+          label="链接名称">
+      </el-table-column>
+      <el-table-column
+          prop="url"
+          header-align="center"
+          align="center"
+          width="300px"
+          label="链接地址">
+      </el-table-column>
+      <el-table-column
+          prop="avatar"
+          header-align="center"
+          align="center"
+          width="200px"
+          label="头像">
+        <template slot-scope="scope">
+          <img :src="scope.row.avatar" width="80px"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
         header-align="center"
         align="center"
-        min-width="20%"
-        label="链接名称">
-    </el-table-column>
-    <el-table-column
-        prop="url"
+        width="180px"
+        label="创建时间">
+      </el-table-column>
+      <el-table-column
+        prop="updateTime"
         header-align="center"
         align="center"
-        min-width="50%"
-        label="链接地址">
-    </el-table-column>
-    <el-table-column
-        prop="avatar"
-        header-align="center"
-        align="center"
-        min-width="30%"
-        label="头像">
-      <template slot-scope="scope">
-        <img :src="scope.row.avatar" width="80px"/>
-      </template>
-    </el-table-column>
+        width="180px"
+        label="更新时间">
+      </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="100px"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

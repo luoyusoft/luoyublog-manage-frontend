@@ -46,41 +46,55 @@
               type="selection"
               header-align="center"
               align="center"
-              min-width="10%">
+              width="50px">
             </el-table-column>
             <el-table-column
               prop="parKey"
               header-align="center"
               align="center"
-              min-width="20%"
+              width="100px"
               label="参数键">
             </el-table-column>
             <el-table-column
               prop="parValue"
               header-align="center"
               align="center"
-              min-width="20%"
+              width="100px"
               label="参数值">
             </el-table-column>
             <el-table-column
               prop="menuUrl"
               header-align="center"
               align="center"
-              min-width="50%"
+              width="200px"
               label="参数url">
             </el-table-column>
             <el-table-column
               prop="type"
               header-align="center"
               align="center"
-              min-width="40%"
+              width="200px"
               label="参数类型">
+            </el-table-column>
+            <el-table-column
+              prop="createTime"
+              header-align="center"
+              align="center"
+              width="180px"
+              label="创建时间">
+            </el-table-column>
+            <el-table-column
+              prop="updateTime"
+              header-align="center"
+              align="center"
+              width="180px"
+              label="更新时间">
             </el-table-column>
             <el-table-column
               fixed="right"
               header-align="center"
               align="center"
-              min-width="20%"
+              width="100px"
               label="操作">
               <template slot-scope="scope">
                 <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

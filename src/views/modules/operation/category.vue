@@ -25,14 +25,14 @@
       <table-tree-column
         prop="name"
         header-align="center"
-        min-width="30%"
+        width="250px"
         label="名称">
       </table-tree-column>
       <el-table-column
         prop="type"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="100px"
         label="类型">
         <template slot-scope="scope">
           {{getSysParam('MODULE_TYPE',scope.row.type,typeList)}}
@@ -42,7 +42,7 @@
         prop="rank"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="100px"
         label="级别">
         <template slot-scope="scope">
           {{getSysParam('CATEGORY_RANK', scope.row.rank)}}
@@ -52,14 +52,28 @@
         prop="parentName"
         header-align="center"
         align="center"
-        min-width="30%"
+        width="150px"
         label="上级级别">
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
+        header-align="center"
+        align="center"
+        width="180px"
+        label="创建时间">
+      </el-table-column>
+      <el-table-column
+        prop="updateTime"
+        header-align="center"
+        align="center"
+        width="180px"
+        label="更新时间">
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="100px"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
