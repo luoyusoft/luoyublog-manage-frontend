@@ -16,7 +16,8 @@
 Vue 2.x
 Vuex
 Vue Router
-Vue-cli
+Vue CLI
+Axios
 Element-UI
 ...
 ```
@@ -37,11 +38,16 @@ npm run build:prod
 ```
 
 ## 在线地址
-会持续更新，欢迎大家Star，感谢！-->【<b><a href="https://luoyublog.com/manage"> https://luoyublog.com/manage </a></b>】<br/>
-游客账号：guest，密码：guest
+会持续更新，欢迎大家Star，感谢！
+
+个人博客-->【<b><a href="https://luoyublog.com"> https://luoyublog.com </a></b>】<br/>
+后台管理系统-->【<b><a href="https://luoyublog.com/manage"> https://luoyublog.com/manage </a></b>】<br/>
+后台管理系统-->游客账号：guest，密码：guest
 
 ## 后端项目地址
-【<b><a href="https://github.com/luoyusoft/luoyublog-manage-backend"> https://github.com/luoyusoft/luoyublog-manage-backend </a></b>】<br/>
+会持续更新，欢迎大家Star，感谢！
+
+【<b><a href="https://github.com/luoyusoft/luoyublog-backend"> https://github.com/luoyusoft/luoyublog-backend </a></b>】<br/>
 
 ## 参考教程
 |序号|文章标题|
