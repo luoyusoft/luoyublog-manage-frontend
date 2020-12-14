@@ -2,27 +2,28 @@
   <div>
     <el-form :model="article" label-width="80px" :rules="rules" ref="articleForm">
       <el-form-item label="文章标题" prop="title">
-        <el-col :span="12">
+        <el-col :span="18">
           <el-input placeholder="文章标题" v-model="article.title"  clearable></el-input>
         </el-col>
       </el-form-item>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="9">
           <el-form-item label="文章分类">
             <el-cascader
               style="width: 100%;"
               clearable
               change-on-select
+              placeholder="请选择文章分类"
               :options="categoryOptions"
               v-model="categoryOptionsSelect"
               :props="categoryListTreeProps">
             </el-cascader>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="9">
           <el-form-item label="文章标签">
             <el-select
-              style="width: 120%"
+              style="width: 107%"
               v-model="tagListSelect"
               multiple
               allow-create
@@ -39,10 +40,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="文章作者">
+      <el-form-item label="作者" prop="author">
         <el-row>
-          <el-col :span="4">
-            <el-input placeholder="文章作者" v-model="article.author" clearable></el-input>
+          <el-col :span="6">
+            <el-input placeholder="作者" v-model="article.author" clearable></el-input>
           </el-col>
         </el-row>
       </el-form-item>
@@ -70,21 +71,21 @@
             :on-success="successHandle">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__tip" slot="tip">只支持jpg、png、gif格式的图片！</div>
+            <div class="el-upload__tip" slot="tip">暂时只支持jpg、png、gif格式的图片！</div>
           </el-upload>
         </el-col>
       </el-form-item>
-      <el-form-item label="文章描述">
+      <el-form-item label="描述">
         <el-col :span="12">
-          <el-input type="textarea" v-model="article.description" placeholder="文章描述" clearable></el-input>
+          <el-input type="textarea" v-model="article.description" placeholder="描述" clearable></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item label="文章内容">
+      <el-form-item label="内容" prop="content">
         <mavon-editor style="z-index:500" ref=md v-model="article.content" @imgAdd="imgAdd" @change="mavonChangeHandle"></mavon-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="saveArticle()">保存</el-button>
-        <el-button >重置</el-button>
+        <el-button>重置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -111,7 +112,9 @@ export default {
       url: '',
       file: [],
       rules: {
-        title: {required: true, message: '请输入文章标题', trigger: 'change'}
+        title: {required: true, message: '请输入文章标题', trigger: 'change'},
+        author: {required: true, message: '请输入作者', trigger: 'change'},
+        content: {required: true, message: '请输入内容', trigger: 'change'}
       },
       tagList: [],
       tagListSelect: [],
@@ -153,7 +156,7 @@ export default {
           }
         })
       }).then(() => {
-        this.url = this.$http.adornUrl(`/manage/oss/resource/upload?token=${this.$cookie.get('token')}`)
+        this.url = this.$http.adornUrl(`/manage/file/resource/qiniuyun/upload?token=${this.$cookie.get('token')}&fileModule=0`)
         let id = this.$route.params.id
         if (id) {
           this.$http({
@@ -196,7 +199,7 @@ export default {
     // 上传之前
     beforeUploadHandle (file) {
       if (file.type !== 'image/jpg' && file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/gif') {
-        this.$message.error('只支持jpg、png、gif格式的图片！')
+        this.$message.error('暂时只支持jpg、png、gif格式的图片！')
         return false
       }
     },

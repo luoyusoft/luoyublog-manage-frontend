@@ -49,21 +49,12 @@ const mainRoutes = {
         isTab: true
       }
     },
-    { path: '/book/book/update/:id',
-      component: _import('modules/book/book-add-or-update'),
-      name: 'book-update',
+    { path: '/video/video/update/:id',
+      component: _import('modules/video/video-add-or-update'),
+      name: 'video-update',
       meta: {
-        id: 'book-update',
-        title: '阅读修改',
-        isTab: true
-      }
-    },
-    { path: '/book/note/update/:id',
-      component: _import('modules/book/note-add-or-update'),
-      name: 'book-note-update',
-      meta: {
-        id: 'book-note-update',
-        title: '笔记修改',
+        id: 'video-update',
+        title: '视频修改',
         isTab: true
       }
     }

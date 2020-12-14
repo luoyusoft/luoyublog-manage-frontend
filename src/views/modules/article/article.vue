@@ -30,11 +30,29 @@
       label="编号">
     </el-table-column>
     <el-table-column
+      prop="cover"
+      header-align="center"
+      align="center"
+      label="封面"
+      width="200px">
+      <template slot-scope="scope" >
+        <img v-if="scope.row.cover !== null" :src="scope.row.cover" style="height: 100%;width: 100%">
+        <p v-else>暂无封面</p>
+      </template>
+    </el-table-column>
+    <el-table-column
       prop="title"
       header-align="center"
       align="center"
       label="文章标题"
       width="250px">
+    </el-table-column>
+    <el-table-column
+      prop="author"
+      header-align="center"
+      align="center"
+      width="100px"
+      label="作者">
     </el-table-column>
     <el-table-column
       prop="categoryListStr"
@@ -60,14 +78,21 @@
       header-align="center"
       align="center"
       width="100px"
-      label="浏览">
+      label="阅读量">
     </el-table-column>
     <el-table-column
       prop="likeNum"
       header-align="center"
       align="center"
       width="100px"
-      label="喜欢">
+      label="点赞量">
+    </el-table-column>
+    <el-table-column
+      prop="commentNum"
+      header-align="center"
+      align="center"
+      width="100px"
+      label="评论量">
     </el-table-column>
     <el-table-column
       prop="publish"

@@ -2,11 +2,11 @@
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item>
-        <el-input v-model="dataForm.title" placeholder="图书标题" clearable></el-input>
+        <el-input v-model="dataForm.title" placeholder="视频标题" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('book:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('video:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -19,30 +19,59 @@
         type="selection"
         header-align="center"
         align="center"
-        min-width="10%">
+        width="50px">
+      </el-table-column>
+      <el-table-column
+        prop="id"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="编号">
       </el-table-column>
       <el-table-column
         prop="cover"
         header-align="center"
         align="center"
         label="封面"
-        min-width="30%">
+        width="200px">
         <template slot-scope="scope">
-          <img :src="scope.row.cover" style="width: 50px;height: 100px">
+          <img v-if="scope.row.cover !== null" :src="scope.row.cover" style="height: 100%;width: 100%">
+          <p v-else>暂无封面</p>
         </template>
       </el-table-column>
-    <el-table-column
-        prop="title"
+      <el-table-column
+        prop="videoUrl"
         header-align="center"
         align="center"
-        min-width="50%"
-        label="标题">
-    </el-table-column>
+        width="250px"
+        label="视频地址">
+      </el-table-column>
+      <el-table-column
+          prop="title"
+          header-align="center"
+          align="center"
+          width="250px"
+          label="标题">
+      </el-table-column>
+      <el-table-column
+        prop="alternateName"
+        header-align="center"
+        align="center"
+        width="250px"
+        label="又名">
+      </el-table-column>
+      <el-table-column
+        prop="author"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="上传者">
+      </el-table-column>
       <el-table-column
         prop="categoryListStr"
         header-align="center"
         align="center"
-        min-width="50%"
+        width="200px"
         label="分类">
       </el-table-column>
       <el-table-column
@@ -50,29 +79,96 @@
         header-align="center"
         align="center"
         label="标签"
-        min-width="60%">
+        width="300px">
         <template slot-scope="scope">
           <el-row>
             <el-button v-for="tag in scope.row.tagList" :key="tag.id" size="mini">{{tag.name}}</el-button>
           </el-row>
         </template>
       </el-table-column>
-    <el-table-column
-        prop="progress"
+      <el-table-column
+        prop="productionRegion"
         header-align="center"
         align="center"
-        min-width="30%"
-        label="进度">
-      <template slot-scope="scope">
-        <el-slider v-model="scope.row.progress" :step="10" @change="updateProgress(scope.row.id,scope.row.progress)"></el-slider>
-      </template>
-    </el-table-column>
+        width="150px"
+        label="制片国家/地区">
+      </el-table-column>
+      <el-table-column
+        prop="director"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="导演">
+      </el-table-column>
+      <el-table-column
+        prop="releaseTime"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="上映日期">
+      </el-table-column>
+      <el-table-column
+        prop="duration"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="片长">
+      </el-table-column>
+      <el-table-column
+        prop="language"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="语言">
+      </el-table-column>
+      <el-table-column
+        prop="toStar"
+        header-align="center"
+        align="center"
+        width="200px"
+        label="主演">
+      </el-table-column>
+      <el-table-column
+        prop="screenwriter"
+        header-align="center"
+        align="center"
+        width="200px"
+        label="编剧">
+      </el-table-column>
+      <el-table-column
+        prop="score"
+        header-align="center"
+        align="center"
+        width="200px"
+        label="评分">
+      </el-table-column>
+      <el-table-column
+        prop="watchNum"
+        header-align="center"
+        align="center"
+        width="250px"
+        label="观看量">
+      </el-table-column>
+      <el-table-column
+        prop="likeNum"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="点赞量">
+      </el-table-column>
+      <el-table-column
+        prop="commentNum"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="评论量">
+      </el-table-column>
       <el-table-column
         prop="recommend"
         header-align="center"
         align="center"
         label="推荐"
-        min-width="15%">
+        width="100px">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.recommend"
@@ -82,25 +178,11 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="reading"
-        header-align="center"
-        align="center"
-        label="阅读"
-        min-width="15%">
-        <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.reading"
-            active-color="#13ce66"
-            @change="updateReading(scope.row.id,scope.row.reading)">
-          </el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column
         prop="recommend"
         header-align="center"
         align="center"
         label="状态"
-        min-width="15%">
+        width="100px">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
             <el-button type="info" size="mini" @click="updatePublish(scope.row.id, true)">未发布</el-button>
@@ -111,21 +193,24 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="createTime"
         header-align="center"
         align="center"
-        label="读后感"
-        min-width="15%">
-        <template slot-scope="scope">
-          <el-tooltip class="item" effect="dark" content="修改读后感" placement="top">
-            <el-button icon="el-icon-edit" circle @click="getReadSense(scope.row.id)"></el-button>
-          </el-tooltip>
-        </template>
+        width="180px"
+        label="创建时间">
+      </el-table-column>
+      <el-table-column
+        prop="updateTime"
+        header-align="center"
+        align="center"
+        width="180px"
+        label="更新时间">
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
-        min-width="20%"
+        width="100px"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
@@ -210,7 +295,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/manage/book/list'),
+        url: this.$http.adornUrl('/manage/video/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
@@ -245,7 +330,7 @@ export default {
     },
     // 新增 / 修改
     addOrUpdateHandle (id) {
-      this.$router.push({path: 'book/book/update/' + id})
+      this.$router.push({path: 'video/video/update/' + id})
     },
     // 删除
     deleteHandle (id) {
@@ -258,7 +343,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/manage/book/delete'),
+          url: this.$http.adornUrl('/manage/video/delete'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then((response) => {
@@ -277,7 +362,7 @@ export default {
         })
       })
     },
-    // 更新图书推荐状态
+    // 更新视频推荐状态
     updateRecommend (id, value) {
       let data = {
         id: id,
@@ -285,7 +370,7 @@ export default {
       }
       this.updateStatus(data)
     },
-    // 更新图书发布状态
+    // 更新视频发布状态
     updatePublish (id, value) {
       let data = {
         id: id,
@@ -293,7 +378,7 @@ export default {
       }
       this.updateStatus(data)
     },
-    // 更新图书阅读进度
+    // 更新视频阅读进度
     updateProgress (id, value) {
       let data = {
         id: id,
@@ -312,7 +397,7 @@ export default {
     // 更新状态
     updateStatus (data) {
       this.$http({
-        url: this.$http.adornUrl(`/manage/book/update/status`),
+        url: this.$http.adornUrl(`/manage/video/update/status`),
         method: 'put',
         data: this.$http.adornData(data)
       }).then((response) => {
@@ -327,7 +412,7 @@ export default {
     // 更新读后感
     getReadSense (id) {
       this.$http({
-        url: this.$http.adornUrl('/manage/book/sense/' + id),
+        url: this.$http.adornUrl('/manage/video/sense/' + id),
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
@@ -342,7 +427,7 @@ export default {
     // 更新读后感
     updateReadSense () {
       this.$http({
-        url: this.$http.adornUrl(`/manage/book/sense/${!this.bookSense.id ? 'save' : 'update'}`),
+        url: this.$http.adornUrl(`/manage/视频/sense/${!this.bookSense.id ? 'save' : 'update'}`),
         method: !this.bookSense.id ? 'post' : 'put',
         data: this.$http.adornData(this.bookSense)
       }).then((response) => {

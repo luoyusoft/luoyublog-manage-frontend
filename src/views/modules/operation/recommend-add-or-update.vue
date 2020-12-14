@@ -16,15 +16,15 @@
               </el-select>
             </el-form-item>
             <el-form-item style="width: 35%">
-              <el-input v-model="listParams.title" placeholder="文章标题"></el-input>
+              <el-input v-model="listParams.title" placeholder="标题"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button @click="listRecommend()">查询</el-button>
             </el-form-item>
           </el-form>
           <el-table :data="recommendList" style="height: 500px;overflow: auto">
-            <el-table-column property="title" label="文章标题"></el-table-column>
-            <el-table-column property="type"  label="文章类型">
+            <el-table-column property="title" label="标题"></el-table-column>
+            <el-table-column property="type"  label="类型">
               <template  slot-scope="scope" >
                 {{getSysParam('MODULE_TYPE',scope.row.type,typeList)}}
               </template>
@@ -38,20 +38,20 @@
               </template>
             </el-table-column>
           </el-table>
-          <el-button slot="reference" @click="choose()" >请选择推荐文章</el-button>
+          <el-button slot="reference" @click="choose()" >请选择推荐内容</el-button>
         </el-popover>
       </el-form-item>
-      <el-form-item label="推荐文章" v-if="dataForm.title">
+      <el-form-item label="标题" v-if="dataForm.title">
         {{dataForm.title}}
       </el-form-item>
-      <el-form-item label="推荐文章" v-if="!dataForm.title">
-        请选择推荐文章
+      <el-form-item label="标题" v-if="!dataForm.title">
+        请选择推荐内容
       </el-form-item>
-      <el-form-item label="推荐类型" v-if="getSysParam('MODULE_TYPE',dataForm.type,typeList)">
+      <el-form-item label="类型" v-if="getSysParam('MODULE_TYPE',dataForm.type,typeList)">
         {{getSysParam('MODULE_TYPE',dataForm.type,typeList)}}
       </el-form-item>
-      <el-form-item label="推荐类型" v-if="!getSysParam('MODULE_TYPE',dataForm.type,typeList)">
-        请选择推荐文章
+      <el-form-item label="类型" v-if="!getSysParam('MODULE_TYPE',dataForm.type,typeList)">
+        请选择推荐内容
       </el-form-item>
       <el-form-item label="顺序" >
         <el-input v-model="dataForm.orderNum" type="number" placeholder="请输入顺序"></el-input>

@@ -60,7 +60,7 @@ export default {
         method: 'get',
         params: this.$http.adornParams()
       }).then((response) => {
-        this.menuList = treeDataTranslate(response.data, 'id')
+        this.menuList = treeDataTranslate(response.data)
       }).then(() => {
         this.visible = true
         this.$nextTick(() => {
@@ -95,7 +95,7 @@ export default {
             url: this.$http.adornUrl(`/manage/sys/role/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData({
-              'roleId': this.dataForm.id || undefined,
+              'id': this.dataForm.id || undefined,
               'roleName': this.dataForm.roleName,
               'remark': this.dataForm.remark,
               'menuIdList': [].concat(this.$refs.menuListTree.getCheckedKeys(), [this.tempKey], this.$refs.menuListTree.getHalfCheckedKeys())
