@@ -27,7 +27,7 @@
         header-align="center"
         align="center"
         width="100px"
-        label="ID">
+        label="id">
       </el-table-column>
       <el-table-column
         prop="username"
@@ -79,7 +79,7 @@
         fixed="right"
         header-align="center"
         align="center"
-        width="100px"
+        min-width="100px"
         label="操作">
         <template slot-scope="scope">
           <el-button v-if="isAuth('sys:user:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.userId)">修改</el-button>

@@ -26,7 +26,7 @@
         header-align="center"
         align="center"
         width="100px"
-        label="编号">
+        label="id">
       </el-table-column>
       <el-table-column
         prop="cover"
@@ -141,12 +141,21 @@
         align="center"
         width="200px"
         label="评分">
+        <template slot-scope="scope">
+          <el-rate
+            v-model="scope.row.score"
+            disabled
+            show-score
+            allow-half
+            text-color="#ff9900">
+          </el-rate>
+        </template>
       </el-table-column>
       <el-table-column
         prop="watchNum"
         header-align="center"
         align="center"
-        width="250px"
+        width="100px"
         label="观看量">
       </el-table-column>
       <el-table-column
@@ -210,7 +219,7 @@
         fixed="right"
         header-align="center"
         align="center"
-        width="100px"
+        min-width="100px"
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>

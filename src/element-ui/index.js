@@ -37,7 +37,8 @@ import {
   TableColumn,
   DatePicker,
   // TimeSelect,
-  // TimePicker,
+  // eslint-disable-next-line no-unused-vars
+  TimePicker,
   Popover,
   Tooltip,
   // Breadcrumb,
@@ -106,7 +107,7 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(DatePicker)
 // Vue.use(TimeSelect)
-// Vue.use(TimePicker)
+Vue.use(TimePicker)
 Vue.use(Popover)
 Vue.use(Tooltip)
 // Vue.use(Breadcrumb)

@@ -19,7 +19,7 @@
         header-align="center"
         align="center"
         width="100px"
-        label="ID">
+        label="id">
       </el-table-column>
       <el-table-column
         prop="type"
