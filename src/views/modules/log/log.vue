@@ -58,13 +58,34 @@
         header-align="center"
         align="center"
         width="200px"
-        label="IP地址">
+        label="ip地址">
+      </el-table-column>
+      <el-table-column
+        prop="country"
+        header-align="center"
+        align="center"
+        width="150px"
+        label="国家">
+      </el-table-column>
+      <el-table-column
+        prop="region"
+        header-align="center"
+        align="center"
+        width="150px"
+        label="省份">
+      </el-table-column>
+      <el-table-column
+        prop="city"
+        header-align="center"
+        align="center"
+        width="150px"
+        label="城市">
       </el-table-column>
       <el-table-column
         prop="createTime"
         header-align="center"
         align="center"
-        width="180px"
+        min-width="180px"
         label="创建时间">
       </el-table-column>
     </el-table>
