@@ -82,6 +82,41 @@
         label="城市">
       </el-table-column>
       <el-table-column
+        prop="borderName"
+        header-align="center"
+        align="center"
+        width="200px"
+        label="浏览器名字">
+      </el-table-column>
+      <el-table-column
+        prop="borderVersion"
+        header-align="center"
+        align="center"
+        width="200px"
+        label="浏览器版本">
+      </el-table-column>
+      <el-table-column
+        prop="deviceManufacturer"
+        header-align="center"
+        align="center"
+        width="200px"
+        label="设备生产厂商">
+      </el-table-column>
+      <el-table-column
+        prop="deviceType"
+        header-align="center"
+        align="center"
+        width="200px"
+        label="设备类型">
+      </el-table-column>
+      <el-table-column
+        prop="osVersion"
+        header-align="center"
+        align="center"
+        width="200px"
+        label="操作系统的版本号">
+      </el-table-column>
+      <el-table-column
         prop="createTime"
         header-align="center"
         align="center"
