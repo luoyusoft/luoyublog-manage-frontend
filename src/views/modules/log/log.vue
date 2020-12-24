@@ -123,6 +123,13 @@
         min-width="180px"
         label="创建时间">
       </el-table-column>
+      <el-table-column
+        prop="updateTime"
+        header-align="center"
+        align="center"
+        min-width="180px"
+        label="更新时间">
+      </el-table-column>
     </el-table>
     <el-pagination
       @size-change="sizeChangeHandle"
