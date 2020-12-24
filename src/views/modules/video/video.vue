@@ -237,20 +237,20 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 读后感 -->
-    <el-dialog title="读后感" :visible.sync="bookSenseVisible">
-      <el-form>
-        <el-form-item label="作者">
-          <el-input v-model="bookSense.author"/>
-        </el-form-item>
-        <el-form-item>
-          <quill-editor v-model="bookSense.content"></quill-editor>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="updateReadSense()">保存</el-button>
-          <el-button @click="bookSenseVisible = false" >取消</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
+<!--    <el-dialog title="读后感" :visible.sync="bookSenseVisible">-->
+<!--      <el-form>-->
+<!--        <el-form-item label="作者">-->
+<!--          <el-input v-model="bookSense.author"/>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item>-->
+<!--          <quill-editor v-model="bookSense.content"></quill-editor>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item>-->
+<!--          <el-button type="primary" @click="updateReadSense()">保存</el-button>-->
+<!--          <el-button @click="bookSenseVisible = false" >取消</el-button>-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
+<!--    </el-dialog>-->
   </div>
 </template>
 
@@ -271,12 +271,7 @@ export default {
       pageSize: 10,
       totalPage: 0,
       dataListLoading: false,
-      dataListSelections: [],
-      bookSenseVisible: false,
-      bookSense: {
-        content: '',
-        author: ''
-      }
+      dataListSelections: []
     }
   },
   components: {
@@ -387,22 +382,6 @@ export default {
       }
       this.updateStatus(data)
     },
-    // 更新视频阅读进度
-    updateProgress (id, value) {
-      let data = {
-        id: id,
-        progress: value
-      }
-      this.updateStatus(data)
-    },
-    // 更新阅读状态
-    updateReading (id, value) {
-      let data = {
-        id: id,
-        reading: value
-      }
-      this.updateStatus(data)
-    },
     // 更新状态
     updateStatus (data) {
       this.$http({
@@ -413,42 +392,6 @@ export default {
         if (response && response.code === 200) {
           this.$message.success('更新成功')
           this.getDataList()
-        } else {
-          this.$message.error(response.msg)
-        }
-      })
-    },
-    // 更新读后感
-    getReadSense (id) {
-      this.$http({
-        url: this.$http.adornUrl('/manage/video/sense/' + id),
-        method: 'get',
-        params: this.$http.adornParams()
-      }).then((response) => {
-        if (response && response.code === 200) {
-          this.bookSense = response.data || {}
-          this.bookSense.bookId = id
-        }
-      }).then(() => {
-        this.bookSenseVisible = true
-      })
-    },
-    // 更新读后感
-    updateReadSense () {
-      this.$http({
-        url: this.$http.adornUrl(`/manage/视频/sense/${!this.bookSense.id ? 'save' : 'update'}`),
-        method: !this.bookSense.id ? 'post' : 'put',
-        data: this.$http.adornData(this.bookSense)
-      }).then((response) => {
-        if (response && response.code === 200) {
-          this.$message({
-            message: '操作成功',
-            type: 'success',
-            duration: 1500,
-            onClose: () => {
-              this.bookSenseVisible = false
-            }
-          })
         } else {
           this.$message.error(response.msg)
         }
