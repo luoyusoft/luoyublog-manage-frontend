@@ -200,6 +200,11 @@ export default {
   created () {
     this.init()
   },
+  watch: {
+    $route () {
+      this.init()
+    }
+  },
   methods: {
     init () {
       // 获取视频分类

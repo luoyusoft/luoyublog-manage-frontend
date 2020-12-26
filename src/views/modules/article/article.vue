@@ -233,7 +233,7 @@ export default {
     },
     // 新增 / 修改
     addOrUpdateHandle (id) {
-      this.$router.push({path: 'article/article/update/' + id})
+      this.$router.replace({path: 'article/article/update/' + id})
     },
     // 删除
     deleteHandle (id) {
