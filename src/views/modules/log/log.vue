@@ -22,14 +22,15 @@
         label="id">
       </el-table-column>
       <el-table-column
-        prop="type"
+        prop="module"
         header-align="center"
         align="center"
         width="100px"
         label="类型">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.type === 'article'" size="small" type="success">文章</el-tag>
-          <el-tag v-if="scope.row.type === 'video'" size="small" type="info">视频</el-tag>
+          <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
+          <el-tag v-if="scope.row.module === 1" size="small" type="info">视频</el-tag>
+          <el-tag v-if="scope.row.module === 2" size="small" type="info">聊天室</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -40,11 +41,39 @@
         label="请求方法">
       </el-table-column>
       <el-table-column
-        prop="params"
+        prop="uri"
         header-align="center"
         align="center"
-        width="250px"
-        label="请求参数">
+        width="200px"
+        label="请求uri">
+      </el-table-column>
+      <el-table-column
+        prop="requestType"
+        header-align="center"
+        align="center"
+        width="150px"
+        label="请求类型">
+      </el-table-column>
+      <el-table-column
+        prop="headrParams"
+        header-align="center"
+        align="center"
+        width="300px"
+        label="请求头参数">
+      </el-table-column>
+      <el-table-column
+        prop="bodyParams"
+        header-align="center"
+        align="center"
+        width="400px"
+        label="请求体参数">
+      </el-table-column>
+      <el-table-column
+        prop="response"
+        header-align="center"
+        align="center"
+        width="600px"
+        label="响应结果">
       </el-table-column>
       <el-table-column
         prop="time"
