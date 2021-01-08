@@ -15,18 +15,21 @@
       border
       v-loading="dataListLoading"
       @selection-change="selectionChangeHandle"
+      height="500"
       style="width: 100%;">
       <el-table-column
+        fixed="left"
         type="selection"
         header-align="center"
         align="center"
         width="50px">
       </el-table-column>
       <el-table-column
+        fixed="left"
         prop="id"
         header-align="center"
         align="center"
-        width="100px"
+        width="70px"
         label="id">
       </el-table-column>
       <el-table-column
@@ -34,6 +37,7 @@
         header-align="center"
         align="center"
         width="150px"
+        show-overflow-tooltip="true"
         label="角色名称">
       </el-table-column>
       <el-table-column
@@ -41,6 +45,7 @@
         header-align="center"
         align="center"
         width="250px"
+        show-overflow-tooltip="true"
         label="备注">
       </el-table-column>
       <el-table-column

@@ -15,8 +15,10 @@
     border
     v-loading="dataListLoading"
     @selection-change="selectionChangeHandle"
+    height="500"
     style="width: 100%;">
     <el-table-column
+      fixed="left"
       type="selection"
       header-align="center"
       align="center"
@@ -24,9 +26,10 @@
     </el-table-column>
     <el-table-column
       prop="id"
+      fixed="left"
       header-align="center"
       align="center"
-      width="100px"
+      width="70px"
       label="id">
     </el-table-column>
     <el-table-column
@@ -34,7 +37,7 @@
       header-align="center"
       align="center"
       label="封面"
-      width="200px">
+      width="150px">
       <template slot-scope="scope" >
         <img v-if="scope.row.cover !== null" :src="scope.row.cover" style="height: 100%;width: 100%">
         <p v-else>暂无封面</p>
@@ -45,6 +48,15 @@
       header-align="center"
       align="center"
       label="文章标题"
+      show-overflow-tooltip="true"
+      width="250px">
+    </el-table-column>
+    <el-table-column
+      prop="description"
+      header-align="center"
+      align="center"
+      label="文章简介"
+      show-overflow-tooltip="true"
       width="250px">
     </el-table-column>
     <el-table-column
@@ -52,12 +64,14 @@
       header-align="center"
       align="center"
       width="100px"
+      show-overflow-tooltip="true"
       label="作者">
     </el-table-column>
     <el-table-column
       prop="categoryListStr"
       header-align="center"
       align="center"
+      show-overflow-tooltip="true"
       label="分类"
       width="200px">
     </el-table-column>

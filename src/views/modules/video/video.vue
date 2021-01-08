@@ -14,18 +14,21 @@
       border
       v-loading="dataListLoading"
       @selection-change="selectionChangeHandle"
+      height="500"
       style="width: 100%;">
       <el-table-column
+        fixed="left"
         type="selection"
         header-align="center"
         align="center"
         width="50px">
       </el-table-column>
       <el-table-column
+        fixed="left"
         prop="id"
         header-align="center"
         align="center"
-        width="100px"
+        width="70px"
         label="id">
       </el-table-column>
       <el-table-column
@@ -33,7 +36,7 @@
         header-align="center"
         align="center"
         label="封面"
-        width="200px">
+        width="100px">
         <template slot-scope="scope">
           <img v-if="scope.row.cover !== null" :src="scope.row.cover" style="height: 100%;width: 100%">
           <p v-else>暂无封面</p>
@@ -44,6 +47,7 @@
         header-align="center"
         align="center"
         width="250px"
+        show-overflow-tooltip="true"
         label="视频地址">
       </el-table-column>
       <el-table-column
@@ -51,13 +55,23 @@
           header-align="center"
           align="center"
           width="250px"
+          show-overflow-tooltip="true"
           label="标题">
+      </el-table-column>
+      <el-table-column
+        prop="synopsis"
+        header-align="center"
+        align="center"
+        width="250px"
+        show-overflow-tooltip="true"
+        label="剧情简介">
       </el-table-column>
       <el-table-column
         prop="alternateName"
         header-align="center"
         align="center"
         width="250px"
+        show-overflow-tooltip="true"
         label="又名">
       </el-table-column>
       <el-table-column
@@ -65,6 +79,7 @@
         header-align="center"
         align="center"
         width="100px"
+        show-overflow-tooltip="true"
         label="上传者">
       </el-table-column>
       <el-table-column
@@ -72,6 +87,7 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="分类">
       </el-table-column>
       <el-table-column
@@ -91,6 +107,7 @@
         header-align="center"
         align="center"
         width="150px"
+        show-overflow-tooltip="true"
         label="制片国家/地区">
       </el-table-column>
       <el-table-column
@@ -98,6 +115,7 @@
         header-align="center"
         align="center"
         width="100px"
+        show-overflow-tooltip="true"
         label="导演">
       </el-table-column>
       <el-table-column
@@ -119,6 +137,7 @@
         header-align="center"
         align="center"
         width="100px"
+        show-overflow-tooltip="true"
         label="语言">
       </el-table-column>
       <el-table-column
@@ -126,6 +145,7 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="主演">
       </el-table-column>
       <el-table-column
@@ -133,6 +153,7 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="编剧">
       </el-table-column>
       <el-table-column

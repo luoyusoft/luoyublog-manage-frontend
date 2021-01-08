@@ -13,12 +13,14 @@
     <el-table
       :data="dataList"
       border
+      height="500"
       style="width: 100%;">
       <el-table-column
+        fixed="left"
         prop="id"
         header-align="center"
         align="center"
-        width="100px"
+        width="70px"
         label="id">
       </el-table-column>
       <el-table-column
@@ -29,8 +31,8 @@
         label="类型">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
-          <el-tag v-if="scope.row.module === 1" size="small" type="info">视频</el-tag>
-          <el-tag v-if="scope.row.module === 2" size="small" type="info">聊天室</el-tag>
+          <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
+          <el-tag v-if="scope.row.module === 2" size="small" type="error">聊天室</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -38,6 +40,7 @@
         header-align="center"
         treeKey="id"
         width="250px"
+        show-overflow-tooltip="true"
         label="请求方法">
       </el-table-column>
       <el-table-column
@@ -45,6 +48,7 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="请求uri">
       </el-table-column>
       <el-table-column
@@ -52,6 +56,7 @@
         header-align="center"
         align="center"
         width="150px"
+        show-overflow-tooltip="true"
         label="请求类型">
       </el-table-column>
       <el-table-column
@@ -59,6 +64,7 @@
         header-align="center"
         align="center"
         width="300px"
+        show-overflow-tooltip="true"
         label="请求头参数">
       </el-table-column>
       <el-table-column
@@ -66,6 +72,7 @@
         header-align="center"
         align="center"
         width="400px"
+        show-overflow-tooltip="true"
         label="请求体参数">
       </el-table-column>
       <el-table-column
@@ -73,6 +80,7 @@
         header-align="center"
         align="center"
         width="600px"
+        show-overflow-tooltip="true"
         label="响应结果">
       </el-table-column>
       <el-table-column
@@ -80,6 +88,7 @@
         header-align="center"
         align="center"
         width="150px"
+        show-overflow-tooltip="true"
         label="执行时长(毫秒)">
       </el-table-column>
       <el-table-column
@@ -87,6 +96,7 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="ip地址">
       </el-table-column>
       <el-table-column
@@ -94,6 +104,7 @@
         header-align="center"
         align="center"
         width="150px"
+        show-overflow-tooltip="true"
         label="国家">
       </el-table-column>
       <el-table-column
@@ -101,6 +112,7 @@
         header-align="center"
         align="center"
         width="150px"
+        show-overflow-tooltip="true"
         label="省份">
       </el-table-column>
       <el-table-column
@@ -108,6 +120,7 @@
         header-align="center"
         align="center"
         width="150px"
+        show-overflow-tooltip="true"
         label="城市">
       </el-table-column>
       <el-table-column
@@ -115,6 +128,7 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="浏览器名字">
       </el-table-column>
       <el-table-column
@@ -122,6 +136,7 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="浏览器版本">
       </el-table-column>
       <el-table-column
@@ -129,6 +144,7 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="设备生产厂商">
       </el-table-column>
       <el-table-column
@@ -136,6 +152,7 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="设备类型">
       </el-table-column>
       <el-table-column
@@ -143,21 +160,23 @@
         header-align="center"
         align="center"
         width="200px"
+        show-overflow-tooltip="true"
         label="操作系统的版本号">
-      </el-table-column>
-      <el-table-column
-        prop="createTime"
-        header-align="center"
-        align="center"
-        min-width="180px"
-        label="创建时间">
       </el-table-column>
       <el-table-column
         prop="updateTime"
         header-align="center"
         align="center"
-        min-width="180px"
+        width="180px"
         label="更新时间">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        prop="createTime"
+        header-align="center"
+        align="center"
+        min-width="180px"
+        label="创建时间">
       </el-table-column>
     </el-table>
     <el-pagination

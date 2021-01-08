@@ -13,18 +13,21 @@
       border
       v-loading="dataListLoading"
       @selection-change="selectionChangeHandle"
+      height="500"
       style="width: 100%;">
       <el-table-column
+        fixed="left"
         type="selection"
         header-align="center"
         align="center"
         width="50px">
       </el-table-column>
       <el-table-column
+        fixed="left"
         prop="id"
         header-align="center"
         align="center"
-        width="100px"
+        width="70px"
         label="id">
       </el-table-column>
       <el-table-column
@@ -32,6 +35,7 @@
         header-align="center"
         align="center"
         width="300px"
+        show-overflow-tooltip="true"
         label="推荐标题">
       </el-table-column>
       <el-table-column

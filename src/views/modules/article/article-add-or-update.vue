@@ -10,7 +10,6 @@
         <el-col :span="9">
           <el-form-item label="文章分类">
             <el-cascader
-              style="width: 100%;"
               clearable
               change-on-select
               placeholder="请选择文章分类"
@@ -23,7 +22,6 @@
         <el-col :span="9">
           <el-form-item label="文章标签">
             <el-select
-              style="width: 107%"
               v-model="tagListSelect"
               multiple
               allow-create
@@ -96,6 +94,7 @@ import MavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { treeDataTranslate } from '@/utils'
 import marked from 'marked'
+
 export default {
   components: {
     'mavon-editor': MavonEditor.mavonEditor

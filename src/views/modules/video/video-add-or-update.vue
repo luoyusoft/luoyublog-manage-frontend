@@ -15,7 +15,6 @@
         <el-col :span="9">
           <el-form-item label="视频分类">
             <el-cascader
-              style="width: 100%"
               clearable
               change-on-select
               :options="categoryOptions"
@@ -27,7 +26,6 @@
         <el-col :span="9">
           <el-form-item label="视频标签">
             <el-select
-              style="width: 107%"
               v-model="tagListSelect"
               multiple
               allow-create

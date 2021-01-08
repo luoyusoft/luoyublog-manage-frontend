@@ -1,7 +1,7 @@
 <template>
   <div class="mod-config">
     <el-row>
-      <el-col :span="9">
+      <el-col :span="6">
         <el-card>
           <div slot="header">
             <span>菜单列表</span>
@@ -20,7 +20,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="15">
+      <el-col :span="18">
         <el-card>
         <div slot="header">
           <span>参数列表</span>
@@ -41,12 +41,22 @@
             border
             v-loading="dataListLoading"
             @selection-change="selectionChangeHandle"
+            height="500"
             style="width: 100%;">
             <el-table-column
+              fixed="left"
               type="selection"
               header-align="center"
               align="center"
               width="50px">
+            </el-table-column>
+            <el-table-column
+              fixed="left"
+              prop="id"
+              header-align="center"
+              align="center"
+              width="70px"
+              label="id">
             </el-table-column>
             <el-table-column
               prop="parKey"
@@ -60,12 +70,14 @@
               header-align="center"
               align="center"
               width="100px"
+              show-overflow-tooltip="true"
               label="参数值">
             </el-table-column>
             <el-table-column
               prop="menuUrl"
               header-align="center"
               align="center"
+              show-overflow-tooltip="true"
               width="200px"
               label="参数url">
             </el-table-column>
@@ -74,6 +86,7 @@
               header-align="center"
               align="center"
               width="200px"
+              show-overflow-tooltip="true"
               label="参数类型">
             </el-table-column>
             <el-table-column
