@@ -38,6 +38,7 @@
       <el-table-column
         prop="fileName"
         header-align="center"
+        align="center"
         treeKey="id"
         width="200px"
         :show-overflow-tooltip="true"
