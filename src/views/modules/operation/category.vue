@@ -2,11 +2,11 @@
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item>
-        <el-select v-model="dataForm.type" clearable>
-          <el-option v-for="type in typeList"
-          :key="type.parKey"
-          :value="type.parKey"
-          :label="type.parValue"></el-option>
+        <el-select v-model="dataForm.module" clearable>
+          <el-option v-for="module in moduleList"
+          :key="module.parKey"
+          :value="module.parKey"
+          :label="module.parValue"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -39,13 +39,15 @@
         label="名称">
       </table-tree-column>
       <el-table-column
-        prop="type"
+        prop="module"
         header-align="center"
         align="center"
         width="100px"
-        label="类型">
+        label="模块">
         <template slot-scope="scope">
-          {{getSysParam('MODULE_TYPE',scope.row.type,typeList)}}
+          <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
+          <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
+<!--          {{getSysParam('MODULE_TYPE',scope.row.type,typeList)}}-->
         </template>
       </el-table-column>
       <el-table-column
@@ -107,12 +109,12 @@ export default {
     return {
       dataForm: {
         name: '',
-        type: ''
+        module: ''
       },
       dataList: [],
       dataListLoading: false,
       addOrUpdateVisible: false,
-      typeList: this.getSysParamArr('MODULE_TYPE')
+      moduleList: this.getSysParamArr('MODULE_TYPE')
     }
   },
   components: {
@@ -145,7 +147,7 @@ export default {
         method: 'get',
         params: this.$http.adornParams({
           name: this.dataForm.name,
-          type: this.dataForm.type
+          module: this.dataForm.module
         })
       }).then((response) => {
         if (response && response.code === 200) {

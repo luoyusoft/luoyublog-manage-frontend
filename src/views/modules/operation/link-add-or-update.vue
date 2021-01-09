@@ -76,7 +76,7 @@ export default {
       this.dataForm.id = id || ''
       this.visible = true
       this.confirmButtonDisabled = false
-      this.url = this.$http.adornUrl(`/manage/file/resource/minio/upload?token=${this.$cookie.get('token')}&fileModule=2`)
+      this.url = this.$http.adornUrl(`/manage/file/resource/minio/upload?token=${this.$cookie.get('token')}&module=2`)
       this.$nextTick(() => {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {

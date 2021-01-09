@@ -39,13 +39,15 @@
         label="推荐标题">
       </el-table-column>
       <el-table-column
-        prop="type"
+        prop="module"
         header-align="center"
         align="center"
         width="100px"
-        label="推荐类型">
+        label="推荐模块">
         <template slot-scope="scope">
-          {{ getSysParam('MODULE_TYPE', scope.row.type) }}
+          <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
+          <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
+<!--          {{ getSysParam('MODULE_TYPE', scope.row.type) }}-->
         </template>
       </el-table-column>
       <el-table-column

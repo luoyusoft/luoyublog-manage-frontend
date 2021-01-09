@@ -12,13 +12,13 @@
       <el-form-item :label="getSysParam('CATEGORY_RANK',dataForm.rank,rankList)+'名称'" prop="name">
         <el-input v-model="dataForm.name" placeholder="名称"></el-input>
       </el-form-item>
-      <el-form-item label="所属分类" prop="type">
-        <el-select placeholder="请选择所属分类" clearable filterable v-model="dataForm.type" @change="getCategorySelect()">
+      <el-form-item label="所属模块" prop="module">
+        <el-select placeholder="请选择所属模块" clearable filterable v-model="dataForm.module" @change="getCategorySelect()">
           <el-option
-            v-for="type in typeList"
-            :key="type.parKey"
-            :label="type.parValue"
-            :value="type.parKey">
+            v-for="module in moduleList"
+            :key="module.parKey"
+            :label="module.parValue"
+            :value="module.parKey">
           </el-option>
         </el-select>
       </el-form-item>
@@ -63,7 +63,7 @@ export default {
       visible: false,
       dataForm: {
         rank: 0,
-        type: '',
+        module: '',
         parentId: 0,
         parentName: ''
       },
@@ -71,7 +71,7 @@ export default {
         name: [
           { required: true, message: '名称不能为空', trigger: 'blur' }
         ],
-        type: [
+        module: [
           { required: true, message: '类型不能为空', trigger: 'blur' }
         ],
         rank: [
@@ -82,9 +82,9 @@ export default {
         ]
       },
       rankList: this.getSysParamArr('CATEGORY_RANK'),
-      typeList: this.getSysParamArr('MODULE_TYPE').filter(type => {
-        if (type.parKey !== 2) {
-          return type
+      moduleList: this.getSysParamArr('MODULE_TYPE').filter(module => {
+        if (module.parKey !== 2) {
+          return module
         }
       }),
       categoryList: [],
@@ -114,7 +114,7 @@ export default {
           this.$http({
             url: this.$http.adornUrl('/manage/operation/category/select'),
             method: 'get',
-            params: this.$http.adornParams({type: this.dataForm.type})
+            params: this.$http.adornParams({module: this.dataForm.module})
           }).then((response) => {
             if (response && response.code === 200) {
               this.categoryList = treeDataTranslate(response.data)
@@ -127,7 +127,7 @@ export default {
       } else {
         this.dataForm = {
           rank: 0,
-          type: '',
+          module: '',
           parentId: 0,
           parentName: ''
         }
@@ -138,7 +138,7 @@ export default {
       this.$http({
         url: this.$http.adornUrl('/manage/operation/category/select'),
         method: 'get',
-        params: this.$http.adornParams({type: this.dataForm.type})
+        params: this.$http.adornParams({module: this.dataForm.module})
       }).then((response) => {
         if (response && response.code === 200) {
           this.categoryList = treeDataTranslate(response.data)

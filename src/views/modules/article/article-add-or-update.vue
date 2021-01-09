@@ -160,7 +160,7 @@ export default {
           }
         })
       }).then(() => {
-        this.url = this.$http.adornUrl(`/manage/file/resource/qiniuyun/upload?token=${this.$cookie.get('token')}&fileModule=0`)
+        this.url = this.$http.adornUrl(`/manage/file/resource/minio/upload?token=${this.$cookie.get('token')}&module=0`)
         let id = this.$route.params.id
         if (id) {
           this.$http({

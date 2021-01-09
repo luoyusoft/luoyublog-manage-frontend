@@ -32,136 +32,40 @@
         <template slot-scope="scope">
           <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
           <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
-          <el-tag v-if="scope.row.module === 2" size="small" type="error">聊天室</el-tag>
+          <el-tag v-if="scope.row.module === 2" size="small" type="error">友链</el-tag>
         </template>
       </el-table-column>
       <el-table-column
-        prop="method"
+        prop="fileName"
         header-align="center"
         treeKey="id"
-        width="250px"
+        width="200px"
         show-overflow-tooltip="true"
-        label="请求方法">
+        label="文件名称">
       </el-table-column>
       <el-table-column
-        prop="uri"
+        prop="url"
         header-align="center"
         align="center"
         width="200px"
         show-overflow-tooltip="true"
-        label="请求uri">
+        label="url地址">
       </el-table-column>
       <el-table-column
-        prop="requestType"
+        prop="storageType"
         header-align="center"
         align="center"
         width="150px"
         show-overflow-tooltip="true"
-        label="请求类型">
+        label="存储类型">
       </el-table-column>
       <el-table-column
-        prop="headrParams"
-        header-align="center"
-        align="center"
-        width="300px"
-        show-overflow-tooltip="true"
-        label="请求头参数">
-      </el-table-column>
-      <el-table-column
-        prop="bodyParams"
-        header-align="center"
-        align="center"
-        width="400px"
-        show-overflow-tooltip="true"
-        label="请求体参数">
-      </el-table-column>
-      <el-table-column
-        prop="response"
-        header-align="center"
-        align="center"
-        width="600px"
-        show-overflow-tooltip="true"
-        label="响应结果">
-      </el-table-column>
-      <el-table-column
-        prop="time"
+        prop="bucketName"
         header-align="center"
         align="center"
         width="150px"
         show-overflow-tooltip="true"
-        label="执行时长(毫秒)">
-      </el-table-column>
-      <el-table-column
-        prop="ip"
-        header-align="center"
-        align="center"
-        width="200px"
-        show-overflow-tooltip="true"
-        label="ip地址">
-      </el-table-column>
-      <el-table-column
-        prop="country"
-        header-align="center"
-        align="center"
-        width="150px"
-        show-overflow-tooltip="true"
-        label="国家">
-      </el-table-column>
-      <el-table-column
-        prop="region"
-        header-align="center"
-        align="center"
-        width="150px"
-        show-overflow-tooltip="true"
-        label="省份">
-      </el-table-column>
-      <el-table-column
-        prop="city"
-        header-align="center"
-        align="center"
-        width="150px"
-        show-overflow-tooltip="true"
-        label="城市">
-      </el-table-column>
-      <el-table-column
-        prop="borderName"
-        header-align="center"
-        align="center"
-        width="200px"
-        show-overflow-tooltip="true"
-        label="浏览器名字">
-      </el-table-column>
-      <el-table-column
-        prop="borderVersion"
-        header-align="center"
-        align="center"
-        width="200px"
-        show-overflow-tooltip="true"
-        label="浏览器版本">
-      </el-table-column>
-      <el-table-column
-        prop="deviceManufacturer"
-        header-align="center"
-        align="center"
-        width="200px"
-        show-overflow-tooltip="true"
-        label="设备生产厂商">
-      </el-table-column>
-      <el-table-column
-        prop="deviceType"
-        header-align="center"
-        align="center"
-        width="200px"
-        show-overflow-tooltip="true"
-        label="设备类型">
-      </el-table-column>
-      <el-table-column
-        prop="osVersion"
-        header-align="center"
-        align="center"
-        width="200px"
-        show-overflow-tooltip="true"
-        label="操作系统的版本号">
+        label="桶名">
       </el-table-column>
       <el-table-column
         prop="updateTime"
@@ -239,7 +143,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/manage/log/list'),
+        url: this.$http.adornUrl('/manage/file/resource/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,

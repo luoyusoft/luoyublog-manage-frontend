@@ -228,7 +228,7 @@ export default {
           }
         })
       }).then(() => {
-        this.url = this.$http.adornUrl(`/manage/file/resource/minio/upload?token=${this.$cookie.get('token')}&fileModule=1`)
+        this.url = this.$http.adornUrl(`/manage/file/resource/minio/upload?token=${this.$cookie.get('token')}&module=1`)
         let id = this.$route.params.id
         if (id) {
           this.$http({
