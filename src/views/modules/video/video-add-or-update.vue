@@ -165,7 +165,6 @@ export default {
         tagList: [],
         releaseTime: ''
       },
-      coverTypeList: this.getSysParamArr('VIDEO_COVER_TYPE'),
       url: '',
       file: [],
       videoFile: [],
@@ -210,7 +209,7 @@ export default {
         url: this.$http.adornUrl('/manage/operation/category/list'),
         method: 'get',
         params: this.$http.adornParams({
-          type: 1,
+          module: 1,
           name: ''
         })
       }).then((response) => {
@@ -221,7 +220,7 @@ export default {
         this.$http({
           url: this.$http.adornUrl('/manage/operation/tag/select'),
           method: 'get',
-          params: this.$http.adornParams({type: 1})
+          params: this.$http.adornParams({module: 1})
         }).then((response) => {
           if (response && response.code === 200) {
             this.tagList = response.data
@@ -262,11 +261,11 @@ export default {
           let tag = this.tagList[i]
           if (tag.id === value || value.id) {
             isInput = false
-            tagList.push({id: tag.id, name: tag.name, type: 1})
+            tagList.push({id: tag.id, name: tag.name, module: 1})
           }
         }
         if (isInput) {
-          tagList.push({name: value, type: 1})
+          tagList.push({name: value, module: 1})
         }
       })
       this.video.tagList = tagList

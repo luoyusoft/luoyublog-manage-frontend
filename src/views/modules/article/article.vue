@@ -48,7 +48,7 @@
       header-align="center"
       align="center"
       label="文章标题"
-      show-overflow-tooltip="true"
+      :show-overflow-tooltip="true"
       width="250px">
     </el-table-column>
     <el-table-column
@@ -56,7 +56,7 @@
       header-align="center"
       align="center"
       label="文章简介"
-      show-overflow-tooltip="true"
+      :show-overflow-tooltip="true"
       width="250px">
     </el-table-column>
     <el-table-column
@@ -64,14 +64,14 @@
       header-align="center"
       align="center"
       width="100px"
-      show-overflow-tooltip="true"
+      :show-overflow-tooltip="true"
       label="作者">
     </el-table-column>
     <el-table-column
       prop="categoryListStr"
       header-align="center"
       align="center"
-      show-overflow-tooltip="true"
+      :show-overflow-tooltip="true"
       label="分类"
       width="200px">
     </el-table-column>

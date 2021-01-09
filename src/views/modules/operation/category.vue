@@ -35,7 +35,7 @@
         prop="name"
         header-align="center"
         width="250px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="名称">
       </table-tree-column>
       <el-table-column
@@ -55,7 +55,7 @@
         header-align="center"
         align="center"
         width="100px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="级别">
         <template slot-scope="scope">
           {{getSysParam('CATEGORY_RANK', scope.row.rank)}}
@@ -66,7 +66,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="上级级别">
       </el-table-column>
       <el-table-column

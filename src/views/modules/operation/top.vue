@@ -34,7 +34,7 @@
         prop="title"
         header-align="center"
         align="center"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         width="300px"
         label="置顶标题">
       </el-table-column>

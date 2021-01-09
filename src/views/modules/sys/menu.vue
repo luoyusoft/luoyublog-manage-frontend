@@ -23,7 +23,7 @@
         header-align="center"
         treeKey="id"
         width="250px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="名称">
       </table-tree-column>
       <el-table-column
@@ -31,7 +31,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="上级菜单">
       </el-table-column>
       <el-table-column
@@ -67,7 +67,7 @@
         header-align="center"
         align="center"
         width="300px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="菜单URL">
       </el-table-column>
       <el-table-column
@@ -75,7 +75,7 @@
         header-align="center"
         align="center"
         width="250px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="授权标识">
       </el-table-column>
       <el-table-column

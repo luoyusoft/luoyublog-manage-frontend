@@ -35,7 +35,7 @@
         header-align="center"
         align="center"
         width="300px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="推荐标题">
       </el-table-column>
       <el-table-column

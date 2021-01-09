@@ -104,7 +104,7 @@ export default {
       article: {
         recommend: false,
         tagList: [],
-        type: 0,
+        module: 0,
         coverType: 2 // 默认无图片
       },
       coverTypeList: this.getSysParamArr('ARTICLE_COVER_TYPE'),
@@ -142,7 +142,7 @@ export default {
         url: this.$http.adornUrl('/manage/operation/category/list'),
         method: 'get',
         params: this.$http.adornParams({
-          type: 0,
+          module: 0,
           name: ''
         })
       }).then((response) => {
@@ -153,7 +153,7 @@ export default {
         this.$http({
           url: this.$http.adornUrl('/manage/operation/tag/select'),
           method: 'get',
-          params: this.$http.adornParams({type: 0})
+          params: this.$http.adornParams({module: 0})
         }).then((response) => {
           if (response && response.code === 200) {
             this.tagList = response.data
@@ -191,11 +191,11 @@ export default {
           let tag = this.tagList[i]
           if (tag.id === value || value.id) {
             isInput = false
-            tagList.push({id: tag.id, name: tag.name, type: 0})
+            tagList.push({id: tag.id, name: tag.name, module: 0})
           }
         }
         if (isInput) {
-          tagList.push({name: value, type: 0})
+          tagList.push({name: value, module: 0})
         }
       })
       this.article.tagList = tagList

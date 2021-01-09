@@ -40,7 +40,7 @@
         header-align="center"
         treeKey="id"
         width="250px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="请求方法">
       </el-table-column>
       <el-table-column
@@ -48,7 +48,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="请求uri">
       </el-table-column>
       <el-table-column
@@ -56,7 +56,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="请求类型">
       </el-table-column>
       <el-table-column
@@ -64,7 +64,7 @@
         header-align="center"
         align="center"
         width="300px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="请求头参数">
       </el-table-column>
       <el-table-column
@@ -72,7 +72,7 @@
         header-align="center"
         align="center"
         width="400px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="请求体参数">
       </el-table-column>
       <el-table-column
@@ -80,7 +80,7 @@
         header-align="center"
         align="center"
         width="600px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="响应结果">
       </el-table-column>
       <el-table-column
@@ -88,7 +88,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="执行时长(毫秒)">
       </el-table-column>
       <el-table-column
@@ -96,7 +96,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="ip地址">
       </el-table-column>
       <el-table-column
@@ -104,7 +104,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="国家">
       </el-table-column>
       <el-table-column
@@ -112,7 +112,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="省份">
       </el-table-column>
       <el-table-column
@@ -120,7 +120,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="城市">
       </el-table-column>
       <el-table-column
@@ -128,7 +128,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="浏览器名字">
       </el-table-column>
       <el-table-column
@@ -136,7 +136,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="浏览器版本">
       </el-table-column>
       <el-table-column
@@ -144,7 +144,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="设备生产厂商">
       </el-table-column>
       <el-table-column
@@ -152,7 +152,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="设备类型">
       </el-table-column>
       <el-table-column
@@ -160,7 +160,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="操作系统的版本号">
       </el-table-column>
       <el-table-column

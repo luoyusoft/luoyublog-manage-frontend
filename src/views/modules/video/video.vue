@@ -47,7 +47,7 @@
         header-align="center"
         align="center"
         width="250px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="视频地址">
       </el-table-column>
       <el-table-column
@@ -55,7 +55,7 @@
           header-align="center"
           align="center"
           width="250px"
-          show-overflow-tooltip="true"
+          :show-overflow-tooltip="true"
           label="标题">
       </el-table-column>
       <el-table-column
@@ -63,7 +63,7 @@
         header-align="center"
         align="center"
         width="250px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="剧情简介">
       </el-table-column>
       <el-table-column
@@ -71,7 +71,7 @@
         header-align="center"
         align="center"
         width="250px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="又名">
       </el-table-column>
       <el-table-column
@@ -79,7 +79,7 @@
         header-align="center"
         align="center"
         width="100px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="上传者">
       </el-table-column>
       <el-table-column
@@ -87,7 +87,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="分类">
       </el-table-column>
       <el-table-column
@@ -107,7 +107,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="制片国家/地区">
       </el-table-column>
       <el-table-column
@@ -115,7 +115,7 @@
         header-align="center"
         align="center"
         width="100px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="导演">
       </el-table-column>
       <el-table-column
@@ -137,7 +137,7 @@
         header-align="center"
         align="center"
         width="100px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="语言">
       </el-table-column>
       <el-table-column
@@ -145,7 +145,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="主演">
       </el-table-column>
       <el-table-column
@@ -153,7 +153,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="编剧">
       </el-table-column>
       <el-table-column

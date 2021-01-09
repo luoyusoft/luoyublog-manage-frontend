@@ -37,7 +37,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="用户名">
       </el-table-column>
       <el-table-column
@@ -45,7 +45,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="邮箱">
       </el-table-column>
       <el-table-column
@@ -53,7 +53,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="手机号">
       </el-table-column>
       <el-table-column

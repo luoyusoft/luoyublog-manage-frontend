@@ -37,7 +37,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="角色名称">
       </el-table-column>
       <el-table-column
@@ -45,7 +45,7 @@
         header-align="center"
         align="center"
         width="250px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="备注">
       </el-table-column>
       <el-table-column

@@ -70,14 +70,14 @@
               header-align="center"
               align="center"
               width="100px"
-              show-overflow-tooltip="true"
+              :show-overflow-tooltip="true"
               label="参数值">
             </el-table-column>
             <el-table-column
               prop="menuUrl"
               header-align="center"
               align="center"
-              show-overflow-tooltip="true"
+              :show-overflow-tooltip="true"
               width="200px"
               label="参数url">
             </el-table-column>
@@ -86,7 +86,7 @@
               header-align="center"
               align="center"
               width="200px"
-              show-overflow-tooltip="true"
+              :show-overflow-tooltip="true"
               label="参数类型">
             </el-table-column>
             <el-table-column

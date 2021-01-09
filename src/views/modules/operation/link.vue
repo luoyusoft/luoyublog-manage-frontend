@@ -37,7 +37,7 @@
           header-align="center"
           align="center"
           width="150px"
-          show-overflow-tooltip="true"
+          :show-overflow-tooltip="true"
           label="链接名称">
       </el-table-column>
       <el-table-column
@@ -45,7 +45,7 @@
           header-align="center"
           align="center"
           width="300px"
-          show-overflow-tooltip="true"
+          :show-overflow-tooltip="true"
           label="链接地址">
       </el-table-column>
       <el-table-column

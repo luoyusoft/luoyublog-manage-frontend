@@ -40,7 +40,7 @@
         header-align="center"
         treeKey="id"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="文件名称">
       </el-table-column>
       <el-table-column
@@ -48,7 +48,7 @@
         header-align="center"
         align="center"
         width="200px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="url地址">
       </el-table-column>
       <el-table-column
@@ -56,7 +56,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="存储类型">
       </el-table-column>
       <el-table-column
@@ -64,7 +64,7 @@
         header-align="center"
         align="center"
         width="150px"
-        show-overflow-tooltip="true"
+        :show-overflow-tooltip="true"
         label="桶名">
       </el-table-column>
       <el-table-column
