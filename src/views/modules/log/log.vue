@@ -1,7 +1,7 @@
 <template>
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
-      <el-form-item style="display: inline-block;width: 20%">
+      <el-form-item style="display: inline-block">
         <el-select v-model="dataForm.module" >
           <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
         </el-select>
@@ -13,7 +13,7 @@
     <el-table
       :data="dataList"
       border
-      height="500"
+      height="800"
       style="width: 100%;">
       <el-table-column
         fixed="left"

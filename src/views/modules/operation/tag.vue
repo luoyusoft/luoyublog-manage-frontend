@@ -15,7 +15,7 @@
       border
       v-loading="dataListLoading"
       @selection-change="selectionChangeHandle"
-      height="500"
+      height="800"
       style="width: 100%;">
       <el-table-column
         fixed="left"
@@ -41,13 +41,15 @@
           label="标签名称">
       </el-table-column>
       <el-table-column
-          prop="type"
+          prop="module"
           header-align="center"
           align="center"
           width="150px"
-          label="所属类别">
+          label="所属模块">
         <template slot-scope="scope">
-          {{getSysParam('MODULE_TYPE',scope.row.type)}}
+          <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
+          <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
+<!--          {{getSysParam('MODULE_TYPE',scope.row.type)}}-->
         </template>
       </el-table-column>
       <el-table-column

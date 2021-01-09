@@ -11,8 +11,8 @@
                     v-model="isClose">
           <el-form :inline="true">
             <el-form-item style="display: inline-block;width: 20%">
-              <el-select v-model="listParams.type" >
-                <el-option v-for="type in typeList" :key="type.parKey" :value="type.parKey" :label="type.parValue"></el-option>
+              <el-select v-model="listParams.module" >
+                <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item style="width: 35%">
@@ -24,9 +24,9 @@
           </el-form>
           <el-table :data="topList" style="height: 500px;overflow: auto">
             <el-table-column property="title" label="标题"></el-table-column>
-            <el-table-column property="type"  label="类型">
+            <el-table-column property="module"  label="模块">
               <template  slot-scope="scope" >
-                {{getSysParam('MODULE_TYPE',scope.row.type,typeList)}}
+                {{getSysParam('MODULE_TYPE',scope.row.module,moduleList)}}
               </template>
             </el-table-column>
             <el-table-column
@@ -47,10 +47,10 @@
       <el-form-item label="标题" v-if="!dataForm.title">
         请选择置顶内容
       </el-form-item>
-      <el-form-item label="类型" v-if="getSysParam('MODULE_TYPE',dataForm.type,typeList)">
-        {{getSysParam('MODULE_TYPE',dataForm.type,typeList)}}
+      <el-form-item label="模块" v-if="getSysParam('MODULE_TYPE',dataForm.module,moduleList)">
+        {{getSysParam('MODULE_TYPE',dataForm.module,moduleList)}}
       </el-form-item>
-      <el-form-item label="类型" v-if="!getSysParam('MODULE_TYPE',dataForm.type,typeList)">
+      <el-form-item label="模块" v-if="!getSysParam('MODULE_TYPE',dataForm.module,moduleList)">
         请选择置顶内容
       </el-form-item>
       <el-form-item label="顺序" >
@@ -80,14 +80,14 @@ export default {
       dataForm: {},
       dataRule: {
         linkId: [{ required: true, message: '置顶的文章Id不能为空', trigger: 'blur' }],
-        type: [{ required: true, message: '置顶类型不能为空', trigger: 'blur' }]
+        module: [{ required: true, message: '置顶类型不能为空', trigger: 'blur' }]
       },
       topListShow: false,
       topList: [],
-      typeList: this.getSysParamArr('MODULE_TYPE'),
+      moduleList: this.getSysParamArr('MODULE_TYPE'),
       listParams: {
         title: '',
-        type: 0
+        module: 0
       },
       isClose: false
     }
@@ -179,7 +179,7 @@ export default {
     selectTop (top) {
       this.dataForm.linkId = top.linkId
       this.dataForm.title = top.title
-      this.dataForm.type = top.type
+      this.dataForm.module = top.module
       this.topListShow = false
     }
   }

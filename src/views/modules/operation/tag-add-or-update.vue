@@ -7,13 +7,13 @@
       <el-form-item label="标签名称" prop="name">
         <el-input v-model="dataForm.name" placeholder="标签名字"></el-input>
       </el-form-item>
-      <el-form-item label="所属类别" prop="type">
-        <el-select v-model="dataForm.type">
+      <el-form-item label="所属模块" prop="module">
+        <el-select v-model="dataForm.module">
           <el-option
-            v-for="type in typeList"
-            :key="type.parKey"
-            :value="type.parKey"
-            :label="type.parValue"
+            v-for="module in moduleList"
+            :key="module.parKey"
+            :value="module.parKey"
+            :label="module.parValue"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -32,13 +32,13 @@ export default {
       visible: false,
       confirmButtonDisabled: false,
       dataForm: {
-        type: ''
+        module: ''
       },
       dataRule: {
         name: [{ required: true, message: '标签名称不能为空', trigger: 'blur' }],
-        type: [{ required: true, message: '所属类别不能为空', trigger: 'blur' }]
+        module: [{ required: true, message: '所属模块不能为空', trigger: 'blur' }]
       },
-      typeList: this.getSysParamArr('MODULE_TYPE')
+      moduleList: this.getSysParamArr('MODULE_TYPE')
     }
   },
   methods: {

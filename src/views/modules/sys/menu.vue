@@ -8,7 +8,7 @@
     <el-table
       :data="dataList"
       border
-      height="500"
+      height="800"
       style="width: 100%;">
       <el-table-column
         fixed="left"

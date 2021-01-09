@@ -41,7 +41,7 @@
             border
             v-loading="dataListLoading"
             @selection-change="selectionChangeHandle"
-            height="500"
+            height="800"
             style="width: 100%;">
             <el-table-column
               fixed="left"
