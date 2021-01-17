@@ -289,7 +289,7 @@ export default {
       },
       dataList: [],
       pageIndex: 1,
-      pageSize: 10,
+      pageSize: 20,
       totalPage: 0,
       dataListLoading: false,
       dataListSelections: []
@@ -330,6 +330,9 @@ export default {
       }).then((response) => {
         if (response && response.code === 200) {
           this.dataList = response.data.list
+          this.dataList.forEach(x => {
+            x.score = parseFloat(x.score)
+          })
           this.totalPage = response.data.totalCount
         } else {
           this.dataList = []

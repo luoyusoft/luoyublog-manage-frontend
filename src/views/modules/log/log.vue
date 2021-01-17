@@ -2,7 +2,7 @@
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item style="display: inline-block">
-        <el-select v-model="dataForm.module" >
+        <el-select v-model="dataForm.module" clearable>
           <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
         </el-select>
       </el-form-item>
@@ -201,7 +201,7 @@ export default {
       },
       dataList: [],
       pageIndex: 1,
-      pageSize: 10,
+      pageSize: 20,
       totalPage: 0,
       dataListLoading: false
     }

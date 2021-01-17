@@ -20,7 +20,7 @@ Vue.use(VueCookie)
 Vue.config.productionTip = false
 
 // 挂载全局
-Vue.prototype.$http = httpRequest // Ajax 请求方法
+Vue.prototype.$http = httpRequest // axios 请求方法
 Vue.prototype.isAuth = isAuth // 权限方法
 Vue.prototype.getSysParam = getSysParam // 获取参数
 Vue.prototype.getSysParamArr = getSysParamArr // 获取参数列表

@@ -32,7 +32,7 @@ import {
   Option,
   // OptionGroup,
   Button,
-  // ButtonGroup,
+  ButtonGroup,
   Table,
   TableColumn,
   DatePicker,
@@ -55,7 +55,7 @@ import {
   Row,
   Col,
   Upload,
-  // Progress,
+  Progress,
   Badge,
   Card,
   Rate,
@@ -63,8 +63,8 @@ import {
   // Step,
   // Carousel,
   // CarouselItem,
-  // Collapse,
-  // CollapseItem,
+  Collapse,
+  CollapseItem,
   Cascader,
   // ColorPicker,
   // Transfer,
@@ -102,7 +102,7 @@ Vue.use(Select)
 Vue.use(Option)
 // Vue.use(OptionGroup)
 Vue.use(Button)
-// Vue.use(ButtonGroup)
+Vue.use(ButtonGroup)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(DatePicker)
@@ -124,7 +124,7 @@ Vue.use(Slider)
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Upload)
-// Vue.use(Progress)
+Vue.use(Progress)
 Vue.use(Badge)
 Vue.use(Card)
 Vue.use(Rate)
@@ -132,8 +132,8 @@ Vue.use(Rate)
 // Vue.use(Step)
 // Vue.use(Carousel)
 // Vue.use(CarouselItem)
-// Vue.use(Collapse)
-// Vue.use(CollapseItem)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
 Vue.use(Cascader)
 // Vue.use(ColorPicker)
 // Vue.use(Transfer)
