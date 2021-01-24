@@ -89,7 +89,6 @@ const Status = {
   error: 'error',
   done: 'done'
 }
-
 // 单个文件的状态
 const fileStatus = {
   wait: 'wait',
@@ -145,6 +144,10 @@ export default {
       type: Function,
       default: null
     },
+    module: {
+      type: Number,
+      default: 99
+    },
     accept: {
       type: String,
       default: ''
@@ -194,7 +197,8 @@ export default {
   data: () => ({
     uploadFiles: [],
     worker: null,
-    cancels: [], // 存储要取消的请求
+    // 存储要取消的请求
+    cancels: [],
     tempThreads: 3,
     // 默认状态
     status: Status.wait
@@ -247,7 +251,8 @@ export default {
       console.log('handleFileChange -> file', files)
       if (!files) return
 
-      fileIndex = 0 // 重置文件下标
+      // 重置文件下标
+      fileIndex = 0
       console.log('handleFileChange -> this.uploadFiles', this.uploadFiles)
       // 判断文件选择的个数
       if (this.limit && files.length > this.limit) {
@@ -268,13 +273,14 @@ export default {
       rawFile.status = fileStatus.wait
       rawFile.chunkList = []
       rawFile.uploadProgress = 0
-      rawFile.fakeUploadProgress = 0 // 假进度条，处理恢复上传后，进度条后移的问题
+      // 假进度条，处理恢复上传后，进度条后移的问题
+      rawFile.fakeUploadProgress = 0
       rawFile.hashProgress = 0
 
       if (this.beforeUpload) {
         const before = this.beforeUpload(rawFile)
         if (before && before.then) {
-          before.then((res) => {
+          before.then((response) => {
             this.uploadFiles.push(rawFile)
           })
         }
@@ -284,19 +290,21 @@ export default {
         this.uploadFiles.push(rawFile)
       }
     },
+    // 进行上传
     async handleUpload () {
       console.log('handleUpload -> this.uploadFiles', this.uploadFiles)
       if (!this.uploadFiles) return
       this.status = Status.uploading
       const filesArr = this.uploadFiles
 
+      // 遍历表单里的文件
       for (let i = 0; i < filesArr.length; i++) {
         fileIndex = i
         if (['secondPass', 'success', 'error'].includes(filesArr[i].status)) {
           console.log('跳过已上传成功或已秒传的或失败的')
           continue
         }
-
+        // 进行分片切割
         const fileChunkList = this.createFileChunk(filesArr[i])
 
         // 若不是恢复，再进行hash计算
@@ -316,8 +324,10 @@ export default {
 
         this.status = Status.uploading
 
-        const verifyRes = await this.verifyUpload(filesArr[i].name, filesArr[i].hash)
-        if (verifyRes.data.presence) {
+        // 分片上传文件，获取各个分片上传地址
+        const chunkUploadRes = await this.chunkUpload(filesArr[i].name, filesArr[i].hash, fileChunkList.length)
+
+        if (chunkUploadRes.length < 1) {
           filesArr[i].status = fileStatus.secondPass
           filesArr[i].uploadProgress = 100
           this.isAllStatus()
@@ -325,18 +335,35 @@ export default {
           console.log('开始上传文件----》', filesArr[i].name)
           filesArr[i].status = fileStatus.uploading
 
+          let arr = []
+          chunkUploadRes.forEach(e => {
+            arr.push(e.chunkNumber)
+          })
+
+          for (let j = 0; j < fileChunkList.length; j++) {
+            if (!arr.includes(j)) {
+              this.addChunkStorage(filesArr[i].hash, j)
+            }
+          }
+          chunkUploadRes.forEach(x => {
+            x.file = fileChunkList[x.chunkNumber].file
+          })
           const getChunkStorage = this.getChunkStorage(filesArr[i].hash)
-          filesArr[i].fileHash = filesArr[i].hash // 文件的hash，合并时使用
-          filesArr[i].chunkList = fileChunkList.map(({ file }, index) => ({
+          // 文件的hash，合并时使用
+          filesArr[i].fileHash = filesArr[i].hash
+          filesArr[i].chunkList = chunkUploadRes.map(({ chunkNumber, uploadUrl, file }) => ({
             fileHash: filesArr[i].hash,
             fileName: filesArr[i].name,
-            index,
-            hash: filesArr[i].hash + '-' + index,
-            chunk: file,
+            uploadUrl: uploadUrl,
+            chunkNumber: chunkNumber,
+            hash: filesArr[i].hash + '-' + chunkNumber,
+            data: file,
             size: file.size,
-            uploaded: getChunkStorage && getChunkStorage.includes(index), // 标识：是否已完成上传
-            progress: getChunkStorage && getChunkStorage.includes(index) ? 100 : 0,
-            status: getChunkStorage && getChunkStorage.includes(index) ? 'success' : 'wait' // 上传状态，用作进度状态显示
+            // 标识：是否已完成上传
+            uploaded: false,
+            progress: getChunkStorage && getChunkStorage.includes(chunkNumber) ? 100 : 0,
+            // 上传状态，用作进度状态显示
+            status: getChunkStorage && getChunkStorage.includes(chunkNumber) ? 'success' : 'wait'
           }))
 
           this.$set(filesArr, i, filesArr[i])
@@ -352,18 +379,8 @@ export default {
       var chunkData = data.chunkList
       return new Promise(async (resolve, reject) => {
         const requestDataList = chunkData
-          .filter(({ uploaded }) => !uploaded)
-          .map(({ fileHash, chunk, fileName, index }) => {
-            const formData = new FormData()
-            formData.append('md5', fileHash)
-            formData.append('file', chunk)
-            formData.append('fileName', index) // 文件名使用切片的下标
-
-            return { formData, index, fileName }
-          })
 
         console.log('uploadChunks -> requestDataList', requestDataList)
-
         try {
           const ret = await this.sendRequest(requestDataList, chunkData)
           console.log('uploadChunks -> chunkData', chunkData)
@@ -406,18 +423,18 @@ export default {
             // 出栈
             const formInfo = forms.shift()
 
-            const formData = formInfo.formData
-            const index = formInfo.index
-
+            const formData = formInfo
+            console.log('handler -> formData111', formData)
+            const index = formData.chunkNumber
             this.$http({
-              url: this.$http.adornUrl('/manage/file/chunk'),
-              method: 'post',
-              data: formData,
+              url: this.$http.adornUrl(formData.uploadUrl),
+              method: 'put',
+              data: formData.data,
               onUploadProgress: that.createProgresshandler(chunkData[index]),
               cancelToken: new CancelToken((c) => this.cancels.push(c)),
               timeout: 0
-            }).then((res) => {
-              console.log('handler -> res', res)
+            }).then((response) => {
+              console.log('handler -> response', response)
               // 更改状态
               chunkData[index].uploaded = true
               chunkData[index].status = 'success'
@@ -425,6 +442,17 @@ export default {
               // 存储已上传的切片下标
               this.addChunkStorage(chunkData[index].fileHash, index)
 
+              this.$http({
+                url: this.$http.adornUrl('/manage/file/resource/minio/chunkSuccess'),
+                method: 'post',
+                data: this.$http.adornData({
+                  'fileMd5': formData.fileHash,
+                  'module': this.module,
+                  'chunkNumber': index
+                })
+              }).then((response) => {
+                console.log('chunkSuccess -> response', response.msg)
+              })
               finished++
               handler()
             }).catch((e) => {
@@ -475,20 +503,18 @@ export default {
     // 通知服务端合并切片
     mergeRequest (data) {
       return new Promise((resolve, reject) => {
-        const obj = {
-          md5: data.fileHash,
-          fileName: data.name,
-          fileChunkNum: data.chunkList.length,
-          ...this.uploadArguments
-        }
         this.$http({
-          url: this.$http.adornUrl('/manage/file/merge'),
+          url: this.$http.adornUrl('/manage/file/resource/minio/compose'),
           method: 'post',
-          data: obj,
-          timeout: 0
-        }).then((res) => {
+          data: this.$http.adornData({
+            'fileMd5': data.fileHash,
+            'fileName': data.name,
+            'module': this.module,
+            'chunkCount': data.chunkList.length
+          })
+        }).then((response) => {
           // 清除storage
-          if (res.data.code === 2000) {
+          if (response && response.code === 200) {
             data.status = fileStatus.success
             console.log('mergeRequest -> data', data)
             localStorage.removeItem(data.fileHash)
@@ -544,21 +570,25 @@ export default {
       this.uploadFiles[fileIndex].status = fileStatus.resume
       this.handleUpload()
     },
-    // 文件上传之前的校验： 校验文件是否已存在
-    verifyUpload (fileName, fileHash) {
+    // 分片上传文件，获取各个分片上传地址
+    chunkUpload (fileName, fileHash, chunkCount) {
       return new Promise((resolve) => {
-        const obj = {
-          md5: fileHash,
-          fileName,
-          ...this.uploadArguments
-        }
         this.$http({
-          url: this.$http.adornUrl('/manage/file/presence'),
-          method: 'get',
-          params: obj
-        }).then((res) => {
-          console.log('verifyUpload -> res', res)
-          resolve(res.data)
+          url: this.$http.adornUrl('/manage/file/resource/minio/chunkUpload'),
+          method: 'post',
+          data: this.$http.adornData({
+            'fileMd5': fileHash,
+            'fileName': fileName,
+            'module': this.module,
+            'chunkCount': chunkCount
+          })
+        }).then((response) => {
+          if (response && response.code === 200) {
+            console.log('verifyUpload -> res', response)
+            resolve(response.data)
+          } else {
+            this.$message.error(response.msg)
+          }
         }).catch((err) => {
           console.log('verifyUpload -> err', err)
         })
@@ -576,7 +606,6 @@ export default {
             this.uploadFiles[fileIndex].hashProgress = Number(percentage.toFixed(0))
             this.$set(this.uploadFiles, fileIndex, this.uploadFiles[fileIndex])
           }
-
           if (hash) {
             resolve(hash)
           }

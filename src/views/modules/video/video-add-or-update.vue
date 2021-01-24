@@ -73,15 +73,6 @@
       </el-row>
       <el-row>
         <el-col :span="6">
-          <el-form-item label="片长" prop="duration">
-            <el-time-picker
-              v-model="video.duration"
-              :picker-options="{selectableRange: '18:30:00 - 20:30:00'}"
-              placeholder="片长" clearable>
-            </el-time-picker>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
           <el-form-item label="语言" prop="language">
             <el-input placeholder="语言" v-model="video.language" clearable></el-input>
           </el-form-item>
@@ -96,6 +87,15 @@
         <el-col :span="6">
           <el-form-item label="评分">
             <el-rate v-model="video.score" allow-half style="line-height: 2" show-score text-color="#ff9900"></el-rate>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="片长" prop="duration">
+            <el-time-picker
+              v-model="video.duration"
+              :picker-options="{selectableRange: '18:30:00 - 20:30:00'}"
+              placeholder="片长" clearable>
+            </el-time-picker>
           </el-form-item>
         </el-col>
       </el-row>
@@ -143,12 +143,13 @@
 <!--        </el-col>-->
 <!--      </el-form-item>-->
       <el-form-item label="上传视频">
-        <el-col :span="12">
+        <el-col :span="24">
           <div class="mater-upload-container">
             <uploader-container
               ref="upload"
               :before-upload="beforeUpload"
               :accept="accepts"
+              :module="1"
               :upload-arguments="uploadArgumentsObj"
               :limit="limit"
               :on-exceed="fileLimitFn"
@@ -249,7 +250,8 @@ export default {
         type: 'video'
       },
       limit: 20,
-      chunkSize: 50 * 1024 * 1024,
+      // chunkSize: 50 * 1024 * 1024,
+      chunkSize: 10 * 1024 * 1024,
       share: 1 // 是否共享 0私有  1共享
     }
   },
