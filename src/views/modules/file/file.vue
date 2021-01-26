@@ -69,6 +69,46 @@
         label="桶名">
       </el-table-column>
       <el-table-column
+        prop="fileMd5"
+        header-align="center"
+        align="center"
+        width="150px"
+        :show-overflow-tooltip="true"
+        label="文件的md5">
+      </el-table-column>
+      <el-table-column
+        prop="suffix"
+        header-align="center"
+        align="center"
+        width="100px"
+        :show-overflow-tooltip="true"
+        label="文件格式">
+      </el-table-column>
+      <el-table-column
+        prop="isChunk"
+        header-align="center"
+        align="center"
+        width="100px"
+        :show-overflow-tooltip="true"
+        label="是否分片">
+      </el-table-column>
+      <el-table-column
+        prop="chunkCount"
+        header-align="center"
+        align="center"
+        width="100px"
+        :show-overflow-tooltip="true"
+        label="分片总数量">
+      </el-table-column>
+      <el-table-column
+        prop="uploadStatus"
+        header-align="center"
+        align="center"
+        width="100px"
+        :show-overflow-tooltip="true"
+        label="上传状态">
+      </el-table-column>
+      <el-table-column
         prop="updateTime"
         header-align="center"
         align="center"

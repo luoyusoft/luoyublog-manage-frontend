@@ -154,7 +154,7 @@
               :limit="limit"
               :on-exceed="fileLimitFn"
               :chunk-size="chunkSize"
-              @success="success">
+              @successUpload="successUpload">
               <div slot="tip" class="upload-tip">
                 <i class="el-icon-info"></i>:
                 暂时只支持：{{ acceptDesc[uploadType] }}格式的视频！
@@ -251,8 +251,9 @@ export default {
       },
       limit: 20,
       // chunkSize: 50 * 1024 * 1024,
-      chunkSize: 10 * 1024 * 1024,
-      share: 1 // 是否共享 0私有  1共享
+      chunkSize: 400 * 1024 * 1024,
+      // 是否共享 0私有  1共享
+      share: 1
     }
   },
   components: {
@@ -355,13 +356,6 @@ export default {
         return false
       }
     },
-    // 上传视频之前
-    beforeUploadHandleVideo (videoFile) {
-      if (videoFile.type !== 'video/mp4') {
-        this.$message.error('暂时只支持mp4格式的视频！')
-        return false
-      }
-    },
     // 上传图片成功
     successHandleImg (response) {
       if (response && response.code === 200) {
@@ -370,23 +364,10 @@ export default {
         this.$message.success('上传成功！')
       }
     },
-    // 上传视频成功
-    successHandleVideo (response) {
-      if (response && response.code === 200) {
-        this.video.videoUrl = response.data.url
-        this.videoFile = [response.data]
-        this.$message.success('上传成功！')
-      }
-    },
     // 移除上传图片
     handleRemoveImg (file, fileList) {
       this.file = []
       this.video.cover = ''
-    },
-    // 移除上传视频
-    handleRemoveVideo (videoFile, fileList) {
-      this.videoFile = []
-      this.video.url = ''
     },
     // 保存视频
     saveVideo () {
@@ -428,24 +409,10 @@ export default {
         this.$refs.md.$img2Url(pos, response.data.url)
       })
     },
-    // 视频内容图片上传
-    videoAdd (pos, $file) {
-      // 第一步.将图片上传到服务器.
-      let formData = new FormData()
-      formData.append('file', $file)
-      this.$http({
-        url: this.url,
-        method: 'post',
-        data: formData,
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }).then((response) => {
-        this.$refs.md.$img2Url(pos, response.data.url)
-      })
-    },
     beforeUpload (file) {
-      console.log('beforeAvatarUpload -> file', file)
+      console.log('上传文件之前校验：', file)
       if (this.acceptsObj[this.uploadType].indexOf(file.type) === -1) {
-        this.$message.warning('只能上传' + this.acceptDesc[this.uploadType])
+        this.$message.warning('只能上传：' + this.acceptDesc[this.uploadType])
         return false
       }
       if (!file.size) {
@@ -464,15 +431,16 @@ export default {
     clearFiles () {
       this.$refs.upload.clearFiles()
     },
-    success () {
-      this.$message.success('上传成功')
+    successUpload (url) {
+      console.log('上传成功，地址：' + url)
+      this.video.videoUrl = url
     },
     // 属性限制
     async propertyRestrictions (file) {
       return new Promise(async (resolve, reject) => {
         if (this.uploadType === 'image') {
           const isVerifyResolution = await this.verifyResolution(file)
-          console.log('propertyRestrictions -> isVerifyResolution', isVerifyResolution)
+          console.log('属性限制：', isVerifyResolution)
           if (!isVerifyResolution) {
             this.$message.warning('messageTips.notAbove4k')
             reject(new Error())
