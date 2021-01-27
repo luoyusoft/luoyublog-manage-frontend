@@ -22,7 +22,7 @@
 
 |     Name     | Version |
 | :----------: | :-----: |
-|     Vue      |  2.5.2  |
+|     Vue      |  2.6.10  |
 |   Vue CLI    |   2.0   |
 |     Vuex     |  3.0.1  |
 |  Vue-Router  |  3.0.7  |
