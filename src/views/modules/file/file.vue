@@ -77,6 +77,14 @@
         label="文件的md5">
       </el-table-column>
       <el-table-column
+        prop="fileSize"
+        header-align="center"
+        align="center"
+        width="100px"
+        :show-overflow-tooltip="true"
+        label="文件大小">
+      </el-table-column>
+      <el-table-column
         prop="suffix"
         header-align="center"
         align="center"

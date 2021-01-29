@@ -78,7 +78,7 @@
 import { CancelToken } from 'axios'
 
 // 默认切片大小
-var chunkSize = 10 * 1024 * 1024
+var chunkSize = 100 * 1024 * 1024
 // 当前正在被遍历的文件下标
 var fileIndex = 0
 
@@ -327,7 +327,7 @@ export default {
         this.status = Status.uploading
 
         // 分片上传文件，获取各个分片上传地址
-        const chunkUploadRes = await this.chunkUpload(filesArr[i].name, filesArr[i].hash, fileChunkList.length)
+        const chunkUploadRes = await this.chunkUpload(filesArr[i].name, filesArr[i].hash, filesArr[i].size, fileChunkList.length)
 
         if (chunkUploadRes.length < 1) {
           filesArr[i].status = fileStatus.secondPass
@@ -581,7 +581,7 @@ export default {
       this.handleUpload()
     },
     // 分片上传文件，获取各个分片上传地址
-    chunkUpload (fileName, fileHash, chunkCount) {
+    chunkUpload (fileName, fileHash, size, chunkCount) {
       return new Promise((resolve) => {
         this.$http({
           url: this.$http.adornUrl('/manage/file/resource/minio/chunkUpload'),
@@ -590,6 +590,7 @@ export default {
             'fileMd5': fileHash,
             'fileName': fileName,
             'module': this.module,
+            'fileSize': size,
             'chunkCount': chunkCount
           })
         }).then((response) => {
