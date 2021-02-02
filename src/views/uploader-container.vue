@@ -389,7 +389,7 @@ export default {
       return new Promise(async (resolve, reject) => {
         try {
           const ret = await this.sendRequest(chunkData)
-          console.log('ret', ret)
+          console.log('传到minio结果：', ret)
         } catch (error) {
           // 上传有被reject的
           this.$message.error('上传文件失败：' + error)
@@ -452,20 +452,20 @@ export default {
               }).then((response) => {
                 if (response && response.code === 200) {
                   console.log('单个分片状态修改成功：', index)
+
+                  // 更改状态
+                  list[index].uploaded = true
+                  list[index].status = 'success'
+
+                  // 存储已上传的切片下标
+                  this.addChunkStorage(list[index].fileHash, index)
+
+                  finished++
+                  handler()
                 } else {
                   console.log('单个分片状态修改失败：', response.msg)
                 }
               })
-
-              // 更改状态
-              list[index].uploaded = true
-              list[index].status = 'success'
-
-              // 存储已上传的切片下标
-              this.addChunkStorage(list[index].fileHash, index)
-
-              finished++
-              handler()
             }).catch((e) => {
               // 若状态为暂停或等待，则禁止重试
               console.log('当前状态：', this.status)
@@ -486,7 +486,7 @@ export default {
               // 重试3次
               if (retryArr[index] >= this.chunkRetry) {
                 console.warn(' 重试失败--- > handler -> retryArr', retryArr, list[index].hash)
-                return reject(new Error('重试失败', retryArr))
+                return reject(new Error('重试失败' + retryArr))
               }
 
               console.log('重试操作：', `${list[index].hash}--进行第 ${retryArr[index]} '次重试'`)
@@ -501,7 +501,7 @@ export default {
           }
 
           if (finished >= total) {
-            resolve('done')
+            resolve('成功')
           }
         }
 
