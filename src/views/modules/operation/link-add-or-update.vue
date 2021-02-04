@@ -125,7 +125,7 @@ export default {
     },
     handleAvatarSuccess (response) {
       if (response && response.code === 200) {
-        this.dataForm.avatar = response.resource.url
+        this.dataForm.avatar = response.data.url
         this.imageUrl = this.dataForm.avatar
         this.$message.success('上传成功！')
       }
