@@ -53,3 +53,18 @@ export default {
   }
 }
 </script>
+
+<style>
+/*菜单关闭*/
+.el-submenu>.el-submenu__title .el-submenu__icon-arrow{
+  -webkit-transform: rotateZ(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotateZ(-90deg);
+}
+/*菜单展开*/
+.el-submenu.is-opened>.el-submenu__title .el-submenu__icon-arrow{
+  -webkit-transform: rotateZ(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotateZ(0deg);
+}
+</style>
