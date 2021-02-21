@@ -93,7 +93,7 @@
           <el-form-item label="片长" prop="duration">
             <el-time-picker
               v-model="video.duration"
-              :picker-options="{selectableRange: '18:30:00 - 20:30:00'}"
+              :picker-options="{selectableRange: '00:00:00 - 23:59:59'}"
               placeholder="片长" clearable>
             </el-time-picker>
           </el-form-item>
