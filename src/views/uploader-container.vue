@@ -327,7 +327,7 @@ export default {
         this.status = Status.uploading
 
         // 分片上传文件，获取各个分片上传地址
-        const chunkUploadRes = await this.chunkUpload(filesArr[i].name, filesArr[i].hash, filesArr[i].size, fileChunkList.length)
+        const chunkUploadRes = await this.chunk(filesArr[i].name, filesArr[i].hash, filesArr[i].size, fileChunkList.length)
 
         if (chunkUploadRes.length < 1) {
           filesArr[i].status = fileStatus.secondPass
@@ -431,18 +431,21 @@ export default {
             // 出栈
             const formData = chunkData.shift()
             const index = formData.index
-
+            let fileFormData = new FormData()
+            fileFormData.append('file', formData.data)
+            fileFormData.append('uploadUrl', formData.uploadUrl)
             this.$http({
-              url: this.$http.adornUrl(formData.uploadUrl),
-              method: 'put',
-              data: formData.data,
+              url: this.$http.adornUrl('/manage/file/resource/minio/chunkUpload'),
+              method: 'post',
+              data: fileFormData,
+              headers: { 'Content-Type': 'multipart/form-data' },
               onUploadProgress: that.createProgresshandler(list[index]),
               cancelToken: new CancelToken((c) => this.cancels.push(c)),
               timeout: 0
             }).then((response) => {
               console.log('上传文件，minio响应：', response)
               this.$http({
-                url: this.$http.adornUrl('/manage/file/resource/minio/chunkSuccess'),
+                url: this.$http.adornUrl('/manage/file/resource/minio/chunkUploadSuccess'),
                 method: 'put',
                 data: this.$http.adornData({
                   'fileMd5': formData.fileHash,
@@ -581,10 +584,10 @@ export default {
       this.handleUpload()
     },
     // 分片上传文件，获取各个分片上传地址
-    chunkUpload (fileName, fileHash, size, chunkCount) {
+    chunk (fileName, fileHash, size, chunkCount) {
       return new Promise((resolve) => {
         this.$http({
-          url: this.$http.adornUrl('/manage/file/resource/minio/chunkUpload'),
+          url: this.$http.adornUrl('/manage/file/resource/minio/chunk'),
           method: 'post',
           data: this.$http.adornData({
             'fileMd5': fileHash,
