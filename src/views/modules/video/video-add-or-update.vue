@@ -89,13 +89,9 @@
             <el-rate v-model="video.score" allow-half style="line-height: 2" show-score text-color="#ff9900"></el-rate>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
-          <el-form-item label="片长" prop="duration">
-            <el-time-picker
-              v-model="video.duration"
-              :picker-options="{selectableRange: '00:00:00 - 23:59:59'}"
-              placeholder="片长" clearable>
-            </el-time-picker>
+        <el-col :span="12">
+          <el-form-item label="片长（格式：HH:mm:ss）" label-width="200px" prop="duration">
+            <el-input placeholder="片长（格式：HH:mm:ss）" v-model="video.duration" clearable></el-input>
           </el-form-item>
         </el-col>
       </el-row>

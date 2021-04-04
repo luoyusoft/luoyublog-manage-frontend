@@ -360,10 +360,13 @@ export default {
           const getChunkStorage = this.getChunkStorage(filesArr[i].hash)
           // 文件的hash，合并时使用
           filesArr[i].fileHash = filesArr[i].hash
-          filesArr[i].chunkList = chunkUploadRes.map(({ uploadUrl, file }, index) => ({
+          filesArr[i].chunkList = chunkUploadRes.map(({ uploadUrl, bucketName, fileMd5, chunkNumber, file }, index) => ({
             fileHash: filesArr[i].hash,
             fileName: filesArr[i].name,
             uploadUrl: uploadUrl,
+            bucketName: bucketName,
+            fileMd5: fileMd5,
+            chunkNumber: chunkNumber,
             index,
             hash: filesArr[i].hash,
             data: file,
@@ -433,7 +436,9 @@ export default {
             const index = formData.index
             let fileFormData = new FormData()
             fileFormData.append('file', formData.data)
-            fileFormData.append('uploadUrl', formData.uploadUrl)
+            fileFormData.append('bucketName', formData.bucketName)
+            fileFormData.append('fileMd5', formData.fileMd5)
+            fileFormData.append('chunkNumber', formData.chunkNumber)
             this.$http({
               url: this.$http.adornUrl('/manage/file/resource/minio/chunkUpload'),
               method: 'post',
