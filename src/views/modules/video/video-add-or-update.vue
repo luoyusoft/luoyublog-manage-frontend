@@ -247,7 +247,7 @@ export default {
       },
       limit: 20,
       // chunkSize: 50 * 1024 * 1024,
-      chunkSize: 400 * 1024 * 1024,
+      chunkSize: 200 * 1024 * 1024,
       // 是否共享 0私有  1共享
       share: 1
     }
