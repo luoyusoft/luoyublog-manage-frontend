@@ -39,8 +39,15 @@
       label="封面"
       width="150px">
       <template slot-scope="scope" >
-        <img v-if="scope.row.cover !== null" :src="scope.row.cover" style="height: 100%;width: 100%">
-        <p v-else>暂无封面</p>
+        <div v-if="scope.row.cover !== null">
+          <el-popover placement="top-start" title="" trigger="hover">
+            <img :src="scope.row.cover" alt="" style="width: 300px;height: 250px">
+            <img slot="reference" :src="scope.row.cover" style="width: 120px;height: 100px">
+          </el-popover>
+        </div>
+        <div v-else>
+            <p>暂无封面</p>
+        </div>
       </template>
     </el-table-column>
     <el-table-column

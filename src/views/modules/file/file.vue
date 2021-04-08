@@ -8,13 +8,23 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查看</el-button>
+        <el-button type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table
       :data="dataList"
       border
+      v-loading="dataListLoading"
+      @selection-change="selectionChangeHandle"
       height="800"
       style="width: 100%;">
+      <el-table-column
+        fixed="left"
+        type="selection"
+        header-align="center"
+        align="center"
+        width="50px">
+      </el-table-column>
       <el-table-column
         fixed="left"
         prop="id"
@@ -33,6 +43,24 @@
           <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
           <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
           <el-tag v-if="scope.row.module === 2" size="small" type="error">友链</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="cover"
+        header-align="center"
+        align="center"
+        label="预览"
+        width="150px">
+        <template slot-scope="scope" >
+          <div v-if="scope.row.url.startsWith('https://minio.luoyublog.com/img/')">
+            <el-popover placement="top-start" title="" trigger="hover">
+              <img :src="scope.row.url" alt="" style="width: 300px;height: 300px">
+              <img slot="reference" :src="scope.row.url" style="width: 120px;height: 120px">
+            </el-popover>
+          </div>
+          <div v-else>
+            <p>暂不支持预览</p>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
@@ -148,7 +176,20 @@
 export default {
   data () {
     return {
-      moduleList: this.getSysParamArr('MODULE_TYPE'),
+      moduleList: [
+        {
+          parKey: '0',
+          parValue: '文章'
+        },
+        {
+          parKey: '1',
+          parValue: '视频'
+        },
+        {
+          parKey: '2',
+          parValue: '友链'
+        }
+      ],
       dataForm: {
         module: ''
       },
@@ -156,7 +197,8 @@ export default {
       pageIndex: 1,
       pageSize: 20,
       totalPage: 0,
-      dataListLoading: false
+      dataListLoading: false,
+      dataListSelections: []
     }
   },
   activated () {
@@ -187,6 +229,40 @@ export default {
     currentChangeHandle (val) {
       this.pageIndex = val
       this.getDataList()
+    },
+    // 多选
+    selectionChangeHandle (val) {
+      this.dataListSelections = val
+    },
+    // 删除
+    deleteHandle (id) {
+      let ids = id ? [id] : this.dataListSelections.map(item => {
+        return item.id
+      })
+      this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http({
+          url: this.$http.adornUrl('/manage/file/resource/minio/file'),
+          method: 'delete',
+          data: this.$http.adornData(ids, false)
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.$message({
+              message: '操作成功',
+              type: 'success',
+              duration: 1500,
+              onClose: () => {
+                this.getDataList()
+              }
+            })
+          } else {
+            this.$message.error(response.msg)
+          }
+        })
+      }).catch(() => {})
     },
     // 获取数据列表
     getDataList () {
