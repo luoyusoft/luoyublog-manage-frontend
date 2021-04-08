@@ -39,7 +39,7 @@
       label="封面"
       width="150px">
       <template slot-scope="scope" >
-        <div v-if="scope.row.cover !== null">
+        <div v-if="scope.row.cover !== null && scope.row.cover !== ''">
           <el-popover placement="top-start" title="" trigger="hover">
             <img :src="scope.row.cover" alt="" style="width: 300px;height: 250px">
             <img slot="reference" :src="scope.row.cover" style="width: 120px;height: 100px">

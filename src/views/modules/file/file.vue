@@ -52,7 +52,7 @@
         label="预览"
         width="150px">
         <template slot-scope="scope" >
-          <div v-if="scope.row.url.startsWith('https://minio.luoyublog.com/img/')">
+          <div v-if="scope.row.url !== null && scope.row.url !== '' && scope.row.url.startsWith('https://minio.luoyublog.com/img/')">
             <el-popover placement="top-start" title="" trigger="hover">
               <img :src="scope.row.url" alt="" style="width: 300px;height: 300px">
               <img slot="reference" :src="scope.row.url" style="width: 120px;height: 120px">
