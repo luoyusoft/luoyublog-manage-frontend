@@ -1,6 +1,6 @@
 <template>
 <div>
-  <el-form :inline="true">
+  <el-form :inline="true" :model="dataForm" @submit.native.prevent>
     <el-form-item>
       <el-input placeholder="文章标题" v-model="dataForm.title" clearable></el-input>
     </el-form-item>
