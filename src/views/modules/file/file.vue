@@ -1,16 +1,26 @@
 <template>
   <div class="mod-config">
-    <el-form :inline="true" :model="dataForm" @submit.native.prevent>
-      <el-form-item style="display: inline-block">
-        <el-select v-model="dataForm.module" clearable>
-          <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="getDataList()">查看</el-button>
-        <el-button type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
-      </el-form-item>
-    </el-form>
+    <el-collapse v-model="activeNames" @change="handleChange">
+      <el-form :inline="true" :model="dataForm" @submit.native.prevent>
+        <el-collapse-item title="更多条件" name="1" style="margin-bottom: 12px">
+          <el-form-item label="文件的md5">
+            <el-input placeholder="文件的md5" v-model="dataForm.fileMd5" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="文件所属模块">
+            <el-select v-model="dataForm.module" clearable>
+              <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-collapse-item>
+        <el-form-item label="文件名称">
+          <el-input placeholder="文件名称" v-model="dataForm.fileName" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="getDataList()">查看</el-button>
+          <el-button type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
+        </el-form-item>
+      </el-form>
+    </el-collapse>
     <el-table
       :data="dataList"
       border
@@ -191,7 +201,9 @@ export default {
         }
       ],
       dataForm: {
-        module: ''
+        module: '',
+        fileName: '',
+        fileMd5: ''
       },
       dataList: [],
       pageIndex: 1,
@@ -245,7 +257,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/manage/file/resource/minio/file'),
+          url: this.$http.adornUrl('/manage/file/minio/file'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then((response) => {
@@ -268,11 +280,13 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/manage/file/resource/list'),
+        url: this.$http.adornUrl('/manage/file/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
           'limit': this.pageSize,
+          'fileName': this.dataForm.fileName,
+          'fileMd5': this.dataForm.fileMd5,
           'module': this.dataForm.module
         })
       }).then((response) => {

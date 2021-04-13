@@ -36,7 +36,7 @@
 //   console.log('向后端请求本次分片上传初始化')
 //   // 向后端请求本次分片上传初始化
 //   const initUploadParams = JSON.stringify({chunkCount: chunkCount, fileMd5: fileMd5})
-//   this.$http.adornUrl(`/manage/file/resource/minio/init-chunk-upload?token=${this.$cookie.get('token')}&module=1`).then((response) => {
+//   this.$http.adornUrl(`/manage/file/minio/init-chunk-upload?token=${this.$cookie.get('token')}&module=1`).then((response) => {
 //     if (response && response.code === 200) {
 //       console.log('当前文件上传情况：所有分片已在之前上传完成，仅需合并')
 //       composeFile(fileMd5, file.name)

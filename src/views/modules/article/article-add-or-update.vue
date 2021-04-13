@@ -1,7 +1,7 @@
   <template>
   <div>
     <el-form :model="article" label-width="80px" :rules="rules" ref="articleForm">
-      <el-form-item label="文章标题" prop="title">
+      <el-form-item label="文章标题">
         <el-col :span="18">
           <el-input placeholder="文章标题" v-model="article.title"  clearable></el-input>
         </el-col>
@@ -38,7 +38,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="作者" prop="author">
+      <el-form-item label="作者">
         <el-row>
           <el-col :span="6">
             <el-input placeholder="作者" v-model="article.author" clearable></el-input>
@@ -78,7 +78,7 @@
           <el-input type="textarea" v-model="article.description" placeholder="描述" clearable></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item label="内容" prop="content">
+      <el-form-item label="内容">
         <mavon-editor style="z-index:500" ref=md v-model="article.content" @imgAdd="imgAdd" @change="mavonChangeHandle"></mavon-editor>
       </el-form-item>
       <el-form-item>
@@ -160,7 +160,7 @@ export default {
           }
         })
       }).then(() => {
-        this.url = this.$http.adornUrl(`/manage/file/resource/minio/upload?token=${this.$cookie.get('token')}&module=0`)
+        this.url = this.$http.adornUrl(`/manage/file/minio/upload?token=${this.$cookie.get('token')}&module=0`)
         let id = this.$route.params.id
         if (id) {
           this.$http({

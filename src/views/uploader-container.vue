@@ -333,7 +333,7 @@ export default {
           filesArr[i].status = fileStatus.secondPass
           filesArr[i].uploadProgress = 100
           this.$http({
-            url: this.$http.adornUrl('/manage/file/resource/minio/url'),
+            url: this.$http.adornUrl('/manage/file/minio/url'),
             method: 'get',
             params: this.$http.adornParams({
               fileMd5: filesArr[i].hash,
@@ -440,7 +440,7 @@ export default {
             fileFormData.append('fileMd5', formData.fileMd5)
             fileFormData.append('chunkNumber', formData.chunkNumber)
             this.$http({
-              url: this.$http.adornUrl('/manage/file/resource/minio/chunkUpload'),
+              url: this.$http.adornUrl('/manage/file/minio/chunkUpload'),
               method: 'post',
               data: fileFormData,
               headers: { 'Content-Type': 'multipart/form-data' },
@@ -450,7 +450,7 @@ export default {
             }).then((response) => {
               console.log('上传文件，minio响应：', response)
               this.$http({
-                url: this.$http.adornUrl('/manage/file/resource/minio/chunkUploadSuccess'),
+                url: this.$http.adornUrl('/manage/file/minio/chunkUploadSuccess'),
                 method: 'put',
                 data: this.$http.adornData({
                   'fileMd5': formData.fileHash,
@@ -523,7 +523,7 @@ export default {
     mergeRequest (data) {
       return new Promise((resolve, reject) => {
         this.$http({
-          url: this.$http.adornUrl('/manage/file/resource/minio/compose'),
+          url: this.$http.adornUrl('/manage/file/minio/compose'),
           method: 'post',
           data: this.$http.adornData({
             'fileMd5': data.fileHash,
@@ -592,7 +592,7 @@ export default {
     chunk (fileName, fileHash, size, chunkCount) {
       return new Promise((resolve) => {
         this.$http({
-          url: this.$http.adornUrl('/manage/file/resource/minio/chunk'),
+          url: this.$http.adornUrl('/manage/file/minio/chunk'),
           method: 'post',
           data: this.$http.adornData({
             'fileMd5': fileHash,

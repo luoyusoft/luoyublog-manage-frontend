@@ -1,7 +1,7 @@
   <template>
   <div>
     <el-form :model="video" label-width="80px" :rules="rules" ref="videoForm">
-      <el-form-item label="视频标题" prop="title">
+      <el-form-item label="视频标题">
         <el-col :span="18">
           <el-input placeholder="视频标题" v-model="video.title"  clearable></el-input>
         </el-col>
@@ -44,41 +44,41 @@
       </el-row>
       <el-row>
         <el-col :span="9">
-          <el-form-item label="上映日期" prop="releaseTime">
+          <el-form-item label="上映日期">
             <el-date-picker value-format="yyyy-MM-dd" type="date" placeholder="上映日期" v-model="video.releaseTime"></el-date-picker>
           </el-form-item>
         </el-col>
         <el-col :span="9">
-          <el-form-item label="制片国家/地区" label-width="120px" prop="productionRegion">
+          <el-form-item label="制片国家/地区" label-width="120px">
             <el-input placeholder="制片国家/地区" v-model="video.productionRegion" clearable></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <el-form-item label="上传者" prop="author">
+          <el-form-item label="上传者">
             <el-input placeholder="上传者" v-model="video.author" clearable></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="导演" prop="director">
+          <el-form-item label="导演">
             <el-input placeholder="导演" v-model="video.director" clearable></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="编剧" prop="screenwriter">
+          <el-form-item label="编剧">
             <el-input placeholder="编剧" v-model="video.screenwriter" clearable></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <el-form-item label="语言" prop="language">
+          <el-form-item label="语言">
             <el-input placeholder="语言" v-model="video.language" clearable></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="主演" prop="toStar">
+          <el-form-item label="主演">
             <el-input placeholder="主演" v-model="video.toStar" clearable></el-input>
           </el-form-item>
         </el-col>
@@ -90,7 +90,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="片长（格式：HH:mm:ss）" label-width="200px" prop="duration">
+          <el-form-item label="片长（格式：HH:mm:ss）" label-width="200px">
             <el-input placeholder="片长（格式：HH:mm:ss）" v-model="video.duration" clearable></el-input>
           </el-form-item>
         </el-col>
@@ -302,7 +302,7 @@ export default {
           }
         })
       }).then(() => {
-        this.url = this.$http.adornUrl(`/manage/file/resource/minio/upload?token=${this.$cookie.get('token')}&module=1`)
+        this.url = this.$http.adornUrl(`/manage/file/minio/upload?token=${this.$cookie.get('token')}&module=1`)
         let id = this.$route.params.id
         if (id) {
           this.$http({
