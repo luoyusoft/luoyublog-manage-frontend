@@ -1,2 +1,2 @@
 #!/bin/bash
-docker restart nginx
+docker restart nginx-1.19.1
