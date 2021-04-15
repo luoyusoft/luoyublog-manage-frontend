@@ -1,6 +1,6 @@
 <template>
   <div class="mod-config">
-    <el-collapse v-model="activeNames" @change="handleChange">
+    <el-collapse>
       <el-form :inline="true" :model="dataForm" @submit.native.prevent>
         <el-collapse-item title="更多条件" name="1" style="margin-bottom: 12px">
           <el-form-item label="文件的md5">
@@ -52,7 +52,8 @@
         <template slot-scope="scope">
           <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
           <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
-          <el-tag v-if="scope.row.module === 2" size="small" type="error">友链</el-tag>
+          <el-tag v-if="scope.row.module === 2" size="small" type="info">友链</el-tag>
+          <el-tag v-if="scope.row.module === 3" size="small" type="danger">文件</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -198,6 +199,10 @@ export default {
         {
           parKey: '2',
           parValue: '友链'
+        },
+        {
+          parKey: '3',
+          parValue: '文件'
         }
       ],
       dataForm: {
