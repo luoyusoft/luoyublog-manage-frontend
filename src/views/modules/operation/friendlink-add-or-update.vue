@@ -10,17 +10,23 @@
       <el-form-item label="链接地址" prop="url">
         <el-input v-model="dataForm.url" placeholder="链接地址"></el-input>
       </el-form-item>
-      <el-form-item label="头像" prop="avatar">
-        <el-upload
-          class="avatar-uploader"
-          :action="url"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+      <el-form-item label="链接头像" prop="url">
+        <el-input v-model="dataForm.avatar" placeholder="链接头像"></el-input>
       </el-form-item>
+      <el-form-item label="链接简介">
+        <el-input v-model="dataForm.description" placeholder="链接简介"></el-input>
+      </el-form-item>
+<!--      <el-form-item label="头像" prop="avatar">-->
+<!--        <el-upload-->
+<!--          class="avatar-uploader"-->
+<!--          :action="url"-->
+<!--          :show-file-list="false"-->
+<!--          :on-success="handleAvatarSuccess"-->
+<!--          :before-upload="beforeAvatarUpload">-->
+<!--          <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
+<!--          <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
+<!--        </el-upload>-->
+<!--      </el-form-item>-->
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
@@ -81,7 +87,7 @@ export default {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
           this.$http({
-            url: this.$http.adornUrl(`/manage/operation/link/info/${this.dataForm.id}`),
+            url: this.$http.adornUrl(`/manage/operation/friendlink/info/${this.dataForm.id}`),
             method: 'get',
             params: this.$http.adornParams()
           }).then((response) => {
@@ -101,7 +107,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$http({
-            url: this.$http.adornUrl(`/manage/operation/link/${!this.dataForm.id ? 'save' : 'update'}`),
+            url: this.$http.adornUrl(`/manage/operation/friendlink/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData(this.dataForm)
           }).then((response) => {

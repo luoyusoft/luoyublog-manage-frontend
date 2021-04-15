@@ -6,8 +6,8 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('operation:link:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('operation:link:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('operation:friendlink:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+        <el-button v-if="isAuth('operation:friendlink:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -49,13 +49,29 @@
           label="链接地址">
       </el-table-column>
       <el-table-column
+          prop="description"
+          header-align="center"
+          align="center"
+          width="300px"
+          :show-overflow-tooltip="true"
+          label="链接简介">
+      </el-table-column>
+      <el-table-column
           prop="avatar"
           header-align="center"
           align="center"
           width="200px"
           label="头像">
         <template slot-scope="scope">
-          <img :src="scope.row.avatar" width="80px"/>
+          <div v-if="scope.row.avatar !== null && scope.row.avatar !== ''">
+            <el-popover placement="top-start" title="" trigger="hover">
+              <img :src="scope.row.avatar" alt="" style="width: 200px;height: 200px">
+              <img slot="reference" :src="scope.row.avatar" style="width: 100px;height: 100px">
+            </el-popover>
+          </div>
+          <div v-else>
+            <p>暂无头像</p>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
@@ -99,7 +115,7 @@
 </template>
 
 <script>
-import AddOrUpdate from './link-add-or-update'
+import AddOrUpdate from './friendlink-add-or-update'
 export default {
   data () {
     return {
@@ -140,7 +156,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl('/manage/operation/link/list'),
+        url: this.$http.adornUrl('/manage/operation/friendlink/list'),
         method: 'get',
         params: this.$http.adornParams({
           'page': this.pageIndex,
@@ -191,7 +207,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/manage/operation/link/delete'),
+          url: this.$http.adornUrl('/manage/operation/friendlink/delete'),
           method: 'delete',
           data: this.$http.adornData(ids, false)
         }).then((response) => {
