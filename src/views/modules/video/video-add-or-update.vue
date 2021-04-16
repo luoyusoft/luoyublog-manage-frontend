@@ -391,20 +391,6 @@ export default {
         }
       })
     },
-    // 视频内容图片上传
-    imgAdd (pos, $file) {
-      // 第一步.将图片上传到服务器.
-      let formData = new FormData()
-      formData.append('file', $file)
-      this.$http({
-        url: this.url,
-        method: 'post',
-        data: formData,
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }).then((response) => {
-        this.$refs.md.$img2Url(pos, response.data.url)
-      })
-    },
     beforeUpload (file) {
       console.log('上传文件之前校验：', file)
       if (this.acceptsObj[this.uploadType].indexOf(file.type) === -1) {
