@@ -25,7 +25,7 @@
               ref="upload"
               :before-upload="beforeUpload"
               :accept="accepts"
-              :module="1"
+              :module="3"
               :upload-arguments="uploadArgumentsObj"
               :limit="limit"
               :on-exceed="fileLimitFn"
@@ -33,7 +33,7 @@
               @successUpload="successUpload">
               <div slot="tip" class="upload-tip">
                 <i class="el-icon-info"></i>:
-                暂时只支持：{{ acceptDesc[uploadType] }}格式的文件！
+                暂时只支持：所有格式的文件！
               </div>
             </uploader-container>
           </div>
@@ -53,7 +53,7 @@ export default {
     return {
       url: this.$http.adornUrl(`/manage/file/minio/upload?token=${this.$cookie.get('token')}&module=3`),
       file: [],
-      accepts: 'image/png',
+      accepts: '*',
       acceptsObj: {
         all: [
           'video/mp4',
@@ -126,7 +126,8 @@ export default {
   },
   created () {
     if (this.uploadType) {
-      this.accepts = this.acceptsObj[this.uploadType].join(',') // 设置文件类型
+      // 设置文件类型
+      // this.accepts = this.acceptsObj[this.uploadType].join(',')
     } else {
       this.$message('存在类型不正确的文件')
     }
@@ -151,10 +152,10 @@ export default {
     },
     beforeUpload (file) {
       console.log('上传文件之前校验：', file)
-      if (this.acceptsObj[this.uploadType].indexOf(file.type) === -1) {
-        this.$message.warning('只能上传：' + this.acceptDesc[this.uploadType])
-        return false
-      }
+      // if (this.acceptsObj[this.uploadType].indexOf(file.type) === -1) {
+      //   this.$message.warning('只能上传：' + this.acceptDesc[this.uploadType])
+      //   return false
+      // }
       if (!file.size) {
         setTimeout(() => {
           this.$message.warning('不能上传大小为0的文件')

@@ -211,7 +211,7 @@ export default {
         children: 'children',
         value: 'id'
       },
-      accepts: 'image/png',
+      accepts: 'video/mp4',
       acceptsObj: {
         video: ['video/mp4'],
         image: [
@@ -267,7 +267,8 @@ export default {
   created () {
     this.init()
     if (this.uploadType) {
-      this.accepts = this.acceptsObj[this.uploadType].join(',') // 设置文件类型
+      // 设置文件类型
+      this.accepts = this.acceptsObj[this.uploadType].join(',')
     } else {
       this.$message('存在类型不正确的文件')
     }
