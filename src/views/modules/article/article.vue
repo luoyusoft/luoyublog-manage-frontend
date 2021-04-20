@@ -5,8 +5,8 @@
       <el-input placeholder="文章标题" v-model="dataForm.title" clearable></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button @click="getDataList()">查询</el-button>
-      <el-button type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
+      <el-button v-if="isAuth('article:list')" @click="getDataList()">查询</el-button>
+      <el-button v-if="isAuth('article:delete')" type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
     </el-form-item>
   </el-form>
   <el-table
@@ -164,8 +164,8 @@
       min-width="100px"
       label="操作">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-        <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+        <el-button v-if="isAuth('article:save,article:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+        <el-button v-if="isAuth('article:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>

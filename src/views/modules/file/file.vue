@@ -6,6 +6,9 @@
           <el-form-item label="文件的md5">
             <el-input placeholder="文件的md5" v-model="dataForm.fileMd5" clearable></el-input>
           </el-form-item>
+          <el-form-item label="url地址">
+            <el-input placeholder="url地址" v-model="dataForm.url" clearable></el-input>
+          </el-form-item>
           <el-form-item label="文件所属模块">
             <el-select v-model="dataForm.module" clearable>
               <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
@@ -16,8 +19,8 @@
           <el-input placeholder="文件名称" v-model="dataForm.fileName" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="getDataList()">查看</el-button>
-          <el-button type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
+          <el-button v-if="isAuth('file:list')" @click="getDataList()">查看</el-button>
+          <el-button v-if="isAuth('file:delete')" type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
         </el-form-item>
       </el-form>
     </el-collapse>
@@ -170,6 +173,16 @@
         min-width="180px"
         label="创建时间">
       </el-table-column>
+      <el-table-column
+        fixed="right"
+        header-align="center"
+        align="center"
+        min-width="100px"
+        label="操作">
+        <template slot-scope="scope">
+          <el-button v-if="isAuth('file:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       @size-change="sizeChangeHandle"
@@ -208,7 +221,8 @@ export default {
       dataForm: {
         module: '',
         fileName: '',
-        fileMd5: ''
+        fileMd5: '',
+        url: ''
       },
       dataList: [],
       pageIndex: 1,
@@ -292,7 +306,8 @@ export default {
           'limit': this.pageSize,
           'fileName': this.dataForm.fileName,
           'fileMd5': this.dataForm.fileMd5,
-          'module': this.dataForm.module
+          'module': this.dataForm.module,
+          'url': this.dataForm.url
         })
       }).then((response) => {
         if (response && response.code === 200) {

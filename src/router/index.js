@@ -62,6 +62,7 @@ const mainRoutes = {
   beforeEnter (to, from, next) {
     let token = Vue.cookie.get('token')
     if (!token || !/\S/.test(token)) { // 正则：非空白就匹配
+      Vue.prototype.$message.error('登录信息已过期，请重新登录')
       clearLoginInfo()
       next({ name: 'login' })
     }

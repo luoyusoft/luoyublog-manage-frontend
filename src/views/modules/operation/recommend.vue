@@ -3,8 +3,7 @@
     <el-form :inline="true" :model="dataForm">
       <el-form-item>
         <el-button v-if="isAuth('operation:recommend:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('operation:recommend:delete')" type="danger" @click="deleteHandle()"
-                   :disabled="dataListSelections.length <= 0">批量删除
+        <el-button v-if="isAuth('operation:recommend:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除
         </el-button>
       </el-form-item>
     </el-form>
@@ -90,8 +89,8 @@
         min-width="100px"
         label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-          <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button v-if="isAuth('operation:recommend:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="isAuth('operation:recommend:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

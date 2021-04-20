@@ -7,7 +7,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button @click="getDataList()">查看</el-button>
+        <el-button v-if="isAuth('log:list')" @click="getDataList()">查看</el-button>
       </el-form-item>
     </el-form>
     <el-table

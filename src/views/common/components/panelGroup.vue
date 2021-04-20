@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="$router.push({ name: 'log-log' })">
+      <div class="card-panel" @click="$router.push({ name: 'log-log' })" v-if="isAuth('log:list')">
 <!--        <div class="card-panel-icon-wrapper icon-people">-->
         <div class="card-panel-icon-wrapper icon-people">
           <icon-svg name="peoples" class-name="card-panel-icon" />
@@ -16,7 +16,7 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" v-if="isAuth('article:list')">
       <div class="card-panel" @click="$router.push({ name: 'article-article' })">
         <div class="card-panel-icon-wrapper icon-shopping">
           <icon-svg name="articles" class-name="card-panel-icon" />
@@ -28,7 +28,7 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" v-if="isAuth('video:list')">
       <div class="card-panel" @click="$router.push({ name: 'video-video' })">
         <div class="card-panel-icon-wrapper icon-message">
           <icon-svg name="videos" class-name="card-panel-icon" />
@@ -40,7 +40,7 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" v-if="isAuth('operation:friendlink:list')">
       <div class="card-panel" @click="$router.push({ name: 'operation-friendlink' })">
         <div class="card-panel-icon-wrapper icon-money">
           <icon-svg name="like" class-name="card-panel-icon" />
