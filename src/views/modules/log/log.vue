@@ -13,6 +13,7 @@
     <el-table
       :data="dataList"
       border
+      v-loading="dataListLoading"
       height="800"
       style="width: 100%;">
       <el-table-column
@@ -33,6 +34,8 @@
           <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
           <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
           <el-tag v-if="scope.row.module === 2" size="small" type="error">聊天室</el-tag>
+          <el-tag v-if="scope.row.module === 3" size="small" type="error">搜索</el-tag>
+          <el-tag v-if="scope.row.module === 4" size="small" type="error">时间线</el-tag>
         </template>
       </el-table-column>
       <el-table-column
