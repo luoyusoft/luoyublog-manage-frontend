@@ -36,6 +36,7 @@
           <el-tag v-if="scope.row.module === 2" size="small" type="error">聊天室</el-tag>
           <el-tag v-if="scope.row.module === 3" size="small" type="error">搜索</el-tag>
           <el-tag v-if="scope.row.module === 4" size="small" type="error">时间线</el-tag>
+          <el-tag v-if="scope.row.module === 5" size="small" type="error">留言墙</el-tag>
         </template>
       </el-table-column>
       <el-table-column
