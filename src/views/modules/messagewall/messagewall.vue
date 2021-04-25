@@ -1,5 +1,4 @@
 <template>
-<template>
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item label="昵称">
