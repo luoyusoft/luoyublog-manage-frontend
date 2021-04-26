@@ -1,12 +1,12 @@
 <template>
   <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="$router.push({ name: 'log-log' })" v-if="isAuth('log:list')">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" v-if="isAuth('log:list')">
+      <div class="card-panel" @click="$router.push({ name: 'log-log' })">
 <!--        <div class="card-panel-icon-wrapper icon-people">-->
         <div class="card-panel-icon-wrapper icon-people">
           <icon-svg name="peoples" class-name="card-panel-icon" />
         </div>
-        <div class="card-panel-description" style="margin: 10px 0 0 10px" >
+        <div class="card-panel-description" style="margin: 10px 0 0 10px">
 <!--          <div class="card-panel-text">New Visits</div>-->
 <!--          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>-->
           <span>今天PV：</span><count-to :start-val="0" :end-val="hommeInfo.logInfo.todayPV" :duration="3600" class="card-panel-num"/><br>
@@ -40,15 +40,18 @@
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" v-if="isAuth('operation:friendlink:list')">
-      <div class="card-panel" @click="$router.push({ name: 'operation-friendlink' })">
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col" v-if="isAuth('messagewall:list')">
+      <div class="card-panel" @click="$router.push({ name: 'messagewall-messagewall' })">
         <div class="card-panel-icon-wrapper icon-money">
-          <icon-svg name="like" class-name="card-panel-icon" />
+          <icon-svg name="comment" class-name="card-panel-icon" />
         </div>
-        <div class="card-panel-description">
+        <div class="card-panel-description" style="margin: 20px 0 0 10px">
+          <span>今天留言量：</span><count-to :start-val="0" :end-val="hommeInfo.messageWallInfo.todayCount" :duration="3600" class="card-panel-num"/><br>
+          <span>总留言量：</span><count-to :start-val="0" :end-val="hommeInfo.messageWallInfo.allCount" :duration="3600" class="card-panel-num"/><br>
+          <span>最大楼层数：</span><count-to :start-val="0" :end-val="hommeInfo.messageWallInfo.maxFloorNum" :duration="3600" class="card-panel-num"/><br>
 <!--          <div class="card-panel-text">友链</div>-->
-          <span>友链量：</span><count-to :start-val="0" :end-val="hommeInfo.friendLinkInfo.count" :duration="3600" class="card-panel-num"/><br>
-          <span>推荐量：</span><count-to :start-val="0" :end-val="hommeInfo.recommendInfo.count" :duration="3600" class="card-panel-num"/>
+<!--          <span>友链量：</span><count-to :start-val="0" :end-val="hommeInfo.friendLinkInfo.count" :duration="3600" class="card-panel-num"/><br>-->
+<!--          <span>推荐量：</span><count-to :start-val="0" :end-val="hommeInfo.recommendInfo.count" :duration="3600" class="card-panel-num"/>-->
         </div>
       </div>
     </el-col>
@@ -81,6 +84,11 @@ export default {
         },
         recommendInfo: {
           count: 0
+        },
+        messageWallInfo: {
+          allCount: 0,
+          todayCount: 0,
+          maxFloorNum: 0
         }
       }
     }
@@ -97,56 +105,74 @@ export default {
     },
     // 获取首页数据
     getHommeInfo () {
-      this.$http({
-        url: this.$http.adornUrl('/manage/article/homeinfo'),
-        method: 'get'
-      }).then((response) => {
-        if (response && response.code === 200) {
-          this.hommeInfo.articleInfo = response.data
-        } else {
-          this.$message.error(response.msg)
-        }
-      })
-      this.$http({
-        url: this.$http.adornUrl('/manage/video/homeinfo'),
-        method: 'get'
-      }).then((response) => {
-        if (response && response.code === 200) {
-          this.hommeInfo.videoInfo = response.data
-        } else {
-          this.$message.error(response.msg)
-        }
-      })
-      this.$http({
-        url: this.$http.adornUrl('/manage/log/homeinfo'),
-        method: 'get'
-      }).then((response) => {
-        if (response && response.code === 200) {
-          this.hommeInfo.logInfo = response.data
-        } else {
-          this.$message.error(response.msg)
-        }
-      })
-      this.$http({
-        url: this.$http.adornUrl('/manage/operation/friendlink/homeinfo'),
-        method: 'get'
-      }).then((response) => {
-        if (response && response.code === 200) {
-          this.hommeInfo.friendLinkInfo = response.data
-        } else {
-          this.$message.error(response.msg)
-        }
-      })
-      this.$http({
-        url: this.$http.adornUrl('/manage/operation/recommend/homeinfo'),
-        method: 'get'
-      }).then((response) => {
-        if (response && response.code === 200) {
-          this.hommeInfo.recommendInfo = response.data
-        } else {
-          this.$message.error(response.msg)
-        }
-      })
+      if (this.isAuth('article:list')) {
+        this.$http({
+          url: this.$http.adornUrl('/manage/article/homeinfo'),
+          method: 'get'
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.hommeInfo.articleInfo = response.data
+          } else {
+            this.$message.error(response.msg)
+          }
+        })
+      }
+      if (this.isAuth('video:list')) {
+        this.$http({
+          url: this.$http.adornUrl('/manage/video/homeinfo'),
+          method: 'get'
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.hommeInfo.videoInfo = response.data
+          } else {
+            this.$message.error(response.msg)
+          }
+        })
+      }
+      if (this.isAuth('log:list')) {
+        this.$http({
+          url: this.$http.adornUrl('/manage/log/homeinfo'),
+          method: 'get'
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.hommeInfo.logInfo = response.data
+          } else {
+            this.$message.error(response.msg)
+          }
+        })
+      }
+      if (this.isAuth('messagewall:list')) {
+        this.$http({
+          url: this.$http.adornUrl('/manage/messagewall/homeinfo'),
+          method: 'get'
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.hommeInfo.messageWallInfo = response.data
+          } else {
+            this.$message.error(response.msg)
+          }
+        })
+      }
+      // this.$http({
+      //   url: this.$http.adornUrl('/manage/operation/friendlink/homeinfo'),
+      //   method: 'get'
+      // }).then((response) => {
+      //   if (response && response.code === 200) {
+      //     this.hommeInfo.friendLinkInfo = response.data
+      //   } else {
+      //     this.$message.error(response.msg)
+      //   }
+      // })
+      // this.$http({
+      //   url: this.$http.adornUrl('/manage/operation/recommend/homeinfo'),
+      //   method: 'get'
+      // }).then((response) => {
+      //   if (response && response.code === 200) {
+      //     this.hommeInfo.recommendInfo = response.data
+      //   } else {
+      //     this.$message.error(response.msg)
+      //   }
+      // })
     }
   }
 }
