@@ -50,7 +50,7 @@ npm run build:prod
 
 会持续更新，欢迎大家Star，感谢！
 
-> 个人博客-->【<b><a href=" "> https://jinhx.cc </a ></b>】
+> 个人博客-->【<b><a href="https://jinhx.cc"> https://jinhx.cc </a ></b>】
 
 > 后台管理系统-->【<b><a href="https://jinhx.cc/manage"> https://jinhx.cc/manage </a ></b>】
 >
