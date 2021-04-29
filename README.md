@@ -60,7 +60,7 @@ npm run build:prod
 
 会持续更新，欢迎大家Star，感谢！
 
-> 个人博客 + 后台管理系统-->【<b><a href="https://github.com/luoyusoft/luoyublog-backend"> https://github.com/luoyusoft/luoyublog-backend </a></b>】
+> 个人博客 + 后台管理系统-->【<b><a href="https://github.com/Jinhx128/blog-backend"> https://github.com/Jinhx128/blog-backend </a></b>】
 
 ## 参考教程
 
