@@ -42,7 +42,7 @@
         label="头像"
         width="100px">
         <template slot-scope="scope" >
-          <div v-if="scope.row.profile !== null && scope.row.profile !== '' && scope.row.profile.startsWith('https://minio.luoyublog.com/img/')">
+          <div v-if="scope.row.profile !== null && scope.row.profile !== '' && scope.row.profile.startsWith('https://minio.jinhx.cc/img/')">
             <el-popover placement="top-start" title="" trigger="hover">
               <img :src="scope.row.profile" alt="" style="width: 300px;height: 300px">
               <img slot="reference" :src="scope.row.profile" style="width: 80px;height: 80px">
