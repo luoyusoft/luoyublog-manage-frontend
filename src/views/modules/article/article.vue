@@ -108,13 +108,6 @@
       label="点赞量">
     </el-table-column>
     <el-table-column
-      prop="commentNum"
-      header-align="center"
-      align="center"
-      width="100px"
-      label="评论量">
-    </el-table-column>
-    <el-table-column
       prop="publish"
       header-align="center"
       align="center"
