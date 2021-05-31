@@ -3,7 +3,7 @@
     <div class="site-content__wrapper">
       <div class="site-content">
         <div class="brand-info">
-          <h2 class="brand-info__text">落雨</h2>
+          <h2 class="brand-info__text">Jinhx</h2>
           <p class="brand-info__intro">看山是山！看山不是山！看山还是山！</p>
         </div>
         <div class="login-main">
