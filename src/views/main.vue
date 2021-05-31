@@ -70,7 +70,7 @@ export default {
       }).then((response) => {
         if (response && response.code === 200) {
           this.loading = false
-          this.userId = response.data.userId
+          this.userId = response.data.id
           this.userName = response.data.username
         }
       })

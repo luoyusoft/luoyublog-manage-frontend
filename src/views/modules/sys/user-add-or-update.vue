@@ -144,7 +144,7 @@ export default {
             url: this.$http.adornUrl(`/manage/sys/user/${!this.dataForm.id ? 'save' : 'update'}`),
             method: !this.dataForm.id ? 'post' : 'put',
             data: this.$http.adornData({
-              'userId': this.dataForm.id || undefined,
+              'id': this.dataForm.id || undefined,
               'username': this.dataForm.userName,
               'password': this.dataForm.password,
               'salt': this.dataForm.salt,
