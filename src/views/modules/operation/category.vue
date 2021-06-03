@@ -121,7 +121,7 @@ export default {
     AddOrUpdate,
     TableTreeColumn
   },
-  activated () {
+  created () {
     this.getDataList()
   },
   beforeDestroy () {

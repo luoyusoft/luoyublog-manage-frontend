@@ -210,7 +210,7 @@ export default {
       dataListLoading: false
     }
   },
-  activated () {
+  created () {
     this.getDataList()
   },
   beforeDestroy () {

@@ -139,12 +139,12 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <add v-if="addVisible" ref="add" @refreshDataList="getDataList"></add>
   </div>
 </template>
 
 <script>
-import AddOrUpdate from './messagewall-add-or-update'
+import Add from './messagewall-add'
 
 export default {
   data () {
@@ -159,13 +159,13 @@ export default {
       totalPage: 0,
       dataListLoading: false,
       dataListSelections: [],
-      addOrUpdateVisible: false
+      addVisible: false
     }
   },
   components: {
-    AddOrUpdate
+    Add
   },
-  activated () {
+  created () {
     this.getDataList()
   },
   beforeDestroy () {
@@ -253,9 +253,9 @@ export default {
     },
     // 新增 / 修改
     addOrUpdateHandle (id, floorNum) {
-      this.addOrUpdateVisible = true
+      this.addVisible = true
       this.$nextTick(() => {
-        this.$refs.addOrUpdate.init(id, floorNum)
+        this.$refs.add.init(id, floorNum)
       })
     }
   }

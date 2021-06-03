@@ -1,27 +1,29 @@
 <template>
   <div class="mod-config">
     <el-collapse>
-      <el-form :inline="true" :model="dataForm" @submit.native.prevent>
-        <el-collapse-item title="更多条件" name="1" style="margin-bottom: 12px">
-          <el-form-item label="文件的md5">
-            <el-input placeholder="文件的md5" v-model="dataForm.fileMd5" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="url地址">
-            <el-input placeholder="url地址" v-model="dataForm.url" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="文件所属模块">
-            <el-select v-model="dataForm.module" clearable>
-              <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-collapse-item>
-        <el-form-item label="文件名称">
+      <el-form :inline="true" style="margin-top: 10px" :model="dataForm" @submit.native.prevent>
+        <el-form-item label="文件名称" >
           <el-input placeholder="文件名称" v-model="dataForm.fileName" clearable></el-input>
         </el-form-item>
         <el-form-item>
           <el-button v-if="isAuth('file:list')" @click="getDataList()">查看</el-button>
           <el-button v-if="isAuth('file:delete')" type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
         </el-form-item>
+        <el-collapse v-model="activeNames">
+          <el-collapse-item title="更多条件" name="1" style="margin-bottom: 12px" value="true">
+            <el-form-item label="文件的md5">
+              <el-input placeholder="文件的md5" v-model="dataForm.fileMd5" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="url地址">
+              <el-input placeholder="url地址" v-model="dataForm.url" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="文件所属模块">
+              <el-select v-model="dataForm.module" clearable>
+                <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-collapse-item>
+        </el-collapse>
       </el-form>
     </el-collapse>
     <el-table
@@ -229,10 +231,12 @@ export default {
       pageSize: 20,
       totalPage: 0,
       dataListLoading: false,
-      dataListSelections: []
+      dataListSelections: [],
+      // 默认展开筛选条件
+      activeNames: ['1']
     }
   },
-  activated () {
+  created () {
     this.getDataList()
   },
   beforeDestroy () {

@@ -127,7 +127,7 @@ export default {
   components: {
     AddOrUpdate
   },
-  activated () {
+  created () {
     this.getDataList()
   },
   beforeDestroy () {

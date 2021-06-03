@@ -157,7 +157,7 @@
       min-width="100px"
       label="操作">
       <template slot-scope="scope">
-        <el-button v-if="isAuth('article:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+        <el-button v-if="isAuth('article:update')" type="text" size="small" @click="updateHandle(scope.row.id)">修改</el-button>
         <el-button v-if="isAuth('article:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
@@ -189,7 +189,7 @@ export default {
       dataListSelections: []
     }
   },
-  activated () {
+  created () {
     this.getDataList()
   },
   beforeDestroy () {
@@ -200,7 +200,17 @@ export default {
     // 监听回车键
     document.addEventListener('keydown', this.keyDown)
   },
+  computed: {
+    mainTabs: {
+      get () { return this.$store.state.common.mainTabs },
+      set (val) { this.$store.commit('common/updateMainTabs', val) }
+    }
+  },
   methods: {
+    // tabs, 是否存在该标签已经打开
+    existTabHandle (tabName) {
+      return this.mainTabs.filter(item => item.name === tabName).length >= 1
+    },
     keyDown () {
       // 13代表回车键
       if (window.event.keyCode === 13) {
@@ -244,9 +254,19 @@ export default {
     selectionChangeHandle (val) {
       this.dataListSelections = val
     },
-    // 新增 / 修改
-    addOrUpdateHandle (id) {
-      this.$router.replace({path: 'article/article/update/' + id})
+    //  修改
+    updateHandle (id) {
+      if (this.existTabHandle('article-article-update')) {
+        this.$confirm(`已经存在正在修改文章的页面，继续修改当前文章，旧文章将不会进行保存!`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.replace({name: 'article-article-update', params: { id: id }})
+        }).catch(() => {})
+      } else {
+        this.$router.replace({name: 'article-article-update', params: { id: id }})
+      }
     },
     // 删除
     deleteHandle (id) {

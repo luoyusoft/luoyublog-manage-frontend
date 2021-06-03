@@ -82,7 +82,7 @@
         <mavon-editor style="z-index:500" ref=md v-model="article.content" @imgAdd="imgAdd" @change="mavonChangeHandle"></mavon-editor>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="saveArticle()">保存</el-button>
+        <el-button type="primary" @click="saveArticle(false)">保存</el-button>
         <el-button>重置</el-button>
       </el-form-item>
     </el-form>
@@ -130,11 +130,6 @@ export default {
   created () {
     this.init()
   },
-  watch: {
-    $route () {
-      this.init()
-    }
-  },
   methods: {
     init () {
       // 获取文章分类
@@ -159,27 +154,6 @@ export default {
             this.tagList = response.data
           }
         })
-      }).then(() => {
-        this.url = this.$http.adornUrl(`/manage/file/minio/upload?token=${this.$cookie.get('token')}&module=0`)
-        let id = this.$route.params.id
-        if (id) {
-          this.$http({
-            url: this.$http.adornUrl('/manage/article/info/' + id),
-            method: 'get',
-            params: this.$http.adornParams()
-          }).then((response) => {
-            if (response && response.code === 200) {
-              this.article = response.data
-              this.file = [{url: response.data.cover}]
-              // 转换tagList
-              this.tagListSelect = this.article.tagList.map(tag => {
-                return tag.id
-              })
-              // 转换categoryId
-              this.categoryOptionsSelect = this.article.categoryId.split(',').map((data) => { return +data })
-            }
-          })
-        }
       })
     },
     // 过滤标签
@@ -221,7 +195,7 @@ export default {
       this.article.cover = ''
     },
     // 保存文章
-    saveArticle () {
+    saveArticle (isWatch) {
       this.$refs['articleForm'].validate((valid) => {
         if (valid) {
           // 转化categoryId
@@ -234,9 +208,11 @@ export default {
             if (response && response.code === 200) {
               this.$message.success('保存文章成功')
               // 关闭当前标签
-              this.$emit('closeCurrentTabs')
-              // 跳转到list
-              this.$router.push('/article-article')
+              if (!isWatch) {
+                this.$emit('closeCurrentTabs')
+                // 跳转到list
+                this.$router.push('/article-article')
+              }
             } else {
               this.$message.error(response.msg)
             }

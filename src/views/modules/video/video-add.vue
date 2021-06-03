@@ -163,7 +163,7 @@
         <quill-editor v-model="video.synopsis"></quill-editor>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="saveVideo()">保存</el-button>
+        <el-button type="primary" @click="saveVideo(false)">保存</el-button>
         <el-button>重置</el-button>
       </el-form-item>
     </el-form>
@@ -273,11 +273,6 @@ export default {
       this.$message('存在类型不正确的文件')
     }
   },
-  watch: {
-    $route () {
-      this.init()
-    }
-  },
   methods: {
     init () {
       // 获取视频分类
@@ -302,30 +297,6 @@ export default {
             this.tagList = response.data
           }
         })
-      }).then(() => {
-        this.url = this.$http.adornUrl(`/manage/file/minio/upload?token=${this.$cookie.get('token')}&module=1`)
-        let id = this.$route.params.id
-        if (id) {
-          this.$http({
-            url: this.$http.adornUrl('/manage/video/info/' + id),
-            method: 'get',
-            params: this.$http.adornParams()
-          }).then((response) => {
-            if (response && response.code === 200) {
-              this.video = response.data
-              this.video.publishDate = new Date(response.data.publishDate)
-              this.file = [{url: response.data.cover}]
-              this.videoFile = [{url: response.data.videoUrl}]
-              this.video.score = parseFloat(response.data.score)
-              // 转换tagList
-              this.tagListSelect = this.video.tagList.map(tag => {
-                return tag.id
-              })
-              // 转换categoryId
-              this.categoryOptionsSelect = this.video.categoryId.split(',').map((data) => { return +data })
-            }
-          })
-        }
       })
     },
     // 过滤标签
@@ -367,7 +338,7 @@ export default {
       this.video.cover = ''
     },
     // 保存视频
-    saveVideo () {
+    saveVideo (isWatch) {
       this.$refs['videoForm'].validate((valid) => {
         if (valid) {
           // 转化categoryId
@@ -379,10 +350,14 @@ export default {
           }).then((response) => {
             if (response && response.code === 200) {
               this.$message.success('保存视频成功')
-              // 关闭当前标签
-              this.$emit('closeCurrentTabs')
-              // 跳转到list
-              this.$router.push('/video-video')
+              if (!isWatch) {
+                // 清除
+                clearInterval(this.articleTimer)
+                // 关闭当前标签
+                this.$emit('closeCurrentTabs')
+                // 跳转到list
+                this.$router.push('/video-video')
+              }
             } else {
               this.$message.error(response.msg)
             }

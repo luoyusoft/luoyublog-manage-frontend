@@ -40,20 +40,20 @@ const mainRoutes = {
     // 提示: 如需要通过iframe嵌套展示内容, 但不通过tab打开, 请自行创建组件使用iframe处理!
     { path: '/home', component: _import('common/home'), name: 'home', meta: { title: '首页' } },
     { path: '/theme', component: _import('common/theme'), name: 'theme', meta: { title: '主题' } },
-    { path: '/article/article/update/:id',
-      component: _import('modules/article/article-add-or-update'),
-      name: 'article-update',
+    { path: '/article-article-update',
+      component: _import('modules/article/article-update'),
+      name: 'article-article-update',
       meta: {
-        id: 'article-update',
+        id: 'article-article-update',
         title: '文章修改',
         isTab: true
       }
     },
-    { path: '/video/video/update/:id',
-      component: _import('modules/video/video-add-or-update'),
-      name: 'video-update',
+    { path: '/video-video-update',
+      component: _import('modules/video/video-update'),
+      name: 'video-video-update',
       meta: {
-        id: 'video-update',
+        id: 'video-video-update',
         title: '视频修改',
         isTab: true
       }
@@ -72,8 +72,10 @@ const mainRoutes = {
 const router = new Router({
   base: '/manage/',
   mode: 'hash',
-  scrollBehavior: () => ({ y: 0 }), // 每次访问滚动条都置0
-  isAddDynamicMenuRoutes: false, // 是否已经添加动态（菜单）路由
+  // 每次访问滚动条都置0
+  scrollBehavior: () => ({ y: 0 }),
+  // 是否已经添加动态（菜单）路由
+  isAddDynamicMenuRoutes: false,
   routes: globalRoutes.concat(mainRoutes)
 })
 
