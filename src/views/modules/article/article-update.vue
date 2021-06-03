@@ -130,35 +130,12 @@ export default {
       // startWatch: false
     }
   },
-  created () {
-    this.init()
-  },
-  computed: {
-    mainTabsActiveName: {
-      get () { return this.$store.state.common.mainTabsActiveName },
-      set (val) { this.$store.commit('common/updateMainTabsActiveName', val) }
-    }
+  activated () {
+    this.init(this.$route.params.id)
   },
   mounted () {
     // 每5分钟自动保存
     this.articleTimer = setInterval(this.watchSave, 5 * 60 * 1000)
-  },
-  watch: {
-    $route () {
-      if (this.mainTabsActiveName === 'article-article-update' && this.$route.params.id) {
-        this.init()
-      }
-    }
-    // 监听属性变化
-    // article: {
-    //   // 注意：当观察的数据为对象或数组时，curVal和oldVal是相等的，因为这两个形参指向的是同一个数据对象
-    //   handler (curVal, oldVal) {
-    //     if (!this.startWatch) {
-    //       this.startWatch = true
-    //     }
-    //   },
-    //   deep: true
-    // }
   },
   beforeDestroy () {
     // 清除
@@ -169,7 +146,7 @@ export default {
     watchSave () {
       this.saveArticle(true)
     },
-    init () {
+    init (id) {
       // 获取文章分类
       this.$http({
         url: this.$http.adornUrl('/manage/operation/category/list'),
@@ -193,8 +170,11 @@ export default {
           }
         })
       }).then(() => {
-        let id = this.$route.params.id
         if (id) {
+          // 除了第一次进来，后面进来，有id的话，直接先保存旧的
+          if (this.article.id) {
+            this.saveArticle(true)
+          }
           this.$http({
             url: this.$http.adornUrl('/manage/article/info/' + id),
             method: 'get',

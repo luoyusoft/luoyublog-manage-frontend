@@ -369,7 +369,7 @@ export default {
     // 修改
     updateHandle (id) {
       if (this.existTabHandle('video-video-update')) {
-        this.$confirm(`已经存在正在修改视频的页面，继续修改当前视频，旧视频将不会进行保存!`, '提示', {
+        this.$confirm(`已经存在视频修改页面，继续修改当前视频，将直接保存旧页面的视频内容!`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

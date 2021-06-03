@@ -264,14 +264,9 @@ export default {
     },
     uploadArgumentsObj () {
       return { ...this.uploadArguments, share: this.share }
-    },
-    mainTabsActiveName: {
-      get () { return this.$store.state.common.mainTabsActiveName },
-      set (val) { this.$store.commit('common/updateMainTabsActiveName', val) }
     }
   },
   created () {
-    this.init()
     if (this.uploadType) {
       // 设置文件类型
       this.accepts = this.acceptsObj[this.uploadType].join(',')
@@ -279,25 +274,12 @@ export default {
       this.$message('存在类型不正确的文件')
     }
   },
+  activated () {
+    this.init(this.$route.params.id)
+  },
   mounted () {
     // 每5分钟自动保存
     this.articleTimer = setInterval(this.watchSave, 5 * 60 * 1000)
-  },
-  watch: {
-    $route () {
-      if (this.mainTabsActiveName === 'video-video-update' && this.$route.params.id) {
-        this.init()
-      }
-    },
-    video: {
-      // 注意：当观察的数据为对象或数组时，curVal和oldVal是相等的，因为这两个形参指向的是同一个数据对象
-      handler (curVal, oldVal) {
-        if (!this.startWatch) {
-          this.startWatch = true
-        }
-      },
-      deep: true
-    }
   },
   beforeDestroy () {
     // 清除
@@ -308,7 +290,7 @@ export default {
     watchSave () {
       this.saveVideo(true)
     },
-    init () {
+    init (id) {
       // 获取视频分类
       this.$http({
         url: this.$http.adornUrl('/manage/operation/category/list'),
@@ -332,8 +314,11 @@ export default {
           }
         })
       }).then(() => {
-        let id = this.$route.params.id
         if (id) {
+          // 除了第一次进来，后面进来，有id的话，直接先保存旧的
+          if (this.video.id) {
+            this.saveVideo(true)
+          }
           this.$http({
             url: this.$http.adornUrl('/manage/video/info/' + id),
             method: 'get',

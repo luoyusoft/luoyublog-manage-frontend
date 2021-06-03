@@ -161,7 +161,7 @@ export default {
   components: {
     AddOrUpdate
   },
-  created () {
+  activated () {
     this.getDataList()
     this.initMenu()
   },

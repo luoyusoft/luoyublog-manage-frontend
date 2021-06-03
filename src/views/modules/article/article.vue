@@ -257,7 +257,7 @@ export default {
     //  修改
     updateHandle (id) {
       if (this.existTabHandle('article-article-update')) {
-        this.$confirm(`已经存在正在修改文章的页面，继续修改当前文章，旧文章将不会进行保存!`, '提示', {
+        this.$confirm(`已经存在文章修改页面，继续修改当前文章，将直接保存旧页面的文章内容!`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
