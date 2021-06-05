@@ -4,5 +4,5 @@
 ;(function () {
   window.SITE_CONFIG = {}
   // api接口请求地址
-  window.SITE_CONFIG['baseUrl'] = 'https://jinhx.cc/api'
+  window.SITE_CONFIG['baseUrl'] = 'https://manage.jinhx.cc/api'
 })()

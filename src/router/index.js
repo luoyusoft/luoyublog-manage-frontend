@@ -70,7 +70,7 @@ const mainRoutes = {
   }
 }
 const router = new Router({
-  base: '/manage/',
+  base: '/',
   mode: 'hash',
   // 每次访问滚动条都置0
   scrollBehavior: () => ({ y: 0 }),
