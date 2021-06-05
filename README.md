@@ -1,5 +1,5 @@
 [![](https://img.shields.io/badge/个人博客-在线地址-green.svg)](https://jinhx.cc)
-[![](https://img.shields.io/badge/后台管理系统-在线地址-blue.svg)](https://jinhx.cc/manage)
+[![](https://img.shields.io/badge/后台管理系统-在线地址-blue.svg)](https://manage.jinhx.cc)
 
 # Blog
 
@@ -52,7 +52,7 @@ npm run build:prod
 
 > 个人博客-->【<b><a href="https://jinhx.cc"> https://jinhx.cc </a ></b>】
 
-> 后台管理系统-->【<b><a href="https://jinhx.cc/manage"> https://jinhx.cc/manage </a ></b>】
+> 后台管理系统-->【<b><a href="https://manage.jinhx.cc"> https://manage.jinhx.cc </a ></b>】
 >
 > 后台管理系统-->游客账号：guest，密码：guest
 
