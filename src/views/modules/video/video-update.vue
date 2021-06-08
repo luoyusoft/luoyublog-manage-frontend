@@ -253,7 +253,7 @@ export default {
       // 自动保存
       videoTimer: 0,
       videoStartWatch: false,
-      videoWatchTime: 10 * 60 * 1000
+      videoWatchTime: 5 * 60 * 1000
     }
   },
   components: {

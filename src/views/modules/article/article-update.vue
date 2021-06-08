@@ -129,7 +129,7 @@ export default {
       // 自动保存
       articleTimer: 0,
       articleStartWatch: false,
-      articleWatchTime: 10 * 60 * 1000
+      articleWatchTime: 5 * 60 * 1000
     }
   },
   activated () {
