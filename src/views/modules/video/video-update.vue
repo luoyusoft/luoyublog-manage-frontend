@@ -251,7 +251,9 @@ export default {
       // 是否共享 0私有  1共享
       share: 1,
       // 自动保存
-      articleTimer: 0
+      videoTimer: 0,
+      videoStartWatch: false,
+      videoWatchTime: 10 * 60 * 1000
     }
   },
   components: {
@@ -275,15 +277,14 @@ export default {
     }
   },
   activated () {
+    // 已经打开过标签，第二次进来不会有id，除非重新打开新的文章
     this.init(this.$route.params.id)
   },
-  mounted () {
-    // 每5分钟自动保存
-    this.articleTimer = setInterval(this.watchSave, 5 * 60 * 1000)
-  },
   beforeDestroy () {
-    // 清除
-    clearInterval(this.articleTimer)
+    if (this.videoStartWatch) {
+      // 清除
+      clearInterval(this.videoTimer)
+    }
   },
   methods: {
     // 自动保存
@@ -315,29 +316,43 @@ export default {
         })
       }).then(() => {
         if (id) {
-          // 除了第一次进来，后面进来，有id的话，直接先保存旧的
-          if (this.video.id) {
-            this.saveVideo(true)
-          }
-          this.$http({
-            url: this.$http.adornUrl('/manage/video/info/' + id),
-            method: 'get',
-            params: this.$http.adornParams()
-          }).then((response) => {
-            if (response && response.code === 200) {
-              this.video = response.data
-              this.video.publishDate = new Date(response.data.publishDate)
-              this.file = [{url: response.data.cover}]
-              this.videoFile = [{url: response.data.videoUrl}]
-              this.video.score = parseFloat(response.data.score)
-              // 转换tagList
-              this.tagListSelect = this.video.tagList.map(tag => {
-                return tag.id
-              })
-              // 转换categoryId
-              this.categoryOptionsSelect = this.video.categoryId.split(',').map((data) => { return +data })
+          // 除了第一次进来，后面进来，有id的话，并且跟原本的不一样的话，直接先保存旧的
+          if (this.video.id !== id) {
+            if (this.video.id) {
+              this.saveVideo(true)
             }
-          })
+            this.$http({
+              url: this.$http.adornUrl('/manage/video/info/' + id),
+              method: 'get',
+              params: this.$http.adornParams()
+            }).then((response) => {
+              if (response && response.code === 200) {
+                this.video = response.data
+                this.video.publishDate = new Date(response.data.publishDate)
+                this.file = [{url: response.data.cover}]
+                this.videoFile = [{url: response.data.videoUrl}]
+                this.video.score = parseFloat(response.data.score)
+                // 转换tagList
+                this.tagListSelect = this.video.tagList.map(tag => {
+                  return tag.id
+                })
+                // 转换categoryId
+                this.categoryOptionsSelect = this.video.categoryId.split(',').map((data) => { return +data })
+                // 开启定时保存
+                if (!this.videoStartWatch) {
+                  // 创建监听器
+                  this.$watch('video', (newVal, oldVal) => {
+                    // console.log('2-' + JSON.stringify(newVal) + '，3-' + JSON.stringify(oldVal) + '，4-' + JSON.stringify(this.video))
+                    // 先清除旧的监听器
+                    clearInterval(this.videoTimer)
+                    // 每10分钟自动保存
+                    this.videoTimer = setInterval(this.watchSave, this.videoWatchTime)
+                  }, {deep: true})
+                  this.videoStartWatch = true
+                }
+              }
+            })
+          }
         }
       })
     },
@@ -392,9 +407,11 @@ export default {
           }).then((response) => {
             if (response && response.code === 200) {
               this.$message.success('保存视频成功')
-              if (!isWatch) {
+              if (this.videoStartWatch) {
                 // 清除
-                clearInterval(this.articleTimer)
+                clearInterval(this.videoTimer)
+              }
+              if (!isWatch) {
                 // 关闭当前标签
                 this.$emit('closeCurrentTabs')
                 // 跳转到list

@@ -105,6 +105,7 @@ export default {
         recommend: false,
         tagList: [],
         module: 0,
+        content: '',
         coverType: 2 // 默认无图片
       },
       coverTypeList: this.getSysParamArr('ARTICLE_COVER_TYPE'),
@@ -126,20 +127,20 @@ export default {
         value: 'id'
       },
       // 自动保存
-      articleTimer: 0
-      // startWatch: false
+      articleTimer: 0,
+      articleStartWatch: false,
+      articleWatchTime: 10 * 60 * 1000
     }
   },
   activated () {
+    // 已经打开过标签，第二次进来不会有id，除非重新打开新的文章
     this.init(this.$route.params.id)
   },
-  mounted () {
-    // 每5分钟自动保存
-    this.articleTimer = setInterval(this.watchSave, 5 * 60 * 1000)
-  },
   beforeDestroy () {
-    // 清除
-    clearInterval(this.articleTimer)
+    if (this.articleStartWatch) {
+      // 清除
+      clearInterval(this.articleTimer)
+    }
   },
   methods: {
     // 自动保存
@@ -171,27 +172,42 @@ export default {
         })
       }).then(() => {
         if (id) {
-          // 除了第一次进来，后面进来，有id的话，直接先保存旧的
-          if (this.article.id) {
-            this.saveArticle(true)
-          }
-          this.$http({
-            url: this.$http.adornUrl('/manage/article/info/' + id),
-            method: 'get',
-            params: this.$http.adornParams()
-          }).then((response) => {
-            if (response && response.code === 200) {
-              this.article = response.data
-              this.file = [{url: response.data.cover}]
-              // 转换tagList
-              this.tagListSelect = this.article.tagList.map(tag => {
-                return tag.id
-              })
-              // 转换categoryId
-              this.categoryOptionsSelect = this.article.categoryId.split(',').map((data) => { return +data })
+          // 除了第一次进来，后面进来，有id的话，并且跟原本的不一样的话，直接先保存旧的
+          if (this.article.id !== id) {
+            if (this.article.id) {
+              this.saveArticle(true)
             }
-          })
+            this.$http({
+              url: this.$http.adornUrl('/manage/article/info/' + id),
+              method: 'get',
+              params: this.$http.adornParams()
+            }).then((response) => {
+              if (response && response.code === 200) {
+                this.article = response.data
+                this.file = [{url: response.data.cover}]
+                // 转换tagList
+                this.tagListSelect = this.article.tagList.map(tag => {
+                  return tag.id
+                })
+                // 转换categoryId
+                this.categoryOptionsSelect = this.article.categoryId.split(',').map((data) => { return +data })
+                // 开启定时保存
+                if (!this.articleStartWatch) {
+                  // 创建监听器
+                  this.$watch('article', (newVal, oldVal) => {
+                    // console.log('2-' + JSON.stringify(newVal) + '，3-' + JSON.stringify(oldVal) + '，4-' + JSON.stringify(this.article))
+                    // 先清除旧的监听器
+                    clearInterval(this.articleTimer)
+                    // 每10分钟自动保存
+                    this.articleTimer = setInterval(this.watchSave, this.articleWatchTime)
+                  }, {deep: true})
+                  this.articleStartWatch = true
+                }
+              }
+            })
+          }
         }
+      }).then(() => {
       })
     },
     // 过滤标签
@@ -245,10 +261,12 @@ export default {
           }).then((response) => {
             if (response && response.code === 200) {
               this.$message.success('保存文章成功')
-              // 关闭当前标签
-              if (!isWatch) {
+              if (this.articleStartWatch) {
                 // 清除
                 clearInterval(this.articleTimer)
+              }
+              if (!isWatch) {
+                // 关闭当前标签
                 this.$emit('closeCurrentTabs')
                 // 跳转到list
                 this.$router.push('/article-article')
