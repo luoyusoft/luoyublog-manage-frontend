@@ -18,6 +18,82 @@
       style="width: 100%;">
       <el-table-column
         fixed="left"
+        type="expand"
+        header-align="center"
+        align="center"
+        width="50px">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="id：">
+              <span>{{ scope.row.id }}</span>
+            </el-form-item>
+            <el-form-item label="模块：">
+              <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
+              <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
+              <el-tag v-if="scope.row.module === 2" size="small" type="error">聊天室</el-tag>
+              <el-tag v-if="scope.row.module === 3" size="small" type="error">搜索</el-tag>
+              <el-tag v-if="scope.row.module === 4" size="small" type="error">时间线</el-tag>
+              <el-tag v-if="scope.row.module === 5" size="small" type="error">留言墙</el-tag>
+            </el-form-item>
+            <el-form-item label="请求方法：">
+              <span>{{ scope.row.method }}</span>
+            </el-form-item>
+            <el-form-item label="请求uri：">
+              <span>{{ scope.row.uri }}</span>
+            </el-form-item>
+            <el-form-item label="请求类型：">
+              <span>{{ scope.row.requestType }}</span>
+            </el-form-item>
+            <el-form-item label="请求头参数：">
+              <span>{{ scope.row.headrParams }}</span>
+            </el-form-item>
+            <el-form-item label="请求体参数：">
+              <span>{{ scope.row.bodyParams }}</span>
+            </el-form-item>
+            <el-form-item label="响应结果：">
+              <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden">{{ scope.row.response }}</p>
+            </el-form-item>
+            <el-form-item label="执行时长（毫秒）：">
+              <span>{{ scope.row.time }}</span>
+            </el-form-item>
+            <el-form-item label="ip地址：">
+              <span>{{ scope.row.ip }}</span>
+            </el-form-item>
+            <el-form-item label="国家：">
+              <span>{{ scope.row.country }}</span>
+            </el-form-item>
+            <el-form-item label="省份：">
+              <span>{{ scope.row.region }}</span>
+            </el-form-item>
+            <el-form-item label="城市：">
+              <span>{{ scope.row.city }}</span>
+            </el-form-item>
+            <el-form-item label="浏览器名字：">
+              <span>{{ scope.row.borderName }}</span>
+            </el-form-item>
+            <el-form-item label="浏览器版本：">
+              <span>{{ scope.row.borderVersion }}</span>
+            </el-form-item>
+            <el-form-item label="设备生产厂商：">
+              <span>{{ scope.row.deviceManufacturer }}</span>
+            </el-form-item>
+            <el-form-item label="设备类型：">
+              <span>{{ scope.row.deviceType }}</span>
+            </el-form-item>
+            <el-form-item label="操作系统的版本号：">
+              <span>{{ scope.row.osVersion }}</span>
+            </el-form-item>
+            <el-form-item label="创建时间：">
+              <span>{{ scope.row.createTime }}</span>
+            </el-form-item>
+            <el-form-item label="更新时间：">
+              <span>{{ scope.row.updateTime }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column
+        fixed="left"
         prop="id"
         header-align="center"
         align="center"
@@ -93,7 +169,7 @@
         align="center"
         width="150px"
         :show-overflow-tooltip="true"
-        label="执行时长(毫秒)">
+        label="执行时长（毫秒）">
       </el-table-column>
       <el-table-column
         prop="ip"
@@ -168,19 +244,19 @@
         label="操作系统的版本号">
       </el-table-column>
       <el-table-column
-        prop="updateTime"
-        header-align="center"
-        align="center"
-        width="180px"
-        label="更新时间">
-      </el-table-column>
-      <el-table-column
         fixed="right"
         prop="createTime"
         header-align="center"
         align="center"
         min-width="180px"
         label="创建时间">
+      </el-table-column>
+      <el-table-column
+        prop="updateTime"
+        header-align="center"
+        align="center"
+        width="180px"
+        label="更新时间">
       </el-table-column>
     </el-table>
     <el-pagination
@@ -264,3 +340,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-left: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>

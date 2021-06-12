@@ -18,6 +18,116 @@
       style="width: 100%;">
       <el-table-column
         fixed="left"
+        type="expand"
+        header-align="center"
+        align="center"
+        width="50px">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="id：">
+              <span>{{ scope.row.id }}</span>
+            </el-form-item>
+            <el-form-item label="封面：">
+              <div v-if="scope.row.cover !== null && scope.row.cover !== ''">
+                <el-popover placement="top-start" title="" trigger="hover">
+                  <img :src="scope.row.cover" alt="" style="width: 250px;height: 300px">
+                  <img slot="reference" :src="scope.row.cover" style="width: 100px;height: 120px">
+                </el-popover>
+                <span>（<a>{{ scope.row.cover }}</a>）</span>
+              </div>
+              <div v-else>
+                <span>暂无封面</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="视频地址：">
+              <a>{{ scope.row.videoUrl }}</a>
+            </el-form-item>
+            <el-form-item label="标题：">
+              <span>{{ scope.row.title }}</span>
+            </el-form-item>
+            <el-form-item label="剧情简介：">
+              <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden">{{ scope.row.synopsis }}</p>
+            </el-form-item>
+            <el-form-item label="又名：">
+              <span>{{ scope.row.alternateName }}</span>
+            </el-form-item>
+            <el-form-item label="上传者：">
+              <span>{{ scope.row.author }}</span>
+            </el-form-item>
+            <el-form-item label="分类：">
+              <span>{{ scope.row.categoryListStr }}</span>
+            </el-form-item>
+            <el-form-item label="标签：">
+              <el-row>
+                <el-button style="margin-top: 8px" v-for="tag in scope.row.tagList" :key="tag.id" size="mini">{{tag.name}}</el-button>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="制片国家/地区：">
+              <span>{{ scope.row.productionRegion }}</span>
+            </el-form-item>
+            <el-form-item label="导演：">
+              <span>{{ scope.row.director }}</span>
+            </el-form-item>
+            <el-form-item label="上映日期：">
+              <span>{{ scope.row.releaseTime }}</span>
+            </el-form-item>
+            <el-form-item label="片长：">
+              <span>{{ scope.row.duration }}</span>
+            </el-form-item>
+            <el-form-item label="语言：">
+              <span>{{ scope.row.language }}</span>
+            </el-form-item>
+            <el-form-item label="主演：">
+              <span>{{ scope.row.toStar }}</span>
+            </el-form-item>
+            <el-form-item label="编剧：">
+              <span>{{ scope.row.screenwriter }}</span>
+            </el-form-item>
+            <el-form-item label="评分：">
+              <el-rate
+                v-model="scope.row.score"
+                disabled
+                show-score
+                allow-half
+                text-color="#ff9900">
+              </el-rate>
+            </el-form-item>
+            <el-form-item label="观看量：">
+              <span>{{ scope.row.watchNum }}</span>
+            </el-form-item>
+            <el-form-item label="点赞量：">
+              <span>{{ scope.row.likeNum }}</span>
+            </el-form-item>
+            <el-form-item label="状态：">
+              <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
+                <el-button type="info" size="mini" @click="updatePublish(scope.row.id, true)">未发布</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="点击下架" v-if="scope.row.publish" placement="top">
+                <el-button type="success" size="mini" @click="updatePublish(scope.row.id, false)" v-if="scope.row.publish === true">已发布</el-button>
+              </el-tooltip>
+            </el-form-item>
+            <el-form-item label="推荐：">
+              <el-switch
+                v-model="scope.row.recommend"
+                active-color="#13ce66"
+                @change="updateRecommend(scope.row.id,scope.row.recommend)">
+              </el-switch>
+            </el-form-item>
+            <el-form-item label="创建时间：">
+              <span>{{ scope.row.createTime }}</span>
+            </el-form-item>
+            <el-form-item label="更新时间：">
+              <span>{{ scope.row.updateTime }}</span>
+            </el-form-item>
+            <el-form-item label="操作：">
+              <el-button v-if="isAuth('video:update')" type="text" size="small" @click="updateHandle(scope.row.id)">修改</el-button>
+              <el-button v-if="isAuth('video:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column
+        fixed="left"
         type="selection"
         header-align="center"
         align="center"
@@ -45,7 +155,7 @@
             </el-popover>
           </div>
           <div v-else>
-            <p>暂无封面</p>
+            <span>暂无封面</span>
           </div>
         </template>
       </el-table-column>
@@ -197,20 +307,6 @@
         prop="recommend"
         header-align="center"
         align="center"
-        label="推荐"
-        width="100px">
-        <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.recommend"
-            active-color="#13ce66"
-            @change="updateRecommend(scope.row.id,scope.row.recommend)">
-          </el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="recommend"
-        header-align="center"
-        align="center"
         label="状态"
         width="100px">
         <template slot-scope="scope">
@@ -220,6 +316,20 @@
           <el-tooltip class="item" effect="dark" content="点击下架" v-if="scope.row.publish" placement="top">
             <el-button type="success" size="mini" @click="updatePublish(scope.row.id, false)" v-if="scope.row.publish === true">已发布</el-button>
           </el-tooltip>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="recommend"
+        header-align="center"
+        align="center"
+        label="推荐"
+        width="100px">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.recommend"
+            active-color="#13ce66"
+            @change="updateRecommend(scope.row.id,scope.row.recommend)">
+          </el-switch>
         </template>
       </el-table-column>
       <el-table-column
@@ -444,3 +554,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-left: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>

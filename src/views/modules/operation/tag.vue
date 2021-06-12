@@ -2,7 +2,15 @@
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item>
-        <el-input v-model="dataForm.key" placeholder="标签名称" clearable></el-input>
+        <el-select v-model="dataForm.module" clearable>
+          <el-option v-for="module in moduleList"
+                     :key="module.parKey"
+                     :value="module.parKey"
+                     :label="module.parValue"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="dataForm.name" placeholder="标签名称" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
@@ -98,7 +106,8 @@ export default {
   data () {
     return {
       dataForm: {
-        key: ''
+        name: '',
+        module: ''
       },
       dataList: [],
       pageIndex: 1,
@@ -106,7 +115,8 @@ export default {
       totalPage: 0,
       dataListLoading: false,
       dataListSelections: [],
-      addOrUpdateVisible: false
+      addOrUpdateVisible: false,
+      moduleList: this.getSysParamArr('MODULE_TYPE')
     }
   },
   components: {
@@ -137,9 +147,10 @@ export default {
         url: this.$http.adornUrl('/manage/operation/tag/list'),
         method: 'get',
         params: this.$http.adornParams({
-          'page': this.pageIndex,
-          'limit': this.pageSize,
-          'key': this.dataForm.key
+          page: this.pageIndex,
+          limit: this.pageSize,
+          name: this.dataForm.name,
+          module: this.dataForm.module
         })
       }).then((response) => {
         if (response && response.code === 200) {

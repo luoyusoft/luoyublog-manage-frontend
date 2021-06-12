@@ -22,6 +22,60 @@
       style="width: 100%;">
       <el-table-column
         fixed="left"
+        type="expand"
+        header-align="center"
+        align="center"
+        width="50px">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="id：">
+              <span>{{ scope.row.id }}</span>
+            </el-form-item>
+            <el-form-item label="头像：">
+              <div v-if="scope.row.profile !== null && scope.row.profile !== '' && scope.row.profile.startsWith('https://minio.jinhx.cc/img/')">
+                <el-popover placement="top-start" title="" trigger="hover">
+                  <img :src="scope.row.profile" alt="" style="width: 300px;height: 300px">
+                  <img slot="reference" :src="scope.row.profile" style="width: 80px;height: 80px">
+                </el-popover>
+                <span>（<a>{{ scope.row.profile }}</a>）</span>
+              </div>
+              <div v-else>
+                <span>暂不支持预览</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="楼层数：">
+              <span>{{ scope.row.floorNum }}</span>
+            </el-form-item>
+            <el-form-item label="回复id，-1为层主：">
+              <span>{{ scope.row.replyId }}</span>
+            </el-form-item>
+            <el-form-item label="昵称：">
+              <span>{{ scope.row.name }}</span>
+            </el-form-item>
+            <el-form-item label="内容：">
+              <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden">{{ scope.row.comment }}</p>
+            </el-form-item>
+            <el-form-item label="邮箱：">
+              <span>{{ scope.row.email }}</span>
+            </el-form-item>
+            <el-form-item label="网站：">
+              <span>{{ scope.row.website }}</span>
+            </el-form-item>
+            <el-form-item label="创建时间：">
+              <span>{{ scope.row.createTime }}</span>
+            </el-form-item>
+            <el-form-item label="更新时间：">
+              <span>{{ scope.row.updateTime }}</span>
+            </el-form-item>
+            <el-form-item label="操作：">
+              <el-button v-if="isAuth('messagewall:add')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id, scope.row.floorNum)">回复</el-button>
+              <el-button v-if="isAuth('messagewall:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column
+        fixed="left"
         type="selection"
         header-align="center"
         align="center"
@@ -49,7 +103,7 @@
             </el-popover>
           </div>
           <div v-else>
-            <p>暂不支持预览</p>
+            <span>暂不支持预览</span>
           </div>
         </template>
       </el-table-column>
@@ -103,19 +157,19 @@
         label="网站">
       </el-table-column>
       <el-table-column
-        prop="updateTime"
-        header-align="center"
-        align="center"
-        width="180px"
-        label="更新时间">
-      </el-table-column>
-      <el-table-column
         fixed="right"
         prop="createTime"
         header-align="center"
         align="center"
         min-width="180px"
         label="创建时间">
+      </el-table-column>
+      <el-table-column
+        prop="updateTime"
+        header-align="center"
+        align="center"
+        width="180px"
+        label="更新时间">
       </el-table-column>
       <el-table-column
         fixed="right"
@@ -261,3 +315,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-left: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>

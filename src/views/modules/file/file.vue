@@ -35,6 +35,77 @@
       style="width: 100%;">
       <el-table-column
         fixed="left"
+        type="expand"
+        header-align="center"
+        align="center"
+        width="50px">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="id：">
+              <span>{{ scope.row.id }}</span>
+            </el-form-item>
+            <el-form-item label="模块：">
+              <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
+              <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
+              <el-tag v-if="scope.row.module === 2" size="small" type="info">友链</el-tag>
+              <el-tag v-if="scope.row.module === 3" size="small" type="danger">文件</el-tag>
+            </el-form-item>
+            <el-form-item label="预览：">
+              <div v-if="scope.row.url !== null && scope.row.url !== '' && scope.row.url.startsWith('https://minio.jinhx.cc/img/')">
+                <el-popover placement="top-start" title="" trigger="hover">
+                  <img :src="scope.row.url" alt="" style="width: 300px;height: 300px">
+                  <img slot="reference" :src="scope.row.url" style="width: 120px;height: 120px">
+                </el-popover>
+                <span>（<a>{{ scope.row.url }}</a>）</span>
+              </div>
+              <div v-else>
+                <span>暂不支持预览</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="文件名称：">
+              <span>{{ scope.row.fileName }}</span>
+            </el-form-item>
+            <el-form-item label="url地址：">
+              <a>{{ scope.row.url }}</a>
+            </el-form-item>
+            <el-form-item label="存储类型：">
+              <span>{{ scope.row.storageType }}</span>
+            </el-form-item>
+            <el-form-item label="桶名：">
+              <span>{{ scope.row.bucketName }}</span>
+            </el-form-item>
+            <el-form-item label="文件的md5：">
+              <span>{{ scope.row.fileMd5 }}</span>
+            </el-form-item>
+            <el-form-item label="文件大小：">
+              <span>{{ scope.row.fileSize }}</span>
+            </el-form-item>
+            <el-form-item label="文件格式：">
+              <span>{{ scope.row.suffix }}</span>
+            </el-form-item>
+            <el-form-item label="是否分片：">
+              <span>{{ scope.row.isChunk }}</span>
+            </el-form-item>
+            <el-form-item label="分片总数量：">
+              <span>{{ scope.row.chunkCount }}</span>
+            </el-form-item>
+            <el-form-item label="上传状态：">
+              <span>{{ scope.row.uploadStatus }}</span>
+            </el-form-item>
+            <el-form-item label="创建时间：">
+              <span>{{ scope.row.createTime }}</span>
+            </el-form-item>
+            <el-form-item label="更新时间：">
+              <span>{{ scope.row.updateTime }}</span>
+            </el-form-item>
+            <el-form-item label="操作：">
+              <el-button v-if="isAuth('file:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column
+        fixed="left"
         type="selection"
         header-align="center"
         align="center"
@@ -75,7 +146,7 @@
             </el-popover>
           </div>
           <div v-else>
-            <p>暂不支持预览</p>
+            <span>暂不支持预览</span>
           </div>
         </template>
       </el-table-column>
@@ -161,19 +232,19 @@
         label="上传状态">
       </el-table-column>
       <el-table-column
-        prop="updateTime"
-        header-align="center"
-        align="center"
-        width="180px"
-        label="更新时间">
-      </el-table-column>
-      <el-table-column
         fixed="right"
         prop="createTime"
         header-align="center"
         align="center"
         min-width="180px"
         label="创建时间">
+      </el-table-column>
+      <el-table-column
+        prop="updateTime"
+        header-align="center"
+        align="center"
+        width="180px"
+        label="更新时间">
       </el-table-column>
       <el-table-column
         fixed="right"
@@ -327,3 +398,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-left: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>
