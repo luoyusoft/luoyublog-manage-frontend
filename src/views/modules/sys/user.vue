@@ -2,7 +2,7 @@
   <div class="mod-user">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
       <el-form-item>
-        <el-input v-model="dataForm.userName" placeholder="用户名" clearable></el-input>
+        <el-input v-model="dataForm.newUsername" placeholder="用户名" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
@@ -17,6 +17,61 @@
       @selection-change="selectionChangeHandle"
       height="800"
       style="width: 100%;">
+      <el-table-column
+        fixed="left"
+        type="expand"
+        header-align="center"
+        align="center"
+        width="50px">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="id：">
+              <span>{{ scope.row.id }}</span>
+            </el-form-item>
+            <el-form-item label="用户名：">
+              <span>{{ scope.row.username }}</span>
+            </el-form-item>
+            <el-form-item label="角色：">
+              <span>{{ scope.row.roleNameStr }}</span>
+            </el-form-item>
+            <el-form-item label="昵称：">
+              <span>{{ scope.row.nickname }}</span>
+            </el-form-item>
+            <el-form-item label="头像：">
+              <div v-if="scope.row.profile !== null && scope.row.profile !== ''">
+                <el-popover placement="top-start" title="" trigger="hover">
+                  <img :src="scope.row.profile" alt="" style="width: 250px;height: 250px">
+                  <img slot="reference" :src="scope.row.profile" style="width: 100px;height: 100px">
+                </el-popover>
+                <span>（<a>{{ scope.row.profile }}</a>）</span>
+              </div>
+              <div v-else>
+                <span>暂无头像</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="邮箱：">
+              <span>{{ scope.row.email }}</span>
+            </el-form-item>
+            <el-form-item label="手机号：">
+              <span>{{ scope.row.mobile }}</span>
+            </el-form-item>
+            <el-form-item label="状态：">
+              <el-tag v-if="scope.row.status === 0" size="small" type="danger">禁用</el-tag>
+              <el-tag v-else size="small">正常</el-tag>
+            </el-form-item>
+            <el-form-item label="创建时间：">
+              <span>{{ scope.row.createTime }}</span>
+            </el-form-item>
+            <el-form-item label="更新时间：">
+              <span>{{ scope.row.updateTime }}</span>
+            </el-form-item>
+            <el-form-item label="操作：">
+              <el-button v-if="isAuth('sys:user:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+              <el-button v-if="isAuth('sys:user:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column
         fixed="left"
         type="selection"
@@ -39,6 +94,41 @@
         width="150px"
         :show-overflow-tooltip="true"
         label="用户名">
+      </el-table-column>
+      <el-table-column
+        prop="roleNameStr"
+        header-align="center"
+        align="center"
+        width="150px"
+        :show-overflow-tooltip="true"
+        label="角色">
+      </el-table-column>
+      <el-table-column
+        prop="nickname"
+        header-align="center"
+        align="center"
+        width="150px"
+        :show-overflow-tooltip="true"
+        label="昵称">
+      </el-table-column>
+      <el-table-column
+        prop="profile"
+        header-align="center"
+        align="center"
+        width="150px"
+        :show-overflow-tooltip="true"
+        label="头像">
+        <template slot-scope="scope" >
+          <div v-if="scope.row.profile !== null && scope.row.profile !== ''">
+            <el-popover placement="top-start" title="" trigger="hover">
+              <img :src="scope.row.profile" alt="" style="width: 250px;height: 250px">
+              <img slot="reference" :src="scope.row.profile" style="width: 100px;height: 100px">
+            </el-popover>
+          </div>
+          <div v-else>
+            <span>暂无头像</span>
+          </div>
+        </template>
       </el-table-column>
       <el-table-column
         prop="email"
@@ -113,7 +203,7 @@ export default {
   data () {
     return {
       dataForm: {
-        userName: ''
+        newUsername: ''
       },
       dataList: [],
       pageIndex: 1,
@@ -154,7 +244,7 @@ export default {
         params: this.$http.adornParams({
           'page': this.pageIndex,
           'limit': this.pageSize,
-          'username': this.dataForm.userName
+          'username': this.dataForm.newUsername
         })
       }).then((response) => {
         if (response && response.code === 200) {
@@ -222,3 +312,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-left: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>

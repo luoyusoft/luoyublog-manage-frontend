@@ -1,15 +1,19 @@
 export default {
   namespaced: true,
   state: {
-    id: 0,
-    name: ''
+    userId: 0,
+    nickname: '',
+    profile: ''
   },
   mutations: {
-    updateId (state, id) {
-      state.id = id
+    updateUserId (state, userId) {
+      state.userId = userId
     },
-    updateName (state, name) {
-      state.name = name
+    updateNickname (state, nickname) {
+      state.nickname = nickname
+    },
+    updateProfile (state, profile) {
+      state.profile = profile
     }
   }
 }

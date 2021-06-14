@@ -108,7 +108,7 @@ export default {
         coverType: 2 // 默认无图片
       },
       coverTypeList: this.getSysParamArr('ARTICLE_COVER_TYPE'),
-      url: '',
+      url: this.$http.adornUrl(`/manage/file/minio/upload?token=${this.$cookie.get('token')}&module=0`),
       file: [],
       rules: {
         title: {required: true, message: '请输入文章标题', trigger: 'change'},

@@ -35,10 +35,11 @@
         <el-menu-item class="site-navbar__avatar" index="3">
           <el-dropdown :show-timeout="0" placement="bottom">
             <span class="el-dropdown-link">
-              <img src="~@/assets/img/avatar.jpg" :alt="userName">{{ userName }}
+              <img :src="profile" :alt="nickname">{{ nickname }}
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native="updatePasswordHandle()">修改密码</el-dropdown-item>
+<!--              <el-dropdown-item @click.native="updatePasswordHandle()">修改密码</el-dropdown-item>-->
+              <el-dropdown-item @click.native="addOrUpdateHandle()">修改信息</el-dropdown-item>
               <el-dropdown-item @click.native="logoutHandle()">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -46,21 +47,26 @@
       </el-menu>
     </div>
     <!-- 弹窗, 修改密码 -->
-    <update-password v-if="updatePassowrdVisible" ref="updatePassowrd"></update-password>
+<!--    <update-password v-if="updatePassowrdVisible" ref="updatePassowrd"></update-password>-->
+    <!-- 弹窗, 新增 / 修改 -->
+    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
   </nav>
 </template>
 
 <script>
 import UpdatePassword from './main-navbar-update-password'
+import AddOrUpdate from './modules/sys/user-add-or-update'
 import { clearLoginInfo } from '@/utils'
 export default {
   data () {
     return {
+      addOrUpdateVisible: false,
       updatePassowrdVisible: false
     }
   },
   components: {
-    UpdatePassword
+    UpdatePassword,
+    AddOrUpdate
   },
   computed: {
     navbarLayoutType: {
@@ -74,8 +80,14 @@ export default {
       get () { return this.$store.state.common.mainTabs },
       set (val) { this.$store.commit('common/updateMainTabs', val) }
     },
-    userName: {
-      get () { return this.$store.state.user.name }
+    nickname: {
+      get () { return this.$store.state.user.nickname }
+    },
+    profile: {
+      get () { return this.$store.state.user.profile }
+    },
+    userId: {
+      get () { return this.$store.state.user.userId }
     }
   },
   methods: {
@@ -85,6 +97,15 @@ export default {
       this.$nextTick(() => {
         this.$refs.updatePassowrd.init()
       })
+    },
+    // 修改
+    addOrUpdateHandle () {
+      this.addOrUpdateVisible = true
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init(this.userId)
+      })
+    },
+    getDataList () {
     },
     // 退出
     logoutHandle () {

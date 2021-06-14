@@ -187,7 +187,7 @@ export default {
         tagList: [],
         releaseTime: ''
       },
-      url: '',
+      url: this.$http.adornUrl(`/manage/file/minio/upload?token=${this.$cookie.get('token')}&module=1`),
       file: [],
       videoFile: [],
       rules: {

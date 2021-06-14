@@ -5,7 +5,7 @@
     :append-to-body="true">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
       <el-form-item label="账号">
-        <span>{{ userName }}</span>
+        <span>{{ nickname }}</span>
       </el-form-item>
       <el-form-item label="原密码" prop="password">
         <el-input type="password" v-model="dataForm.password"></el-input>
@@ -57,8 +57,8 @@ export default {
     }
   },
   computed: {
-    userName: {
-      get () { return this.$store.state.user.name }
+    nickname: {
+      get () { return this.$store.state.user.nickname }
     },
     mainTabs: {
       get () { return this.$store.state.common.mainTabs },

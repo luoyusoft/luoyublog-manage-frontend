@@ -38,12 +38,16 @@ export default {
       get () { return this.$store.state.common.sidebarFold }
     },
     userId: {
-      get () { return this.$store.state.user.id },
-      set (val) { this.$store.commit('user/updateId', val) }
+      get () { return this.$store.state.user.userId },
+      set (val) { this.$store.commit('user/updateUserId', val) }
     },
-    userName: {
-      get () { return this.$store.state.user.name },
-      set (val) { this.$store.commit('user/updateName', val) }
+    nickname: {
+      get () { return this.$store.state.user.nickname },
+      set (val) { this.$store.commit('user/updateNickname', val) }
+    },
+    profile: {
+      get () { return this.$store.state.user.profile },
+      set (val) { this.$store.commit('user/updateProfile', val) }
     }
   },
   created: function () {
@@ -61,7 +65,7 @@ export default {
         this.documentClientHeight = document.documentElement['clientHeight']
       }
     },
-    // 获取当前管理员信息
+    // 获取当前用户信息
     getUserInfo () {
       this.$http({
         url: this.$http.adornUrl('/manage/sys/user/info'),
@@ -71,7 +75,8 @@ export default {
         if (response && response.code === 200) {
           this.loading = false
           this.userId = response.data.id
-          this.userName = response.data.username
+          this.nickname = response.data.nickname
+          this.profile = response.data.profile
         }
       })
     },
