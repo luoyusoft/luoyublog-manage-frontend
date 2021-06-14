@@ -56,11 +56,6 @@
       </el-row>
       <el-row>
         <el-col :span="6">
-          <el-form-item label="上传者">
-            <el-input placeholder="上传者" v-model="video.author" clearable></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
           <el-form-item label="导演">
             <el-input placeholder="导演" v-model="video.director" clearable></el-input>
           </el-form-item>
@@ -194,7 +189,6 @@ export default {
         title: {required: true, message: '请输入视频标题', trigger: 'change'},
         releaseTime: {required: true, message: '请输入上映日期', trigger: 'change'},
         productionRegion: {required: true, message: '请输入制片国家/地区', trigger: 'change'},
-        author: {required: true, message: '请输入上传者', trigger: 'change'},
         director: {required: true, message: '请输入导演', trigger: 'change'},
         screenwriter: {required: true, message: '请输入编剧', trigger: 'change'},
         duration: {required: true, message: '请输入片长', trigger: 'change'},

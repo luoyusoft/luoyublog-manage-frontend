@@ -38,13 +38,6 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="作者">
-        <el-row>
-          <el-col :span="6">
-            <el-input placeholder="作者" v-model="article.author" clearable></el-input>
-          </el-col>
-        </el-row>
-      </el-form-item>
       <el-form-item label="是否推荐">
         <el-radio-group v-model="article.recommend">
           <el-radio :label="true" >是</el-radio>
@@ -112,7 +105,6 @@ export default {
       file: [],
       rules: {
         title: {required: true, message: '请输入文章标题', trigger: 'change'},
-        author: {required: true, message: '请输入作者', trigger: 'change'},
         content: {required: true, message: '请输入内容', trigger: 'change'}
       },
       tagList: [],
