@@ -6,7 +6,7 @@
           <el-input placeholder="文件名称" v-model="dataForm.fileName" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button v-if="isAuth('file:list')" @click="getDataList()">查看</el-button>
+          <el-button v-if="isAuth('file:list')" @click="getDataList()">查询</el-button>
           <el-button v-if="isAuth('file:delete')" type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
         </el-form-item>
         <el-collapse v-model="activeNames">

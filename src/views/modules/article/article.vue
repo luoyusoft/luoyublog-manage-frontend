@@ -143,7 +143,7 @@
         prop="author"
         header-align="center"
         align="center"
-        width="100px"
+        width="200px"
         :show-overflow-tooltip="true"
         label="作者">
       </el-table-column>

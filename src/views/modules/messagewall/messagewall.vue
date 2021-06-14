@@ -8,7 +8,7 @@
         <el-input placeholder="楼层数" v-model="dataForm.floorNum" clearable></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button v-if="isAuth('messagewall:list')" @click="getDataList()">查看</el-button>
+        <el-button v-if="isAuth('messagewall:list')" @click="getDataList()">查询</el-button>
         <el-button v-if="isAuth('messagewall:add')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
         <el-button v-if="isAuth('messagewall:delete')" type="danger" :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
       </el-form-item>
