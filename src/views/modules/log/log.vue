@@ -1,7 +1,7 @@
 <template>
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
-      <el-form-item style="display: inline-block">
+      <el-form-item style="display: inline-block" label="模块">
         <el-select v-model="dataForm.module" clearable>
           <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
         </el-select>
@@ -68,7 +68,7 @@
             <el-form-item label="城市：">
               <span>{{ scope.row.city }}</span>
             </el-form-item>
-            <el-form-item label="浏览器名字：">
+            <el-form-item label="浏览器名称：">
               <span>{{ scope.row.borderName }}</span>
             </el-form-item>
             <el-form-item label="浏览器版本：">
@@ -82,6 +82,12 @@
             </el-form-item>
             <el-form-item label="操作系统的版本号：">
               <span>{{ scope.row.osVersion }}</span>
+            </el-form-item>
+            <el-form-item label="创建者id：">
+              <span>{{ scope.row.createrId }}</span>
+            </el-form-item>
+            <el-form-item label="更新者id：">
+              <span>{{ scope.row.updaterId }}</span>
             </el-form-item>
             <el-form-item label="创建时间：">
               <span>{{ scope.row.createTime }}</span>
@@ -209,7 +215,7 @@
         align="center"
         width="200px"
         :show-overflow-tooltip="true"
-        label="浏览器名字">
+        label="浏览器名称">
       </el-table-column>
       <el-table-column
         prop="borderVersion"
@@ -242,6 +248,20 @@
         width="200px"
         :show-overflow-tooltip="true"
         label="操作系统的版本号">
+      </el-table-column>
+      <el-table-column
+        prop="createrId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="创建者id">
+      </el-table-column>
+      <el-table-column
+        prop="updaterId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="更新者id">
       </el-table-column>
       <el-table-column
         fixed="right"

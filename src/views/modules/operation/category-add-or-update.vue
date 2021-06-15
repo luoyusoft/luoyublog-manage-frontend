@@ -12,8 +12,8 @@
       <el-form-item :label="getSysParam('CATEGORY_RANK',dataForm.rank,rankList)+'名称'" prop="name">
         <el-input v-model="dataForm.name" placeholder="名称"></el-input>
       </el-form-item>
-      <el-form-item label="所属模块" prop="module">
-        <el-select placeholder="请选择所属模块" clearable filterable v-model="dataForm.module" @change="getCategorySelect()">
+      <el-form-item label="模块" prop="module">
+        <el-select placeholder="请选择模块" clearable filterable v-model="dataForm.module" @change="getCategorySelect()">
           <el-option
             v-for="module in moduleList"
             :key="module.parKey"

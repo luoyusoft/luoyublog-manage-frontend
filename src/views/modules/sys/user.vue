@@ -1,12 +1,15 @@
 <template>
   <div class="mod-user">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
-      <el-form-item>
+      <el-form-item label="用户id">
+        <el-input v-model="dataForm.id" placeholder="用户id" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="用户名">
         <el-input v-model="dataForm.newUsername" placeholder="用户名" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
-        <el-button v-if="isAuth('sys:user:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+        <el-button v-if="isAuth('sys:user:save')" type="primary" @click="addOrUpdateHandle(null)">新增</el-button>
         <el-button v-if="isAuth('sys:user:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
@@ -58,6 +61,12 @@
             <el-form-item label="状态：">
               <el-tag v-if="scope.row.status === 0" size="small" type="danger">禁用</el-tag>
               <el-tag v-else size="small">正常</el-tag>
+            </el-form-item>
+            <el-form-item label="创建者id：">
+              <span>{{ scope.row.createrId }}</span>
+            </el-form-item>
+            <el-form-item label="更新者id：">
+              <span>{{ scope.row.updaterId }}</span>
             </el-form-item>
             <el-form-item label="创建时间：">
               <span>{{ scope.row.createTime }}</span>
@@ -158,6 +167,20 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="createrId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="创建者id">
+      </el-table-column>
+      <el-table-column
+        prop="updaterId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="更新者id">
+      </el-table-column>
+      <el-table-column
         prop="createTime"
         header-align="center"
         align="center"
@@ -203,7 +226,8 @@ export default {
   data () {
     return {
       dataForm: {
-        newUsername: ''
+        newUsername: '',
+        id: ''
       },
       dataList: [],
       pageIndex: 1,
@@ -244,7 +268,8 @@ export default {
         params: this.$http.adornParams({
           'page': this.pageIndex,
           'limit': this.pageSize,
-          'username': this.dataForm.newUsername
+          'username': this.dataForm.newUsername,
+          'id': this.dataForm.id
         })
       }).then((response) => {
         if (response && response.code === 200) {

@@ -27,7 +27,7 @@
         </div>
         <div>
           <el-form :inline="true" :model="dataForm" @submit.native.prevent>
-            <el-form-item>
+            <el-form-item label="类型">
               <el-input v-model="dataForm.type" placeholder="类型" clearable></el-input>
             </el-form-item>
             <el-form-item>
@@ -43,6 +43,48 @@
             @selection-change="selectionChangeHandle"
             height="800"
             style="width: 100%;">
+            <el-table-column
+              fixed="left"
+              type="expand"
+              header-align="center"
+              align="center"
+              width="50px">
+              <template slot-scope="scope">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <el-form-item label="id：">
+                    <span>{{ scope.row.id }}</span>
+                  </el-form-item>
+                  <el-form-item label="参数键：">
+                    <span>{{ scope.row.parKey }}</span>
+                  </el-form-item>
+                  <el-form-item label="参数值：">
+                    <span>{{ scope.row.parValue }}</span>
+                  </el-form-item>
+                  <el-form-item label="参数url：">
+                    <span>{{ scope.row.menuUrl }}</span>
+                  </el-form-item>
+                  <el-form-item label="参数类型：">
+                    <span>{{ scope.row.type }}</span>
+                  </el-form-item>
+                  <el-form-item label="创建者id：">
+                    <span>{{ scope.row.createrId }}</span>
+                  </el-form-item>
+                  <el-form-item label="更新者id：">
+                    <span>{{ scope.row.updaterId }}</span>
+                  </el-form-item>
+                  <el-form-item label="创建时间：">
+                    <span>{{ scope.row.createTime }}</span>
+                  </el-form-item>
+                  <el-form-item label="更新时间：">
+                    <span>{{ scope.row.updateTime }}</span>
+                  </el-form-item>
+                  <el-form-item label="操作：">
+                    <el-button v-if="isAuth('sys:param:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+                    <el-button v-if="isAuth('sys:param:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+                  </el-form-item>
+                </el-form>
+              </template>
+            </el-table-column>
             <el-table-column
               fixed="left"
               type="selection"
@@ -88,6 +130,20 @@
               width="200px"
               :show-overflow-tooltip="true"
               label="参数类型">
+            </el-table-column>
+            <el-table-column
+              prop="createrId"
+              header-align="center"
+              align="center"
+              width="100px"
+              label="创建者id">
+            </el-table-column>
+            <el-table-column
+              prop="updaterId"
+              header-align="center"
+              align="center"
+              width="100px"
+              label="更新者id">
             </el-table-column>
             <el-table-column
               prop="createTime"
@@ -278,3 +334,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-left: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>

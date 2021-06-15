@@ -17,7 +17,7 @@
             <el-form-item label="url地址">
               <el-input placeholder="url地址" v-model="dataForm.url" clearable></el-input>
             </el-form-item>
-            <el-form-item label="文件所属模块">
+            <el-form-item label="模块">
               <el-select v-model="dataForm.module" clearable>
                 <el-option v-for="module in moduleList" :key="module.parKey" :value="module.parKey" :label="module.parValue"></el-option>
               </el-select>
@@ -91,6 +91,12 @@
             </el-form-item>
             <el-form-item label="上传状态：">
               <span>{{ scope.row.uploadStatus }}</span>
+            </el-form-item>
+            <el-form-item label="创建者id：">
+              <span>{{ scope.row.createrId }}</span>
+            </el-form-item>
+            <el-form-item label="更新者id：">
+              <span>{{ scope.row.updaterId }}</span>
             </el-form-item>
             <el-form-item label="创建时间：">
               <span>{{ scope.row.createTime }}</span>
@@ -230,6 +236,20 @@
         width="100px"
         :show-overflow-tooltip="true"
         label="上传状态">
+      </el-table-column>
+      <el-table-column
+        prop="createrId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="创建者id">
+      </el-table-column>
+      <el-table-column
+        prop="updaterId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="更新者id">
       </el-table-column>
       <el-table-column
         fixed="right"

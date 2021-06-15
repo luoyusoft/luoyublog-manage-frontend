@@ -17,6 +17,57 @@
       style="width: 100%;">
       <el-table-column
         fixed="left"
+        type="expand"
+        header-align="center"
+        align="center"
+        width="50px">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="id：">
+              <span>{{ scope.row.id }}</span>
+            </el-form-item>
+            <el-form-item label="置顶标题：">
+              <span>{{ scope.row.title }}</span>
+            </el-form-item>
+            <el-form-item label="置顶模块：">
+              <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
+              <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
+              <!--          {{ getSysParam('MODULE_TYPE', scope.row.type) }}-->
+            </el-form-item>
+            <el-form-item label="顺序：">
+              <span>{{ scope.row.orderNum }}</span>
+            </el-form-item>
+            <el-form-item v-if="isAuth('operation:top:update')" label="置顶：">
+              <el-tooltip class="item" effect="dark" content="置顶" v-if="scope.row.orderNum !== 1" placement="top">
+                <el-button type="info" size="mini" @click="updateTop(scope.row.id)">未置顶</el-button>
+              </el-tooltip>
+              <el-button type="success" size="mini" v-if="scope.row.orderNum === 1">已置顶</el-button>
+            </el-form-item>
+            <el-form-item v-else label="置顶：">
+              <span v-if="scope.row.orderNum !== 1">未置顶</span>
+              <span v-else>已置顶</span>
+            </el-form-item>
+            <el-form-item label="创建者id：">
+              <span>{{ scope.row.createrId }}</span>
+            </el-form-item>
+            <el-form-item label="更新者id：">
+              <span>{{ scope.row.updaterId }}</span>
+            </el-form-item>
+            <el-form-item label="创建时间：">
+              <span>{{ scope.row.createTime }}</span>
+            </el-form-item>
+            <el-form-item label="更新时间：">
+              <span>{{ scope.row.updateTime }}</span>
+            </el-form-item>
+            <el-form-item label="操作：">
+              <el-button v-if="isAuth('operation:top:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+              <el-button v-if="isAuth('operation:top:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column
+        fixed="left"
         type="selection"
         header-align="center"
         align="center"
@@ -58,6 +109,7 @@
         label="顺序">
       </el-table-column>
       <el-table-column
+        v-if="isAuth('operation:top:update')"
         header-align="center"
         align="center"
         width="150px"
@@ -68,6 +120,31 @@
           </el-tooltip>
           <el-button type="success" size="mini" v-if="scope.row.orderNum === 1">已置顶</el-button>
         </template>
+      </el-table-column>
+      <el-table-column
+        v-else
+        header-align="center"
+        align="center"
+        width="150px"
+        label="置顶">
+        <template slot-scope="scope">
+          <span v-if="scope.row.orderNum !== 1">未置顶</span>
+          <span v-else>已置顶</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="createrId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="创建者id">
+      </el-table-column>
+      <el-table-column
+        prop="updaterId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="更新者id">
       </el-table-column>
       <el-table-column
         prop="createTime"
@@ -230,3 +307,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-left: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>

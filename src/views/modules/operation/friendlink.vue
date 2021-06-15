@@ -1,7 +1,7 @@
 <template>
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
-      <el-form-item>
+      <el-form-item label="链接名称">
         <el-input v-model="dataForm.title" placeholder="链接名称" clearable></el-input>
       </el-form-item>
       <el-form-item>
@@ -17,6 +17,57 @@
       @selection-change="selectionChangeHandle"
       height="800"
       style="width: 100%;">
+      <el-table-column
+        fixed="left"
+        type="expand"
+        header-align="center"
+        align="center"
+        width="50px">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="id：">
+              <span>{{ scope.row.id }}</span>
+            </el-form-item>
+            <el-form-item label="链接名称：">
+              <span>{{ scope.row.title }}</span>
+            </el-form-item>
+            <el-form-item label="链接地址：">
+              <span>{{ scope.row.url }}</span>
+            </el-form-item>
+            <el-form-item label="链接简介：">
+              <span>{{ scope.row.description }}</span>
+            </el-form-item>
+            <el-form-item label="头像：">
+              <div v-if="scope.row.avatar !== null && scope.row.avatar !== ''">
+                <el-popover placement="top-start" title="" trigger="hover">
+                  <img :src="scope.row.avatar" alt="" style="width: 250px;height: 250px">
+                  <img slot="reference" :src="scope.row.avatar" style="width: 100px;height: 100px">
+                </el-popover>
+                <span>（<a>{{ scope.row.avatar }}</a>）</span>
+              </div>
+              <div v-else>
+                <span>暂无头像</span>
+              </div>
+            </el-form-item>
+            <el-form-item label="创建者id：">
+              <span>{{ scope.row.createrId }}</span>
+            </el-form-item>
+            <el-form-item label="更新者id：">
+              <span>{{ scope.row.updaterId }}</span>
+            </el-form-item>
+            <el-form-item label="创建时间：">
+              <span>{{ scope.row.createTime }}</span>
+            </el-form-item>
+            <el-form-item label="更新时间：">
+              <span>{{ scope.row.updateTime }}</span>
+            </el-form-item>
+            <el-form-item label="操作：">
+              <el-button v-if="isAuth('operation:friendlink:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+              <el-button v-if="isAuth('operation:friendlink:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column
         fixed="left"
         type="selection"
@@ -70,9 +121,23 @@
             </el-popover>
           </div>
           <div v-else>
-            <p>暂无头像</p>
+            <span>暂无头像</span>
           </div>
         </template>
+      </el-table-column>
+      <el-table-column
+        prop="createrId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="创建者id">
+      </el-table-column>
+      <el-table-column
+        prop="updaterId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="更新者id">
       </el-table-column>
       <el-table-column
         prop="createTime"
@@ -229,3 +294,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-left: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>

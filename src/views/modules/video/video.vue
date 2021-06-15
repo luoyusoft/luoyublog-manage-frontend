@@ -98,7 +98,7 @@
             <el-form-item label="点赞量：">
               <span>{{ scope.row.likeNum }}</span>
             </el-form-item>
-            <el-form-item label="状态：">
+            <el-form-item v-if="isAuth('video:update')" label="状态：">
               <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
                 <el-button type="info" size="mini" @click="updatePublish(scope.row.id, true)">未发布</el-button>
               </el-tooltip>
@@ -106,12 +106,26 @@
                 <el-button type="success" size="mini" @click="updatePublish(scope.row.id, false)" v-if="scope.row.publish === true">已发布</el-button>
               </el-tooltip>
             </el-form-item>
-            <el-form-item label="推荐：">
+            <el-form-item v-else label="状态：">
+              <span v-if="!scope.row.publish">未发布</span>
+              <span v-else>已发布</span>
+            </el-form-item>
+            <el-form-item v-if="isAuth('video:update')" label="推荐：">
               <el-switch
                 v-model="scope.row.recommend"
                 active-color="#13ce66"
                 @change="updateRecommend(scope.row.id,scope.row.recommend)">
               </el-switch>
+            </el-form-item>
+            <el-form-item v-else label="推荐：">
+              <span v-if="!scope.row.recommend">未推荐</span>
+              <span v-else>已推荐</span>
+            </el-form-item>
+            <el-form-item label="创建者id：">
+              <span>{{ scope.row.createrId }}</span>
+            </el-form-item>
+            <el-form-item label="更新者id：">
+              <span>{{ scope.row.updaterId }}</span>
             </el-form-item>
             <el-form-item label="创建时间：">
               <span>{{ scope.row.createTime }}</span>
@@ -304,6 +318,7 @@
         label="点赞量">
       </el-table-column>
       <el-table-column
+        v-if="isAuth('video:update')"
         prop="recommend"
         header-align="center"
         align="center"
@@ -319,6 +334,19 @@
         </template>
       </el-table-column>
       <el-table-column
+        v-else
+        prop="recommend"
+        header-align="center"
+        align="center"
+        label="状态"
+        width="100px">
+        <template slot-scope="scope">
+          <span v-if="!scope.row.publish">未发布</span>
+          <span v-else>已发布</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        v-if="isAuth('video:update')"
         prop="recommend"
         header-align="center"
         align="center"
@@ -331,6 +359,32 @@
             @change="updateRecommend(scope.row.id,scope.row.recommend)">
           </el-switch>
         </template>
+      </el-table-column>
+      <el-table-column
+        v-else
+        prop="recommend"
+        header-align="center"
+        align="center"
+        label="推荐"
+        width="100px">
+        <template slot-scope="scope">
+          <span v-if="!scope.row.recommend">未推荐</span>
+          <span v-else>已推荐</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="createrId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="创建者id">
+      </el-table-column>
+      <el-table-column
+        prop="updaterId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="更新者id">
       </el-table-column>
       <el-table-column
         prop="createTime"

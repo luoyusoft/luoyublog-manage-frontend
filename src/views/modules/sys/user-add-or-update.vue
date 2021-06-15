@@ -145,7 +145,7 @@ export default {
   },
   methods: {
     init (id) {
-      this.dataForm.id = id || 0
+      this.dataForm.id = id
       this.$http({
         url: this.$http.adornUrl('/manage/sys/role/select'),
         method: 'get',
@@ -158,7 +158,7 @@ export default {
           this.$refs['dataForm'].resetFields()
         })
       }).then(() => {
-        if (this.dataForm.id) {
+        if (this.dataForm.id !== null) {
           this.$http({
             url: this.$http.adornUrl(`/manage/sys/user/info/${this.dataForm.id}`),
             method: 'get',
@@ -173,8 +173,19 @@ export default {
               this.dataForm.nickname = response.data.nickname
               this.dataForm.profile = response.data.profile
               this.dataForm.mobile = response.data.mobile
+              this.file = [{url: response.data.profile}]
             }
           })
+        } else {
+          this.dataForm.newUsername = ''
+          this.dataForm.salt = ''
+          this.dataForm.email = ''
+          this.dataForm.roleIdList = []
+          this.dataForm.status = 1
+          this.dataForm.nickname = ''
+          this.dataForm.profile = ''
+          this.dataForm.mobile = ''
+          this.file = []
         }
       })
     },

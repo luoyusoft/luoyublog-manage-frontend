@@ -61,6 +61,12 @@
             <el-form-item label="网站：">
               <span>{{ scope.row.website }}</span>
             </el-form-item>
+            <el-form-item label="创建者id：">
+              <span>{{ scope.row.createrId }}</span>
+            </el-form-item>
+            <el-form-item label="更新者id：">
+              <span>{{ scope.row.updaterId }}</span>
+            </el-form-item>
             <el-form-item label="创建时间：">
               <span>{{ scope.row.createTime }}</span>
             </el-form-item>
@@ -155,6 +161,20 @@
         width="200px"
         :show-overflow-tooltip="true"
         label="网站">
+      </el-table-column>
+      <el-table-column
+        prop="createrId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="创建者id">
+      </el-table-column>
+      <el-table-column
+        prop="updaterId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="更新者id">
       </el-table-column>
       <el-table-column
         fixed="right"

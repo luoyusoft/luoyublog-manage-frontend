@@ -5,9 +5,9 @@
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="120px">
       <el-form-item label="标签名称" prop="name">
-        <el-input v-model="dataForm.name" placeholder="标签名字"></el-input>
+        <el-input v-model="dataForm.name" placeholder="标签名称"></el-input>
       </el-form-item>
-      <el-form-item label="所属模块" prop="module">
+      <el-form-item label="模块" prop="module">
         <el-select v-model="dataForm.module">
           <el-option
             v-for="module in moduleList"
@@ -36,7 +36,7 @@ export default {
       },
       dataRule: {
         name: [{ required: true, message: '标签名称不能为空', trigger: 'blur' }],
-        module: [{ required: true, message: '所属模块不能为空', trigger: 'blur' }]
+        module: [{ required: true, message: '模块不能为空', trigger: 'blur' }]
       },
       moduleList: this.getSysParamArr('MODULE_TYPE')
     }

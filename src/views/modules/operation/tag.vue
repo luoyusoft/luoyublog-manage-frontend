@@ -1,7 +1,7 @@
 <template>
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @submit.native.prevent>
-      <el-form-item>
+      <el-form-item label="模块">
         <el-select v-model="dataForm.module" clearable>
           <el-option v-for="module in moduleList"
                      :key="module.parKey"
@@ -9,7 +9,7 @@
                      :label="module.parValue"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="标签名称">
         <el-input v-model="dataForm.name" placeholder="标签名称" clearable></el-input>
       </el-form-item>
       <el-form-item>
@@ -25,6 +25,44 @@
       @selection-change="selectionChangeHandle"
       height="800"
       style="width: 100%;">
+      <el-table-column
+        fixed="left"
+        type="expand"
+        header-align="center"
+        align="center"
+        width="50px">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="id：">
+              <span>{{ scope.row.id }}</span>
+            </el-form-item>
+            <el-form-item label="标签名称：">
+              <span>{{ scope.row.name }}</span>
+            </el-form-item>
+            <el-form-item label="模块：">
+              <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
+              <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
+              <!--          {{getSysParam('MODULE_TYPE',scope.row.type)}}-->
+            </el-form-item>
+            <el-form-item label="创建者id：">
+              <span>{{ scope.row.createrId }}</span>
+            </el-form-item>
+            <el-form-item label="更新者id：">
+              <span>{{ scope.row.updaterId }}</span>
+            </el-form-item>
+            <el-form-item label="创建时间：">
+              <span>{{ scope.row.createTime }}</span>
+            </el-form-item>
+            <el-form-item label="更新时间：">
+              <span>{{ scope.row.updateTime }}</span>
+            </el-form-item>
+            <el-form-item label="操作：">
+              <el-button v-if="isAuth('operation:tag:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+              <el-button v-if="isAuth('operation:tag:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column
         fixed="left"
         type="selection"
@@ -53,12 +91,26 @@
           header-align="center"
           align="center"
           width="150px"
-          label="所属模块">
+          label="模块">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.module === 0" size="small" type="success">文章</el-tag>
           <el-tag v-if="scope.row.module === 1" size="small" type="warning">视频</el-tag>
 <!--          {{getSysParam('MODULE_TYPE',scope.row.type)}}-->
         </template>
+      </el-table-column>
+      <el-table-column
+        prop="createrId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="创建者id">
+      </el-table-column>
+      <el-table-column
+        prop="updaterId"
+        header-align="center"
+        align="center"
+        width="100px"
+        label="更新者id">
       </el-table-column>
       <el-table-column
         prop="createTime"
@@ -218,3 +270,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-left: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>
