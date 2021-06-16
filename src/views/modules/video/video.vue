@@ -445,6 +445,8 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
+import middle from '../../../utils/middle.js'
+
 export default {
   data () {
     return {
@@ -472,6 +474,10 @@ export default {
   mounted () {
     // 监听回车键
     document.addEventListener('keydown', this.keyDown)
+    var that = this
+    middle.$on('refreshVideoDataList', function () {
+      that.getDataList()
+    })
   },
   computed: {
     mainTabs: {

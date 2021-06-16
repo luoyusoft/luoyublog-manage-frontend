@@ -173,6 +173,7 @@ import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 import { treeDataTranslate } from '@/utils'
 import UploaderContainer from '@/views/uploader-container'
+import middle from '../../../utils/middle.js'
 
 export default {
   data () {
@@ -351,6 +352,8 @@ export default {
                 this.$emit('closeCurrentTabs')
                 // 跳转到list
                 this.$router.push('/video-video')
+                // 刷新list数据
+                middle.$emit('refreshVideoDataList')
               }
             } else {
               this.$message.error(response.msg)

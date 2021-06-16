@@ -327,7 +327,7 @@ export default {
       activeNames: ['1']
     }
   },
-  created () {
+  activated () {
     this.getDataList()
   },
   beforeDestroy () {

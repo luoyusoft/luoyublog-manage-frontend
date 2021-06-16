@@ -309,6 +309,10 @@ export default {
       var userIds = id ? [id] : this.dataListSelections.map(item => {
         return item.id
       })
+      if (userIds.includes(this.$store.state.user.userId)) {
+        this.$message.error('不可以删除当前登录用户')
+        return
+      }
       this.$confirm(`确定对[id=${userIds.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

@@ -215,8 +215,12 @@ export default {
                 type: 'success',
                 duration: 1500,
                 onClose: () => {
-                  this.visible = false
-                  this.$emit('refreshDataList')
+                  if (this.dataForm.id === this.$store.state.user.userId) {
+                    this.$router.go(0)
+                  } else {
+                    this.visible = false
+                    this.$emit('refreshDataList')
+                  }
                 }
               })
             } else {

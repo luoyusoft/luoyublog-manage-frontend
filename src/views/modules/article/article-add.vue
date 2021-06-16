@@ -87,6 +87,7 @@ import MavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { treeDataTranslate } from '@/utils'
 import marked from 'marked'
+import middle from '../../../utils/middle.js'
 
 export default {
   components: {
@@ -204,6 +205,8 @@ export default {
                 this.$emit('closeCurrentTabs')
                 // 跳转到list
                 this.$router.push('/article-article')
+                // 刷新list数据
+                middle.$emit('refreshArticleDataList')
               }
             } else {
               this.$message.error(response.msg)

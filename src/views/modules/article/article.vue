@@ -303,6 +303,8 @@
 </template>
 
 <script>
+import middle from '../../../utils/middle.js'
+
 export default {
   data () {
     return {
@@ -327,6 +329,10 @@ export default {
   mounted () {
     // 监听回车键
     document.addEventListener('keydown', this.keyDown)
+    var that = this
+    middle.$on('refreshArticleDataList', function () {
+      that.getDataList()
+    })
   },
   computed: {
     mainTabs: {
