@@ -69,10 +69,10 @@
               <span>{{ scope.row.city }}</span>
             </el-form-item>
             <el-form-item label="浏览器名称：">
-              <span>{{ scope.row.borderName }}</span>
+              <span>{{ scope.row.browserName }}</span>
             </el-form-item>
             <el-form-item label="浏览器版本：">
-              <span>{{ scope.row.borderVersion }}</span>
+              <span>{{ scope.row.browserVersion }}</span>
             </el-form-item>
             <el-form-item label="设备生产厂商：">
               <span>{{ scope.row.deviceManufacturer }}</span>
@@ -210,7 +210,7 @@
         label="城市">
       </el-table-column>
       <el-table-column
-        prop="borderName"
+        prop="browserName"
         header-align="center"
         align="center"
         width="200px"
@@ -218,7 +218,7 @@
         label="浏览器名称">
       </el-table-column>
       <el-table-column
-        prop="borderVersion"
+        prop="browserVersion"
         header-align="center"
         align="center"
         width="200px"
