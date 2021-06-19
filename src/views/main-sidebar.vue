@@ -6,11 +6,11 @@
         :collapse="sidebarFold"
         :collapseTransition="false"
         class="site-sidebar__menu">
-        <el-menu-item index="home" @click="$router.push({ name: 'home' })">
+        <el-menu-item index="home" @click="goHome()">
           <icon-svg name="shouye" class="site-sidebar__menu-icon"></icon-svg>
           <span slot="title">首页</span>
         </el-menu-item>
-        <el-menu-item index="theme" @click="$router.push({ name: 'theme' })">
+        <el-menu-item index="theme" @click="goTheme()">
           <icon-svg name="zhuti" class="site-sidebar__menu-icon"></icon-svg>
           <span slot="title">主题</span>
         </el-menu-item>
@@ -70,6 +70,32 @@ export default {
     this.routeHandle(this.$route)
   },
   methods: {
+    goHome () {
+      if (this.$route.path.replace(/\//g, '') === 'theme') {
+        this.$router.push({ name: 'home' })
+      } else if (this.$route.path.replace(/\//g, '') !== 'home') {
+        this.$confirm(`返回首页将关闭当前打开的所有标签页!`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({ name: 'home' })
+        }).catch(() => {})
+      }
+    },
+    goTheme () {
+      if (this.$route.path.replace(/\//g, '') === 'home') {
+        this.$router.push({ name: 'theme' })
+      } else if (this.$route.path.replace(/\//g, '') !== 'theme') {
+        this.$confirm(`设置主题将关闭当前打开的所有标签页!`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({ name: 'theme' })
+        }).catch(() => {})
+      }
+    },
     // 路由操作
     routeHandle (route) {
       if (route.meta.isTab) {

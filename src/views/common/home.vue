@@ -1,6 +1,10 @@
 <template>
   <div class="mod-home">
-    <h3>网站实时数据</h3>
+    <h3>网站实时数据
+      <a href="/" title="刷新" style="color: black;margin-left: 8px">
+      <i class="el-icon-refresh"></i>
+      </a>
+    </h3>
     <panel-group></panel-group>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData"/>
