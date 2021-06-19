@@ -76,6 +76,7 @@
             </el-form-item>
             <el-form-item label="操作：">
               <el-button v-if="isAuth('sys:user:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+              <el-button v-if="isAuth('sys:user:update')" type="text" size="small" @click="resetPasswordHandle(scope.row.id)">重置密码</el-button>
               <el-button v-if="isAuth('sys:user:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
             </el-form-item>
           </el-form>
@@ -198,10 +199,11 @@
         fixed="right"
         header-align="center"
         align="center"
-        min-width="100px"
+        min-width="200px"
         label="操作">
         <template slot-scope="scope">
           <el-button v-if="isAuth('sys:user:update')" type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+          <el-button v-if="isAuth('sys:user:update')" type="text" size="small" @click="resetPasswordHandle(scope.row.id)">重置密码</el-button>
           <el-button v-if="isAuth('sys:user:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
@@ -217,11 +219,13 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <reset-password v-if="resetPasswordVisible" ref="resetPassword" @refreshDataList="getDataList"></reset-password>
   </div>
 </template>
 
 <script>
 import AddOrUpdate from './user-add-or-update'
+import ResetPassword from './user-reset-password'
 export default {
   data () {
     return {
@@ -235,11 +239,13 @@ export default {
       totalPage: 0,
       dataListLoading: false,
       dataListSelections: [],
-      addOrUpdateVisible: false
+      addOrUpdateVisible: false,
+      resetPasswordVisible: false
     }
   },
   components: {
-    AddOrUpdate
+    AddOrUpdate,
+    ResetPassword
   },
   created () {
     this.getDataList()
@@ -302,6 +308,13 @@ export default {
       this.addOrUpdateVisible = true
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init(id)
+      })
+    },
+    // 重置密码
+    resetPasswordHandle (id) {
+      this.resetPasswordVisible = true
+      this.$nextTick(() => {
+        this.$refs.resetPassword.init(id)
       })
     },
     // 删除

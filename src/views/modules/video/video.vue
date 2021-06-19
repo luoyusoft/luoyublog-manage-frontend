@@ -134,6 +134,7 @@
               <span>{{ scope.row.updateTime }}</span>
             </el-form-item>
             <el-form-item label="操作：">
+              <el-button type="text" size="small" @click="toView(scope.row.id)">查看</el-button>
               <el-button v-if="isAuth('video:update')" type="text" size="small" @click="updateHandle(scope.row.id)">修改</el-button>
               <el-button v-if="isAuth('video:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
             </el-form-item>
@@ -404,9 +405,10 @@
         fixed="right"
         header-align="center"
         align="center"
-        min-width="100px"
+        min-width="200px"
         label="操作">
         <template slot-scope="scope">
+          <el-button type="text" size="small" @click="toView(scope.row.id)">查看</el-button>
           <el-button v-if="isAuth('video:update')" type="text" size="small" @click="updateHandle(scope.row.id)">修改</el-button>
           <el-button v-if="isAuth('video:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
@@ -486,6 +488,9 @@ export default {
     }
   },
   methods: {
+    toView (id) {
+      window.open('https://jinhx.cc/video/' + id, '_blank')
+    },
     // tabs, 是否存在该标签已经打开
     existTabHandle (tabName) {
       return this.mainTabs.filter(item => item.name === tabName).length >= 1

@@ -8,20 +8,14 @@
       <el-form-item label="用户名" prop="newUsername">
         <el-input v-model="dataForm.newUsername" placeholder="用户名"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password" :class="{ 'is-required': !dataForm.id }">
-        <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="comfirmPassword" :class="{ 'is-required': !dataForm.id }">
-        <el-input v-model="dataForm.comfirmPassword" type="password" placeholder="确认密码"></el-input>
+      <el-form-item label="昵称" prop="nickname">
+        <el-input v-model="dataForm.nickname" placeholder="昵称"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="dataForm.email" placeholder="邮箱"></el-input>
       </el-form-item>
       <el-form-item label="手机" prop="mobile">
         <el-input v-model="dataForm.mobile" placeholder="手机"></el-input>
-      </el-form-item>
-      <el-form-item label="昵称" prop="nickname">
-        <el-input v-model="dataForm.nickname" placeholder="昵称"></el-input>
       </el-form-item>
       <el-form-item label="上传头像">
         <el-col :span="12">
@@ -63,18 +57,18 @@
 import { isEmail, isMobile } from '@/utils/validate'
 export default {
   data () {
-    var validatePassword = (rule, value, callback) => {
-      if (!this.dataForm.id && !/\S/.test(value)) {
-        callback(new Error('密码不能为空'))
+    // eslint-disable-next-line no-unused-vars
+    var validateNickname = (rule, value, callback) => {
+      if (value.length < 2 || value.length > 20) {
+        callback(new Error('昵称长度必须位于2到20之间'))
       } else {
         callback()
       }
     }
-    var validateComfirmPassword = (rule, value, callback) => {
-      if (!this.dataForm.id && !/\S/.test(value)) {
-        callback(new Error('确认密码不能为空'))
-      } else if (this.dataForm.password !== value) {
-        callback(new Error('确认密码与密码输入不一致'))
+    // eslint-disable-next-line no-unused-vars
+    var validateUsername = (rule, value, callback) => {
+      if (value.length < 4 || value.length > 20) {
+        callback(new Error('用户名长度必须位于4到20之间'))
       } else {
         callback()
       }
@@ -107,8 +101,6 @@ export default {
       dataForm: {
         id: 0,
         newUsername: '',
-        password: '',
-        comfirmPassword: '',
         salt: '',
         nickname: '',
         profile: '',
@@ -121,13 +113,8 @@ export default {
       file: [],
       dataRule: {
         newUsername: [
-          { required: true, message: '用户名不能为空', trigger: 'blur' }
-        ],
-        password: [
-          { validator: validatePassword, trigger: 'blur' }
-        ],
-        comfirmPassword: [
-          { validator: validateComfirmPassword, trigger: 'blur' }
+          { required: true, message: '用户名不能为空', trigger: 'blur' },
+          { validator: validateUsername, trigger: 'blur' }
         ],
         email: [
           // { required: true, message: '邮箱不能为空', trigger: 'blur' },
@@ -138,7 +125,8 @@ export default {
           { validator: validateMobile, trigger: 'blur' }
         ],
         nickname: [
-          { required: true, message: '昵称不能为空', trigger: 'blur' }
+          { required: true, message: '昵称不能为空', trigger: 'blur' },
+          { validator: validateNickname, trigger: 'blur' }
         ]
       }
     }
@@ -199,7 +187,6 @@ export default {
             data: this.$http.adornData({
               'id': this.dataForm.id || undefined,
               'username': this.dataForm.newUsername,
-              'password': this.dataForm.password,
               'salt': this.dataForm.salt,
               'email': this.dataForm.email,
               'mobile': this.dataForm.mobile,

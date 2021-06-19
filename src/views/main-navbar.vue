@@ -40,6 +40,7 @@
             <el-dropdown-menu slot="dropdown">
 <!--              <el-dropdown-item @click.native="updatePasswordHandle()">修改密码</el-dropdown-item>-->
               <el-dropdown-item @click.native="addOrUpdateHandle()">修改信息</el-dropdown-item>
+              <el-dropdown-item @click.native="resetPasswordHandle()">重置密码</el-dropdown-item>
               <el-dropdown-item @click.native="logoutHandle()">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -50,23 +51,28 @@
 <!--    <update-password v-if="updatePassowrdVisible" ref="updatePassowrd"></update-password>-->
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <reset-password v-if="resetPasswordVisible" ref="resetPassword" @refreshDataList="getDataList"></reset-password>
   </nav>
 </template>
 
 <script>
 import UpdatePassword from './main-navbar-update-password'
 import AddOrUpdate from './modules/sys/user-add-or-update'
+import ResetPassword from './modules/sys/user-reset-password'
 import { clearLoginInfo } from '@/utils'
+
 export default {
   data () {
     return {
       addOrUpdateVisible: false,
-      updatePassowrdVisible: false
+      updatePassowrdVisible: false,
+      resetPasswordVisible: false
     }
   },
   components: {
     UpdatePassword,
-    AddOrUpdate
+    AddOrUpdate,
+    ResetPassword
   },
   computed: {
     navbarLayoutType: {
@@ -103,6 +109,13 @@ export default {
       this.addOrUpdateVisible = true
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init(this.userId)
+      })
+    },
+    // 重置密码
+    resetPasswordHandle () {
+      this.resetPasswordVisible = true
+      this.$nextTick(() => {
+        this.$refs.resetPassword.init(this.userId)
       })
     },
     getDataList () {

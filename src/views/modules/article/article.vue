@@ -62,7 +62,7 @@
             <el-form-item label="点赞量：">
               <span>{{ scope.row.likeNum }}</span>
             </el-form-item>
-            <el-form-item v-if="isAuth('article:update')" label="状态：">
+            <el-form-item v-if="isAuth('article:update') && (scope.row.createrId === userId || scope.row.open)" label="发布：">
               <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
                 <el-button type="info" size="mini" @click="updatePublish(scope.row.id, true)">未发布</el-button>
               </el-tooltip>
@@ -70,11 +70,23 @@
                 <el-button type="success" size="mini" @click="updatePublish(scope.row.id, false)" v-if="scope.row.publish === true">已发布</el-button>
               </el-tooltip>
             </el-form-item>
-            <el-form-item v-else label="状态：">
+            <el-form-item v-else label="发布：">
               <span v-if="!scope.row.publish">未发布</span>
               <span v-else>已发布</span>
             </el-form-item>
-            <el-form-item v-if="isAuth('article:update')" label="推荐：">
+            <el-form-item v-if="isAuth('article:update') && (scope.row.createrId === userId || scope.row.open)" label="公开：">
+              <el-tooltip class="item" effect="dark" content="点击公开" v-if="!scope.row.open" placement="top">
+                <el-button type="info" size="mini" @click="updateOpen(scope.row.id, true)">未公开</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="点击隐藏" v-if="scope.row.open" placement="top">
+                <el-button type="success" size="mini" @click="updateOpen(scope.row.id, false)" v-if="scope.row.open === true">已公开</el-button>
+              </el-tooltip>
+            </el-form-item>
+            <el-form-item v-else label="公开：">
+              <span v-if="!scope.row.open">未公开</span>
+              <span v-else>已公开</span>
+            </el-form-item>
+            <el-form-item v-if="isAuth('article:update') && (scope.row.createrId === userId || scope.row.open)" label="推荐：">
               <el-switch
                 v-model="scope.row.recommend"
                 active-color="#13ce66"
@@ -98,8 +110,9 @@
               <span>{{ scope.row.updateTime }}</span>
             </el-form-item>
             <el-form-item label="操作：">
-              <el-button v-if="isAuth('article:update')" type="text" size="small" @click="updateHandle(scope.row.id)">修改</el-button>
-              <el-button v-if="isAuth('article:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+              <el-button type="text" size="small" @click="toView(scope.row.id)">查看</el-button>
+              <el-button v-if="isAuth('article:update') && (scope.row.createrId === userId || scope.row.open)" type="text" size="small" @click="updateHandle(scope.row.id, scope.row.open)">修改</el-button>
+              <el-button v-if="isAuth('article:delete') && (scope.row.createrId === userId || scope.row.open)" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
             </el-form-item>
           </el-form>
         </template>
@@ -196,58 +209,65 @@
         label="点赞量">
       </el-table-column>
       <el-table-column
-        v-if="isAuth('article:update')"
         prop="publish"
         header-align="center"
         align="center"
         width="100px"
-        label="状态">
+        label="发布">
         <template slot-scope="scope">
-          <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
-            <el-button type="info" size="mini" @click="updatePublish(scope.row.id, true)">未发布</el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="点击下架" v-if="scope.row.publish" placement="top">
-            <el-button type="success" size="mini" @click="updatePublish(scope.row.id, false)" v-if="scope.row.publish === true">已发布</el-button>
-          </el-tooltip>
+          <div v-if="isAuth('article:update') && (scope.row.createrId === userId || scope.row.open)">
+            <el-tooltip class="item" effect="dark" content="点击发布" v-if="!scope.row.publish" placement="top">
+              <el-button type="info" size="mini" @click="updatePublish(scope.row.id, true)">未发布</el-button>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="点击下架" v-if="scope.row.publish" placement="top">
+              <el-button type="success" size="mini" @click="updatePublish(scope.row.id, false)" v-if="scope.row.publish === true">已发布</el-button>
+            </el-tooltip>
+          </div>
+          <div v-else>
+            <span v-if="!scope.row.publish">未发布</span>
+            <span v-else>已发布</span>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
-        v-else
-        prop="publish"
+        prop="open"
         header-align="center"
         align="center"
         width="100px"
-        label="状态">
+        label="公开">
         <template slot-scope="scope">
-          <span v-if="!scope.row.publish">未发布</span>
-          <span v-else>已发布</span>
+          <div v-if="isAuth('article:update') && (scope.row.createrId === userId || scope.row.open)">
+            <el-tooltip class="item" effect="dark" content="点击公开" v-if="!scope.row.open" placement="top">
+              <el-button type="info" size="mini" @click="updateOpen(scope.row.id, true)">未公开</el-button>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="点击隐藏" v-if="scope.row.open" placement="top">
+              <el-button type="success" size="mini" @click="updateOpen(scope.row.id, false)" v-if="scope.row.open === true">已公开</el-button>
+            </el-tooltip>
+          </div>
+          <div v-else>
+            <span v-if="!scope.row.open">未公开</span>
+            <span v-else>已公开</span>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
-        v-if="isAuth('article:update')"
         prop="recommend"
         header-align="center"
         align="center"
         min-width="100px"
         label="推荐">
         <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.recommend"
-            active-color="#13ce66"
-            @change="updateRecommend(scope.row.id,scope.row.recommend)">
-          </el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column
-        v-else
-        prop="recommend"
-        header-align="center"
-        align="center"
-        min-width="100px"
-        label="推荐">
-        <template slot-scope="scope">
-          <span v-if="!scope.row.recommend">未推荐</span>
-          <span v-else>已推荐</span>
+          <div v-if="isAuth('article:update') && (scope.row.createrId === userId || scope.row.open)">
+            <el-switch
+              v-model="scope.row.recommend"
+              active-color="#13ce66"
+              @change="updateRecommend(scope.row.id,scope.row.recommend)">
+            </el-switch>
+          </div>
+          <div v-else>
+            <span v-if="!scope.row.recommend">未推荐</span>
+            <span v-else>已推荐</span>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
@@ -282,11 +302,12 @@
         fixed="right"
         header-align="center"
         align="center"
-        min-width="100px"
+        min-width="200px"
         label="操作">
         <template slot-scope="scope">
-          <el-button v-if="isAuth('article:update')" type="text" size="small" @click="updateHandle(scope.row.id)">修改</el-button>
-          <el-button v-if="isAuth('article:delete')" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+          <el-button type="text" size="small" @click="toView(scope.row.id)">查看</el-button>
+          <el-button v-if="isAuth('article:update') && (scope.row.createrId === userId || scope.row.open)" type="text" size="small" @click="updateHandle(scope.row.id, scope.row.open)">修改</el-button>
+          <el-button v-if="isAuth('article:delete') && (scope.row.createrId === userId || scope.row.open)" type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -316,7 +337,8 @@ export default {
       pageSize: 20,
       totalPage: 0,
       dataListLoading: false,
-      dataListSelections: []
+      dataListSelections: [],
+      userId: this.$store.state.user.userId
     }
   },
   created () {
@@ -341,6 +363,9 @@ export default {
     }
   },
   methods: {
+    toView (id) {
+      window.open('https://jinhx.cc/article/' + id, '_blank')
+    },
     // tabs, 是否存在该标签已经打开
     existTabHandle (tabName) {
       return this.mainTabs.filter(item => item.name === tabName).length >= 1
@@ -453,6 +478,14 @@ export default {
       let data = {
         id: id,
         publish: value
+      }
+      this.updateStatus(data)
+    },
+    // 更新文章公开状态
+    updateOpen (id, value) {
+      let data = {
+        id: id,
+        open: value
       }
       this.updateStatus(data)
     },

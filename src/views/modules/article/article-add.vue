@@ -44,6 +44,18 @@
           <el-radio :label="false" >否</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="公开状态">
+        <el-radio-group v-model="article.open">
+          <el-radio :label="true" >公开</el-radio>
+          <el-radio :label="false" >不公开</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="发布状态">
+        <el-radio-group v-model="article.publish">
+          <el-radio :label="true" >发布</el-radio>
+          <el-radio :label="false" >不发布</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="展示类型">
         <el-radio-group v-model="article.coverType">
           <el-radio v-for="type in coverTypeList" :key="type.parKey" :label="type.parKey" >{{type.parValue}}</el-radio>
@@ -97,6 +109,8 @@ export default {
     return {
       article: {
         recommend: false,
+        open: false,
+        publish: false,
         tagList: [],
         module: 0,
         coverType: 2 // 默认无图片
@@ -191,27 +205,43 @@ export default {
     saveArticle (isWatch) {
       this.$refs['articleForm'].validate((valid) => {
         if (valid) {
-          // 转化categoryId
-          this.article.categoryId = this.categoryOptionsSelect.join(',')
-          this.$http({
-            url: this.$http.adornUrl(`/manage/article/${!this.article.id ? 'save' : 'update'}`),
-            method: !this.article.id ? 'post' : 'put',
-            data: this.$http.adornData(this.article)
-          }).then((response) => {
-            if (response && response.code === 200) {
-              this.$message.success('保存文章成功')
-              // 关闭当前标签
-              if (!isWatch) {
-                this.$emit('closeCurrentTabs')
-                // 跳转到list
-                this.$router.push('/article-article')
-                // 刷新list数据
-                middle.$emit('refreshArticleDataList')
+          // eslint-disable-next-line no-unused-vars
+          var publishString = '不发布'
+          if (this.article.publish) {
+            publishString = '发布'
+          }
+
+          var openString = '不公开'
+          if (this.article.open) {
+            openString = '公开'
+          }
+          this.$confirm(`当前公开状态为：` + openString + `，发布状态为：` + publishString + `，是否继续保存文章？`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            // 转化categoryId
+            this.article.categoryId = this.categoryOptionsSelect.join(',')
+            this.$http({
+              url: this.$http.adornUrl(`/manage/article/${!this.article.id ? 'save' : 'update'}`),
+              method: !this.article.id ? 'post' : 'put',
+              data: this.$http.adornData(this.article)
+            }).then((response) => {
+              if (response && response.code === 200) {
+                this.$message.success('保存文章成功')
+                // 关闭当前标签
+                if (!isWatch) {
+                  this.$emit('closeCurrentTabs')
+                  // 跳转到list
+                  this.$router.push('/article-article')
+                  // 刷新list数据
+                  middle.$emit('refreshArticleDataList')
+                }
+              } else {
+                this.$message.error(response.msg)
               }
-            } else {
-              this.$message.error(response.msg)
-            }
-          })
+            })
+          }).catch(() => {})
         } else {
           return false
         }
