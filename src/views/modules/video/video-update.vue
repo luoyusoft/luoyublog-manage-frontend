@@ -391,37 +391,55 @@ export default {
     },
     // 保存视频
     saveVideo (isWatch) {
-      this.$refs['videoForm'].validate((valid) => {
-        if (valid) {
-          // 转化categoryId
-          this.video.categoryId = this.categoryOptionsSelect.join(',')
-          this.$http({
-            url: this.$http.adornUrl(`/manage/video/${!this.video.id ? 'save' : 'update'}`),
-            method: !this.video.id ? 'post' : 'put',
-            data: this.$http.adornData(this.video)
-          }).then((response) => {
-            if (response && response.code === 200) {
-              this.$message.success('保存视频成功')
-              if (this.videoStartWatch) {
-                // 清除
-                clearInterval(this.videoTimer)
-              }
-              if (!isWatch) {
+      if (isWatch) {
+        // 转化categoryId
+        this.video.categoryId = this.categoryOptionsSelect.join(',')
+        this.$http({
+          url: this.$http.adornUrl(`/manage/video/${!this.video.id ? 'save' : 'update'}`),
+          method: !this.video.id ? 'post' : 'put',
+          data: this.$http.adornData(this.video)
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.$message.success('保存视频成功')
+            if (this.videoStartWatch) {
+              // 清除
+              clearInterval(this.videoTimer)
+            }
+          } else {
+            this.$message.error(response.msg)
+          }
+        })
+      } else {
+        this.$refs['videoForm'].validate((valid) => {
+          if (valid) {
+            // 转化categoryId
+            this.video.categoryId = this.categoryOptionsSelect.join(',')
+            this.$http({
+              url: this.$http.adornUrl(`/manage/video/${!this.video.id ? 'save' : 'update'}`),
+              method: !this.video.id ? 'post' : 'put',
+              data: this.$http.adornData(this.video)
+            }).then((response) => {
+              if (response && response.code === 200) {
+                this.$message.success('保存视频成功')
+                if (this.videoStartWatch) {
+                  // 清除
+                  clearInterval(this.videoTimer)
+                }
                 // 关闭当前标签
                 this.$emit('closeCurrentTabs')
                 // 跳转到list
                 this.$router.push('/video-video')
                 // 刷新list数据
                 middle.$emit('refreshVideoDataList')
+              } else {
+                this.$message.error(response.msg)
               }
-            } else {
-              this.$message.error(response.msg)
-            }
-          })
-        } else {
-          return false
-        }
-      })
+            })
+          } else {
+            return false
+          }
+        })
+      }
     },
     beforeUpload (file) {
       console.log('上传文件之前校验：', file)

@@ -257,53 +257,71 @@ export default {
     },
     // 保存文章
     saveArticle (isWatch) {
-      this.$refs['articleForm'].validate((valid) => {
-        if (valid) {
-          // eslint-disable-next-line no-unused-vars
-          var publishString = '不发布'
-          if (this.article.publish) {
-            publishString = '发布'
+      if (isWatch) {
+        // 转化categoryId
+        this.article.categoryId = this.categoryOptionsSelect.join(',')
+        this.$http({
+          url: this.$http.adornUrl(`/manage/article/${!this.article.id ? 'save' : 'update'}`),
+          method: !this.article.id ? 'post' : 'put',
+          data: this.$http.adornData(this.article)
+        }).then((response) => {
+          if (response && response.code === 200) {
+            this.$message.success('保存文章成功')
+            if (this.articleStartWatch) {
+              // 清除
+              clearInterval(this.articleTimer)
+            }
+          } else {
+            this.$message.error(response.msg)
           }
+        })
+      } else {
+        this.$refs['articleForm'].validate((valid) => {
+          if (valid) {
+            // eslint-disable-next-line no-unused-vars
+            var publishString = '不发布'
+            if (this.article.publish) {
+              publishString = '发布'
+            }
 
-          var openString = '不公开'
-          if (this.article.open) {
-            openString = '公开'
-          }
-          this.$confirm(`当前公开状态为：` + openString + `，发布状态为：` + publishString + `，是否继续保存文章？`, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            // 转化categoryId
-            this.article.categoryId = this.categoryOptionsSelect.join(',')
-            this.$http({
-              url: this.$http.adornUrl(`/manage/article/${!this.article.id ? 'save' : 'update'}`),
-              method: !this.article.id ? 'post' : 'put',
-              data: this.$http.adornData(this.article)
-            }).then((response) => {
-              if (response && response.code === 200) {
-                this.$message.success('保存文章成功')
-                if (this.articleStartWatch) {
-                  // 清除
-                  clearInterval(this.articleTimer)
-                }
-                if (!isWatch) {
+            var openString = '不公开'
+            if (this.article.open) {
+              openString = '公开'
+            }
+            this.$confirm(`当前公开状态为：` + openString + `，发布状态为：` + publishString + `，是否继续保存文章？`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              // 转化categoryId
+              this.article.categoryId = this.categoryOptionsSelect.join(',')
+              this.$http({
+                url: this.$http.adornUrl(`/manage/article/${!this.article.id ? 'save' : 'update'}`),
+                method: !this.article.id ? 'post' : 'put',
+                data: this.$http.adornData(this.article)
+              }).then((response) => {
+                if (response && response.code === 200) {
+                  this.$message.success('保存文章成功')
+                  if (this.articleStartWatch) {
+                    // 清除
+                    clearInterval(this.articleTimer)
+                  }
                   // 关闭当前标签
                   this.$emit('closeCurrentTabs')
                   // 跳转到list
                   this.$router.push('/article-article')
                   // 刷新list数据
                   middle.$emit('refreshArticleDataList')
+                } else {
+                  this.$message.error(response.msg)
                 }
-              } else {
-                this.$message.error(response.msg)
-              }
-            })
-          }).catch(() => {})
-        } else {
-          return false
-        }
-      })
+              })
+            }).catch(() => {})
+          } else {
+            return false
+          }
+        })
+      }
     },
     // 文章内容图片上传
     imgAdd (pos, $file) {
